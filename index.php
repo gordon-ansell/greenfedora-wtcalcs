@@ -8,6 +8,9 @@
  * @license   https://github.com/gordon-ansell/greenfedora-wtcalcs/blob/master/LICENSE.md New BSD License.
  */
 
-//require __DIR__ . "/vendor/autoload.php";
+require __DIR__ . "/vendor/autoload.php";
 
-echo "here";
+use WTCalcs\WTCalcsApplication;
+
+$app = new WTCalcsApplication('dev');
+$app->dispatch();

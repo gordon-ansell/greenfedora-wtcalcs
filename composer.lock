@@ -1,0 +1,95 @@
+{
+    "_readme": [
+        "This file locks the dependencies of your project to a known state",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
+        "This file is @generated automatically"
+    ],
+    "content-hash": "940656b7b4829fa3d2da9f9ff59253a6",
+    "packages": [
+        {
+            "name": "gordon-ansell/greenfedora-framework",
+            "version": "dev-main",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/gordon-ansell/greenfedora-framework.git",
+                "reference": "e370c9138a10ee041eb7135cf8cdeed39a248ab2"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/gordon-ansell/greenfedora-framework/zipball/e370c9138a10ee041eb7135cf8cdeed39a248ab2",
+                "reference": "e370c9138a10ee041eb7135cf8cdeed39a248ab2",
+                "shasum": ""
+            },
+            "require": {
+                "gordon-ansell/greenfedora-mvc": "*",
+                "php": "^7.0"
+            },
+            "type": "metapackage",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "description": "GreenFedora PHP Framework",
+            "homepage": "http://gordonansell.com/greenfedora/framework",
+            "keywords": [
+                "framework",
+                "greenfedora",
+                "php"
+            ],
+            "support": {
+                "source": "https://github.com/gordon-ansell/greenfedora-framework/tree/main",
+                "issues": "https://github.com/gordon-ansell/greenfedora-framework/issues"
+            },
+            "time": "2021-03-22T08:14:57+00:00"
+        },
+        {
+            "name": "gordon-ansell/greenfedora-mvc",
+            "version": "dev-main",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/gordon-ansell/greenfedora-mvc.git",
+                "reference": "d5fc3790a139691987125a0943f21bcf03791206"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/gordon-ansell/greenfedora-mvc/zipball/d5fc3790a139691987125a0943f21bcf03791206",
+                "reference": "d5fc3790a139691987125a0943f21bcf03791206",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^7.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "GreenFedora\\Mvc\\": "src/"
+                }
+            },
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "description": "GreenFedora Framework MVC component",
+            "homepage": "http://gordonansell.com/greenfedora/framework",
+            "keywords": [
+                "framework",
+                "greenfedora",
+                "mvc",
+                "php"
+            ],
+            "support": {
+                "source": "https://github.com/gordon-ansell/greenfedora-mvc/tree/main",
+                "issues": "https://github.com/gordon-ansell/greenfedora-mvc/issues"
+            },
+            "time": "2021-03-22T08:14:44+00:00"
+        }
+    ],
+    "packages-dev": [],
+    "aliases": [],
+    "minimum-stability": "dev",
+    "stability-flags": [],
+    "prefer-stable": false,
+    "prefer-lowest": false,
+    "platform": {
+        "php": "^7.0"
+    },
+    "platform-dev": []
+}
