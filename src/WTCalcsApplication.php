@@ -8,6 +8,7 @@
  * @license   https://github.com/gordon-ansell/greenfedora-wtcalcs/blob/master/LICENSE.md New BSD License.
  */
 
+declare(strict_types=1);
 namespace WTCalcs;
 
 /**
