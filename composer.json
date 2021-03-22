@@ -12,5 +12,12 @@
     "require": {
         "php": "^7.0",
         "gordon-ansell/greenfedora-framework": "*"
-    }
+    },
+	"minimum-stability": "dev",
+	"repositories": [
+		{
+			"type": "vcs",
+			"url": "git@github.com:gordon-ansell/greenfedora-framework.git"
+		}
+	]
 }
