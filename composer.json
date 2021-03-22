@@ -18,6 +18,10 @@
 		{
 			"type": "vcs",
 			"url": "git@github.com:gordon-ansell/greenfedora-framework.git"
+		},
+		{
+			"type": "vcs",
+			"url": "git@github.com:gordon-ansell/greenfedora-mvc.git"
 		}
 	]
 }
