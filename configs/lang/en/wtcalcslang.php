@@ -1,7 +1,7 @@
 <?php
 	
 /**
- * This file is part of the GordyAnsell WTCalcs package.
+ * This file is part of the WTCalcs package.
  *
  * (c) Gordon Ansell <contact@gordonansell.com>
  *

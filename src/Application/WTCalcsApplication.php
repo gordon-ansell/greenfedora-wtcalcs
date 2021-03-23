@@ -9,20 +9,10 @@
 declare(strict_types=1);
 namespace WTCalcs\Application;
 
-use GreenFedora\Application\ConsoleApplication;
+use GreenFedora\Application\HttpApplication;
 use GreenFedora\Application\ApplicationInterface;
 use GreenFedora\Application\Input\ApplicationInputInterface;
 use GreenFedora\Application\Output\ApplicationOutputInterface;
-use GreenFedora\Arr\Arr;
-use GreenFedora\Arr\ArrInterface;
-use GreenFedora\FileSystem\Yaml\YamlFile;
-use GreenFedora\FileSystem\DirIter;
-use GreenFedora\FileSystem\FileInfo;
-use GreenFedora\Uri\Uri;
-use GreenFedora\FileSystem\DirIterFilter\Filter;
-use GreenFedora\Markdown\ParsedownProcessor;
-use GreenFedora\Template\TemplateInterface;
-use GreenFedora\Template\SmartyTemplate;
 
 /**
  * The main WTCalcs application.
@@ -30,7 +20,7 @@ use GreenFedora\Template\SmartyTemplate;
  * @author Gordon Ansell <contact@gordonansell.com>
  */
 
-class WTCalcsApplication extends ConsoleApplication implements ApplicationInterface
+class WTCalcsApplication extends HttpApplication implements ApplicationInterface
 {
 	/**
 	 * Run.
@@ -43,9 +33,6 @@ class WTCalcsApplication extends ConsoleApplication implements ApplicationInterf
 	protected function run(ApplicationInputInterface $input, ApplicationOutputInterface $output)
 	{
 		$this->trace($this->x("WTCalcs version %s started.", APP_VERSION));
-		
-		// Set the output for return.
-		$output->setOutput(0);
 	}
 	
 }

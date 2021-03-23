@@ -11,18 +11,18 @@
 require __DIR__ . "/vendor/autoload.php";
 
 use WTCalcs\Application\WTCalcsApplication;
-use GreenFedora\Application\Input\ArrayApplicationInput;
-use GreenFedora\Application\Output\ReturnCodeApplicationOutput;
+use GreenFedora\Application\Input\HttpApplicationInput;
+use GreenFedora\Application\Output\HttpApplicationOutput;
 
 // This is assumed to be the base path.
 define('APP_PATH', dirname(__FILE__));
 define('APP_VERSION', '1.0.0.dev1');
 
 // Kick off the application
-$output = new ReturnCodeApplicationOutput();
+$output = new HttpApplicationOutput();
 
 $app = new WTCalcsApplication('dev');
-$app->main(new ArrayApplicationInput, $output);
+$app->main(new HttpApplicationInput, $output);
 
-// Returns an integer code. 0 is success, anything else is a failure.
-return $output->getOutput();
+// Display output.
+return $output->send();

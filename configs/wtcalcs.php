@@ -1,7 +1,7 @@
 <?php
 
 /**
- * This file is part of the GordyAnsell SBS (Static Blogging Software) package.
+ * This file is part of the WTCalcs package.
  *
  * (c) Gordon Ansell <contact@gordonansell.com>
  *
@@ -10,7 +10,7 @@
  */
  
 /**
- * SBS configs.
+ * WTCalcs configs.
  */
  
 use GreenFedora\FileSystem\DirIterFilter\FilterInterface;
