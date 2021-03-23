@@ -7,7 +7,7 @@
  */
 
 declare(strict_types=1);
-namespace WTCalcs;
+namespace WTCalcs\Application;
 
 use GreenFedora\Application\ConsoleApplication;
 use GreenFedora\Application\ApplicationInterface;
@@ -42,7 +42,7 @@ class WTCalcsApplication extends ConsoleApplication implements ApplicationInterf
 	 */
 	protected function run(ApplicationInputInterface $input, ApplicationOutputInterface $output)
 	{
-        echo "HERE";
+		$this->trace($this->x("WTCalcs version %s started.", APP_VERSION));
 		
 		// Set the output for return.
 		$output->setOutput(0);

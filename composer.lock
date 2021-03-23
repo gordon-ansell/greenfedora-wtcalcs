@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "940656b7b4829fa3d2da9f9ff59253a6",
+    "content-hash": "b1b27fc4259d41d3e0d3b19a6ba1a952",
     "packages": [
         {
             "name": "gordon-ansell/greenfedora-framework",
@@ -12,19 +12,29 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/gordon-ansell/greenfedora-framework.git",
-                "reference": "e370c9138a10ee041eb7135cf8cdeed39a248ab2"
+                "reference": "a1f1aba246db195665b7b11321aac7e425d10323"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/gordon-ansell/greenfedora-framework/zipball/e370c9138a10ee041eb7135cf8cdeed39a248ab2",
-                "reference": "e370c9138a10ee041eb7135cf8cdeed39a248ab2",
+                "url": "https://api.github.com/repos/gordon-ansell/greenfedora-framework/zipball/a1f1aba246db195665b7b11321aac7e425d10323",
+                "reference": "a1f1aba246db195665b7b11321aac7e425d10323",
                 "shasum": ""
             },
             "require": {
-                "gordon-ansell/greenfedora-mvc": "*",
-                "php": "^7.0"
+                "php": "^7.0",
+                "psr/container": "^1.0",
+                "psr/link": "^1.0",
+                "psr/log": "~1.0"
             },
-            "type": "metapackage",
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "GreenFedora\\": "src"
+                },
+                "exclude-from-classmap": [
+                    "**/Test/"
+                ]
+            },
             "license": [
                 "BSD-3-Clause"
             ],
@@ -39,47 +49,147 @@
                 "source": "https://github.com/gordon-ansell/greenfedora-framework/tree/main",
                 "issues": "https://github.com/gordon-ansell/greenfedora-framework/issues"
             },
-            "time": "2021-03-22T08:14:57+00:00"
+            "time": "2021-03-23T06:05:46+00:00"
         },
         {
-            "name": "gordon-ansell/greenfedora-mvc",
-            "version": "dev-main",
+            "name": "psr/container",
+            "version": "1.1.x-dev",
             "source": {
                 "type": "git",
-                "url": "https://github.com/gordon-ansell/greenfedora-mvc.git",
-                "reference": "d5fc3790a139691987125a0943f21bcf03791206"
+                "url": "https://github.com/php-fig/container.git",
+                "reference": "8622567409010282b7aeebe4bb841fe98b58dcaf"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/gordon-ansell/greenfedora-mvc/zipball/d5fc3790a139691987125a0943f21bcf03791206",
-                "reference": "d5fc3790a139691987125a0943f21bcf03791206",
+                "url": "https://api.github.com/repos/php-fig/container/zipball/8622567409010282b7aeebe4bb841fe98b58dcaf",
+                "reference": "8622567409010282b7aeebe4bb841fe98b58dcaf",
                 "shasum": ""
             },
             "require": {
-                "php": "^7.0"
+                "php": ">=7.2.0"
             },
             "type": "library",
             "autoload": {
                 "psr-4": {
-                    "GreenFedora\\Mvc\\": "src/"
+                    "Psr\\Container\\": "src/"
                 }
             },
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
-                "BSD-3-Clause"
+                "MIT"
             ],
-            "description": "GreenFedora Framework MVC component",
-            "homepage": "http://gordonansell.com/greenfedora/framework",
+            "authors": [
+                {
+                    "name": "PHP-FIG",
+                    "homepage": "https://www.php-fig.org/"
+                }
+            ],
+            "description": "Common Container Interface (PHP FIG PSR-11)",
+            "homepage": "https://github.com/php-fig/container",
             "keywords": [
-                "framework",
-                "greenfedora",
-                "mvc",
-                "php"
+                "PSR-11",
+                "container",
+                "container-interface",
+                "container-interop",
+                "psr"
             ],
-            "support": {
-                "source": "https://github.com/gordon-ansell/greenfedora-mvc/tree/main",
-                "issues": "https://github.com/gordon-ansell/greenfedora-mvc/issues"
+            "time": "2021-03-05T17:36:06+00:00"
+        },
+        {
+            "name": "psr/link",
+            "version": "1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/php-fig/link.git",
+                "reference": "eea8e8662d5cd3ae4517c9b864493f59fca95562"
             },
-            "time": "2021-03-22T08:14:44+00:00"
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/php-fig/link/zipball/eea8e8662d5cd3ae4517c9b864493f59fca95562",
+                "reference": "eea8e8662d5cd3ae4517c9b864493f59fca95562",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.0"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Psr\\Link\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "PHP-FIG",
+                    "homepage": "http://www.php-fig.org/"
+                }
+            ],
+            "description": "Common interfaces for HTTP links",
+            "keywords": [
+                "http",
+                "http-link",
+                "link",
+                "psr",
+                "psr-13",
+                "rest"
+            ],
+            "time": "2016-10-28T16:06:13+00:00"
+        },
+        {
+            "name": "psr/log",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/php-fig/log.git",
+                "reference": "a18c1e692e02b84abbafe4856c3cd7cc6903908c"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/php-fig/log/zipball/a18c1e692e02b84abbafe4856c3cd7cc6903908c",
+                "reference": "a18c1e692e02b84abbafe4856c3cd7cc6903908c",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.0"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.1.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Psr\\Log\\": "Psr/Log/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "PHP-FIG",
+                    "homepage": "https://www.php-fig.org/"
+                }
+            ],
+            "description": "Common interface for logging libraries",
+            "homepage": "https://github.com/php-fig/log",
+            "keywords": [
+                "log",
+                "psr",
+                "psr-3"
+            ],
+            "time": "2021-03-02T15:02:34+00:00"
         }
     ],
     "packages-dev": [],

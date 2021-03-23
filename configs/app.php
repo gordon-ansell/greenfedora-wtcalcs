@@ -1,0 +1,25 @@
+<?php
+
+/**
+ * This file is part of the GordyAnsell SBS (Static Blogging Software) package.
+ *
+ * (c) Gordon Ansell <contact@gordonansell.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+ 
+/**
+ * Application configs.
+ */
+
+return array(
+	'logger'	=>	array(
+		'level'	=>	'trace'
+	),
+	'locale' 	=>	array(
+		'timezone'	=>	'Europe/London',
+		'lang'		=>	'en',
+		'langFull'	=>	'en_GB',	
+	),	
+);
