@@ -33,6 +33,8 @@ class WTCalcsApplication extends HttpApplication implements ApplicationInterface
 	protected function run(ApplicationInputInterface $input, ApplicationOutputInterface $output)
 	{
 		$this->trace($this->x("WTCalcs version %s started.", APP_VERSION));
+		print_r($input->getRoute());
+		print_r($this->getConfig('routes')->toArray());
 	}
 	
 }

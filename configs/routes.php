@@ -11,6 +11,7 @@
  
 /**
  * Routing configs.
+ * 
  * :any - This matches anything from that point on in the URI, does not match "nothing".
  * :everything - Like :any, but also matches "nothing".
  * :segment - This matches only 1 segment in the URI, but that segment can be anything.
