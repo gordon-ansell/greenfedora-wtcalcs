@@ -10,7 +10,18 @@
 
 require __DIR__ . "/vendor/autoload.php";
 
-use WTCalcs\WTCalcsApplication;
+use WRCalcs\Application\WTCalcsApplication;
+use GreenFedora\Application\Input\ArrayApplicationInput;
+use GreenFedora\Application\Output\ReturnCodeApplicationOutput;
 
-$app = new WTCalcsApplication('dev');
-$app->dispatch();
+// This is assumed to be the base path.
+define('APP_PATH', dirname(__FILE__));
+
+// Kick off the application
+$output = new ReturnCodeApplicationOutput();
+
+$app = new SbsApplication('dev');
+$app->main(new ArrayApplicationInput, $output);
+
+// Returns an integer code. 0 is success, anything else is a failure.
+return $output->getOutput();
