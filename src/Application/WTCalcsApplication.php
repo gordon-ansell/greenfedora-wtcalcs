@@ -26,12 +26,9 @@ class WTCalcsApplication extends HttpApplication implements ApplicationInterface
 	/**
 	 * Run.
 	 *
-	 * @param	ApplicationInputInterface	$input 		Input.
-	 * @param	ApplicationOutputInterface	$output 	Output.
-	 *
 	 * @return 	void
 	 */
-	protected function run(ApplicationInputInterface $input, ApplicationOutputInterface $output)
+	protected function run()
 	{
 		$this->trace($this->x("WTCalcs version %s started.", APP_VERSION));
 
@@ -39,7 +36,7 @@ class WTCalcsApplication extends HttpApplication implements ApplicationInterface
 		$router = $this->getRouter();
 
 		// Find a match for the route.
-		$matched = $router->match($input->getRoute());
+		$matched = $router->match($this->input->getRoute());
 
 		$this->trace4(sprintf("Matched namespaced class is: %s", $matched->getNamespacedClass()));
 
@@ -47,48 +44,6 @@ class WTCalcsApplication extends HttpApplication implements ApplicationInterface
 		$dispatchable = new $class();
 
 		$dispatchable->dispatch();
-
-
-		// Create the namespaced class.
-		/*
-		$class = '';
-
-		if ('\\' != $matched[1]) {
-			if ($this->getConfig('routing')->prefixNamespace) {
-				$class = $this->getConfig('routing')->prefixNamespace;
-			}
-		}
-		*/
-
-		/*
-		print_r($input->getRoute() . PHP_EOL . '<br />');
-		echo PHP_EOL . '<br />';
-		echo $this->getConfig('routing')->prefixNamespace . PHP_EOL . '<br />';
-		echo PHP_EOL . '<br />';
-		print_r($this->getConfig('routing')->routes->toArray());
-		echo PHP_EOL . '<br />';
-
-		$target = 'OnermAction';
-		$class = '';
-
-		if ('\\' != $target[0]) {
-			if ($this->getConfig('routing')->prefixNamespace) {
-				$class = $this->getConfig('routing')->prefixNamespace;
-			}
-		}
-
-		if ('\\' != $class[0]) {
-			$class = '\\' . $class;
-		}
-
-		$class = '\\' . trim($class, '\\') . '\\' . trim($target, '\\');
-
-		echo $class;
-
-		$t = new $class();
-		$t->dispatch();
-		*/
-
 	}
 	
 }
