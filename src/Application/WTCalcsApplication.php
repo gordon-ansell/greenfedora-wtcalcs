@@ -21,7 +21,7 @@ use GreenFedora\Router\Router;
  * @author Gordon Ansell <contact@gordonansell.com>
  */
 
-class WTCalcsApplication extends HttpApplication implements ApplicationInterface
+class WTCalcsApplication extends AbstractHttpApplication implements ApplicationInterface
 {
 	/**
 	 * Run.
