@@ -43,6 +43,11 @@ class WTCalcsApplication extends HttpApplication implements ApplicationInterface
 
 		$this->trace4(sprintf("Matched namespaced class is: %s", $matched->getNamespacedClass()));
 
+		$class = $matched->getNamespacedClass();
+		$dispatchable = new $class();
+
+		$dispatchable->dispatch();
+
 
 		// Create the namespaced class.
 		/*

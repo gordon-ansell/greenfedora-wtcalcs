@@ -10,6 +10,7 @@ declare(strict_types=1);
 namespace WTCalcs\Adr\Action;
 
 use GreenFedora\Adr\Action\AbstractAction;
+use GreenFedora\Adr\Action\ActionInterface;
 
 /**
  * The 1-rep maximum calculator action.
@@ -17,7 +18,7 @@ use GreenFedora\Adr\Action\AbstractAction;
  * @author Gordon Ansell <contact@gordonansell.com>
  */
 
-class OnermAction extends AbstractAction
+class OnermAction extends AbstractAction implements ActionInterface
 {
     /**
      * Dispatch the action.
