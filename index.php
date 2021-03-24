@@ -22,6 +22,7 @@ define('APP_VERSION', '1.0.0.dev1');
 $output = new HttpApplicationOutput();
 
 $app = new WTCalcsApplication(new HttpApplicationInput, $output, 'dev');
+$app->main();
 
 // Display output.
 return $output->send();

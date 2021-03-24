@@ -32,18 +32,7 @@ class WTCalcsApplication extends HttpApplication implements ApplicationInterface
 	{
 		$this->trace($this->x("WTCalcs version %s started.", APP_VERSION));
 
-		// Create the router.
-		$router = $this->getRouter();
-
-		// Find a match for the route.
-		$matched = $router->match($this->input->getRoute());
-
-		$this->trace4(sprintf("Matched namespaced class is: %s", $matched->getNamespacedClass()));
-
-		$class = $matched->getNamespacedClass();
-		$dispatchable = new $class();
-
-		$dispatchable->dispatch();
+		$this->dispatch();
 	}
 	
 }
