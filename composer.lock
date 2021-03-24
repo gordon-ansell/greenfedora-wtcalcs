@@ -12,12 +12,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/gordon-ansell/greenfedora-framework.git",
-                "reference": "b4d58b0f772a1737af486318eb02243545d7e55a"
+                "reference": "b22fa829cef728d234bd5af339a1dcfcc6cbe828"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/gordon-ansell/greenfedora-framework/zipball/b4d58b0f772a1737af486318eb02243545d7e55a",
-                "reference": "b4d58b0f772a1737af486318eb02243545d7e55a",
+                "url": "https://api.github.com/repos/gordon-ansell/greenfedora-framework/zipball/b22fa829cef728d234bd5af339a1dcfcc6cbe828",
+                "reference": "b22fa829cef728d234bd5af339a1dcfcc6cbe828",
                 "shasum": ""
             },
             "require": {
@@ -49,7 +49,7 @@
                 "source": "https://github.com/gordon-ansell/greenfedora-framework/tree/main",
                 "issues": "https://github.com/gordon-ansell/greenfedora-framework/issues"
             },
-            "time": "2021-03-24T15:36:46+00:00"
+            "time": "2021-03-24T15:56:27+00:00"
         },
         {
             "name": "psr/container",
