@@ -9,7 +9,7 @@
 declare(strict_types=1);
 namespace WTCalcs\Application;
 
-use GreenFedora\Application\HttpApplication;
+use GreenFedora\Application\AbstractHttpApplication;
 use GreenFedora\Application\ApplicationInterface;
 use GreenFedora\Application\Input\ApplicationInputInterface;
 use GreenFedora\Application\Output\ApplicationOutputInterface;
