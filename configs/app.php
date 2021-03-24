@@ -15,7 +15,7 @@
 
 return array(
 	'logger'	=>	array(
-		'level'	=>	'trace'
+		'level'		=>	'trace4',
 	),
 	'locale' 	=>	array(
 		'timezone'	=>	'Europe/London',

@@ -21,9 +21,14 @@
  */
 
 return array(
-	'routes'	=>	array(
-		'_default_'	=>  '/index',
-        'wilks'     =>  '/wilks',
-        'onerm'     =>  '/onerm'
+	'routing'	=> 	array(
+
+		'prefixNamespace'	=>	'\WTCalcs\Adr\Action',
+
+		'routes'	=>	array(
+			'/'				=>  'IndexAction',
+			'/wilks'     	=>  'WilksAction',
+			'/onerm'     	=>  'OnermAction',
+		)
 	)
 );
