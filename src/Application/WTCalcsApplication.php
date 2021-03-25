@@ -14,6 +14,7 @@ use GreenFedora\Application\ApplicationInterface;
 use GreenFedora\Application\Input\ApplicationInputInterface;
 use GreenFedora\Application\Output\ApplicationOutputInterface;
 use GreenFedora\Router\Router;
+use GreenFedora\Template\PlatesTemplate;
 
 /**
  * The main WTCalcs application.

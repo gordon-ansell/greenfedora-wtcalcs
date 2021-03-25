@@ -11,7 +11,8 @@
     "license": "BSD-3-Clause",
     "require": {
         "php": "^7.0",
-        "gordon-ansell/greenfedora-framework": "*"
+        "gordon-ansell/greenfedora-framework": "*",
+        "league/plates": "3.*"
     },
 	"minimum-stability": "dev",
 	"repositories": [

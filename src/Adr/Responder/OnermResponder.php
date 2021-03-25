@@ -7,23 +7,21 @@
  */
 
 declare(strict_types=1);
-namespace WTCalcs\Adr\Action;
+namespace WTCalcs\Adr\Responder;
 
-use GreenFedora\Adr\Action\AbstractAction;
-use GreenFedora\Adr\Action\ActionInterface;
-
-use WTCalcs\Adt\Responder\OnermResponse;
+use GreenFedora\Adr\Responder\AbstractResponder;
+use GreenFedora\Adr\Responder\ResponderInterface;
 
 /**
- * The 1-rep maximum calculator action.
+ * The 1-rep maximum calculator responder.
  *
  * @author Gordon Ansell <contact@gordonansell.com>
  */
 
-class OnermAction extends AbstractAction implements ActionInterface
+class OnermResponder extends AbstractResponder implements ResponderInterface
 {
     /**
-     * Dispatch the action.
+     * Dispatch the responder.
      */
     public function dispatch()
     {
