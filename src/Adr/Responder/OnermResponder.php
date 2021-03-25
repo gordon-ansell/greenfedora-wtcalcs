@@ -25,6 +25,6 @@ class OnermResponder extends AbstractResponder implements ResponderInterface
      */
     public function dispatch()
     {
-        echo "Dispatched." . PHP_EOL . '<br />';
+        echo "Dispatched responder." . PHP_EOL . '<br />';
     }
 }
