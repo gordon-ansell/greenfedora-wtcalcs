@@ -12,12 +12,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/gordon-ansell/greenfedora-framework.git",
-                "reference": "5e162c9e852858463c947a5d01dfb3c40b0ae04f"
+                "reference": "fc835a8c83316636646c83afbd99176ba7e8b7ac"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/gordon-ansell/greenfedora-framework/zipball/5e162c9e852858463c947a5d01dfb3c40b0ae04f",
-                "reference": "5e162c9e852858463c947a5d01dfb3c40b0ae04f",
+                "url": "https://api.github.com/repos/gordon-ansell/greenfedora-framework/zipball/fc835a8c83316636646c83afbd99176ba7e8b7ac",
+                "reference": "fc835a8c83316636646c83afbd99176ba7e8b7ac",
                 "shasum": ""
             },
             "require": {
@@ -49,7 +49,7 @@
                 "source": "https://github.com/gordon-ansell/greenfedora-framework/tree/main",
                 "issues": "https://github.com/gordon-ansell/greenfedora-framework/issues"
             },
-            "time": "2021-03-25T11:47:33+00:00"
+            "time": "2021-03-25T12:07:17+00:00"
         },
         {
             "name": "league/plates",
