@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "b1b27fc4259d41d3e0d3b19a6ba1a952",
+    "content-hash": "1ddde39e6707eb5aebab0c867a04d830",
     "packages": [
         {
             "name": "gordon-ansell/greenfedora-framework",
@@ -12,12 +12,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/gordon-ansell/greenfedora-framework.git",
-                "reference": "f8a67d20c4c950f0e17d081846ca804d2045e040"
+                "reference": "5e162c9e852858463c947a5d01dfb3c40b0ae04f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/gordon-ansell/greenfedora-framework/zipball/f8a67d20c4c950f0e17d081846ca804d2045e040",
-                "reference": "f8a67d20c4c950f0e17d081846ca804d2045e040",
+                "url": "https://api.github.com/repos/gordon-ansell/greenfedora-framework/zipball/5e162c9e852858463c947a5d01dfb3c40b0ae04f",
+                "reference": "5e162c9e852858463c947a5d01dfb3c40b0ae04f",
                 "shasum": ""
             },
             "require": {
@@ -49,7 +49,67 @@
                 "source": "https://github.com/gordon-ansell/greenfedora-framework/tree/main",
                 "issues": "https://github.com/gordon-ansell/greenfedora-framework/issues"
             },
-            "time": "2021-03-25T10:37:24+00:00"
+            "time": "2021-03-25T11:47:33+00:00"
+        },
+        {
+            "name": "league/plates",
+            "version": "v3.x-dev",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/thephpleague/plates.git",
+                "reference": "0ed15417865a1b51d6e4464f0cbbc986e9840253"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/thephpleague/plates/zipball/0ed15417865a1b51d6e4464f0cbbc986e9840253",
+                "reference": "0ed15417865a1b51d6e4464f0cbbc986e9840253",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^7.0|^8.0"
+            },
+            "require-dev": {
+                "mikey179/vfsstream": "^1.6",
+                "phpunit/phpunit": "^9.5",
+                "squizlabs/php_codesniffer": "^3.5"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "3.0-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "League\\Plates\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Jonathan Reinink",
+                    "email": "jonathan@reinink.ca",
+                    "role": "Developer"
+                },
+                {
+                    "name": "RJ Garcia",
+                    "email": "ragboyjr@icloud.com",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Plates, the native PHP template system that's fast, easy to use and easy to extend.",
+            "homepage": "https://platesphp.com",
+            "keywords": [
+                "league",
+                "package",
+                "templates",
+                "templating",
+                "views"
+            ],
+            "time": "2021-01-09T16:31:14+00:00"
         },
         {
             "name": "psr/container",
