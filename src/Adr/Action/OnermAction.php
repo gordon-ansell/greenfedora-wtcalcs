@@ -12,7 +12,7 @@ namespace WTCalcs\Adr\Action;
 use GreenFedora\Adr\Action\AbstractAction;
 use GreenFedora\Adr\Action\ActionInterface;
 
-use WTCalcs\Adt\Responder\OnermResponder;
+use WTCalcs\Adr\Responder\OnermResponder;
 
 /**
  * The 1-rep maximum calculator action.
@@ -27,8 +27,7 @@ class OnermAction extends AbstractAction implements ActionInterface
      */
     public function dispatch()
     {
-        echo "Dispatched action." . PHP_EOL . '<br />';
-
         $responder = new OnermResponder($this->container, $this->output);
+        $responder->dispatch();
     }
 }

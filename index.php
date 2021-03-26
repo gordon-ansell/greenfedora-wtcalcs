@@ -8,7 +8,7 @@
  * @license   https://github.com/gordon-ansell/greenfedora-wtcalcs/blob/master/LICENSE.md New BSD License.
  */
 
-require __DIR__ . "/vendor/autoload.php";
+require __DIR__ . "vendor/autoload.php";
 
 use WTCalcs\Application\WTCalcsApplication;
 use GreenFedora\Application\Input\HttpApplicationInput;
@@ -25,4 +25,4 @@ $app = new WTCalcsApplication(new HttpApplicationInput, $output, 'dev');
 $app->main();
 
 // Display output.
-return $output->send();
+$output->send();

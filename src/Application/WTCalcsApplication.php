@@ -24,6 +24,7 @@ use GreenFedora\Template\PlatesTemplate;
 
 class WTCalcsApplication extends AbstractHttpApplication implements ApplicationInterface
 {
+
 	/**
 	 * Run.
 	 *

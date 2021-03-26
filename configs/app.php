@@ -22,4 +22,8 @@ return array(
 		'lang'		=>	'en',
 		'langFull'	=>	'en_GB',	
 	),	
+	'templateType'	=>	'plates',
+	'template'	=> array(
+		'templateDir'	=>	'_layouts'
+	)
 );
