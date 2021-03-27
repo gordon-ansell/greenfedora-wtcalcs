@@ -1,0 +1,217 @@
+// ==============================================================
+// Form allocations.
+// ==============================================================
+
+$form-box-width: 100% !default;
+$form-box-maxwidth: 720px !default;
+$form-box-padding: 15px 7px !default;
+
+$form-fieldset-margin: 0.5rem 0 !default;
+
+$form-label-margin: 0.5rem 0 !default;
+$form-label-font-size: 85% !default;
+
+$form-input-border: 0.25px solid !default;
+$form-input-border-radius: 4px !default;
+$form-input-padding: 10px 5px !default;
+
+$form-input-placeholder-font-size: 80% !default;
+$form-input-placeholder-font-weight: 100 !default;
+$form-input-placeholder-font-style: italic !default;
+
+$form-textarea-padding: 10px !default;
+$form-textarea-min-height: 10ch !default;
+$form-textarea-max-height: 120ch !default;
+$form-textarea-resize: none !default;
+
+$form-button-border: 1px solid !default;
+$form-button-border-radius: 4px !default;
+$form-button-width: 100% !default;
+$form-button-padding: 12px !default;
+$form-button-margin-top: 15px !default;
+
+$form-field-focus-border: 1px solid !default;
+$form-field-required-col: #B0092D !default;
+
+.form-container {
+    position: relative;
+    width: 100%;
+    height: auto;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+
+    .form-box {
+        width: $form-box-width;
+        max-width: $form-box-maxwidth;
+        padding: $form-box-padding;
+        box-sizing: border-box;
+
+        form {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            margin-top: 0;
+            margin-bottom: 0;
+
+            fieldset {
+                border: none;
+                padding: 0;
+                margin: $form-fieldset-margin;
+            }
+
+            fieldset.radio.horizontal {
+                display: block;
+                padding: $form-input-padding;
+                width: 100%;
+                input {
+                    display: inline;
+                    width: auto;
+                }
+            }
+    
+            label, .label {
+                display: inline-block;
+                margin: $form-label-margin;
+                font-size: $form-label-font-size;
+                color: var(--col-text-primary);
+            }
+
+            .label {
+                display: block;
+            }
+
+            input, select {
+                display: block;
+                width: 100%;
+                outline: 0;
+                box-sizing: border-box;
+                background: var(--col-muted);
+                color: var(--col-text-primary);
+                border: $form-input-border;
+                border-color: var(--col-border);
+                border-radius: $form-input-border-radius;
+                padding: $form-input-padding;
+
+                &::placeholder {
+                    color: var(--col-text-secondary);
+                    font-size: $form-input-placeholder-font-size;
+                    font-weight: $form-input-placeholder-font-weight;
+                    font-style: $form-input-placeholder-font-style;
+                }
+
+                &:focus {
+                    border: $form-field-focus-border;
+                }
+            }
+
+            input[type="radio"] + label {
+                padding: $form-input-padding;
+                border-radius: $form-input-border-radius;
+            }
+
+            input[type="radio"]:focus + label {
+                border: 1px solid;
+                border-color: var(--col-border);
+            }
+
+            select {
+                -webkit-appearance: none;
+                -moz-appearance: none;
+                -ms-appearance: none;
+                -o-appearance: none;
+                appearance: none;
+                padding: $form-input-padding;
+            }
+
+            .caret {
+                display: inline;
+                position: absolute;
+                cursor: pointer;
+                margin-top: -35px;
+                margin-left: 43%;
+                pointer-events: none;
+            }
+                          
+            .required {
+                color:$form-field-required-col;
+            }
+                        
+            textarea {
+                width: 100%;
+                padding: $form-textarea-padding;
+                resize: $form-textarea-resize;
+                min-height: $form-textarea-min-height;
+                max-height: $form-textarea-max-height;
+
+                &:focus {
+                    border: $form-field-focus-border;
+                }
+            }
+            
+            div.two-columns,
+            div.three-columns,
+            div.four-columns {
+                display: grid;
+                grid-template-columns: 100%;
+            }
+            
+            div.two-columns-always {
+                display: grid;
+                grid-template-columns: 48% 48%;
+                grid-column-gap: 2%;
+            }
+            div.three-columns-always {
+                display: grid;
+                grid-template-columns: 32% 32% 32%;
+                grid-column-gap: 2%;
+            }
+            div.four-columns-always {
+                display: grid;
+                grid-template-columns: 23.5% 23.5% 23.5% 23.5%;
+                grid-column-gap: 2%;
+            }
+
+            button {
+                cursor: pointer;
+                border: $form-button-border;
+                border-color: var(--col-border);
+                border-radius: $form-button-border-radius;
+                outline: none;
+                width: $form-button-width;
+                text-align: center;
+                padding: $form-button-padding;
+                margin-top: $form-button-margin-top;
+                color: var(--col-text-primary);
+                background: var(--col-bg-secondary);         
+                box-shadow: inset 0 -3em 3em rgba(var(--col-text-primary),0.1),
+                    0.3em 0.3em 1em rgba(var(--col-text-primary),0.3);
+
+                &:focus {
+                    border: $form-field-focus-border;
+                }
+
+                &:active {
+                    box-shadow: none;
+                }
+            }
+            
+        }
+    }
+    
+}
+
+@media screen and (min-width: 800px) {
+    .form-container .form-box form div.two-columns {
+        grid-template-columns: 48% 48%;
+        grid-column-gap: 2%;
+    }
+    .form-container .form-box form div.three-columns {
+        grid-template-columns: 32% 32% 32%;
+        grid-column-gap: 2%;
+    }
+    .form-container .form-box form div.four-columns {
+        grid-template-columns: 23.5% 23.5% 23.5% 23.5%;
+        grid-column-gap: 2%;
+    }
+}  

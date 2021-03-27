@@ -24,6 +24,9 @@ return array(
 	),	
 	'templateType'	=>	'plates',
 	'template'	=> array(
-		'templateDir'	=>	'_layouts'
+		'templateDir'	=>	'layouts'
+	),
+	'locations' => array(
+		'webroot'	=>	'/',
 	)
 );

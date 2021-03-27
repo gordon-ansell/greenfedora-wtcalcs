@@ -25,7 +25,7 @@ class OnermResponder extends AbstractResponder implements ResponderInterface
      */
     public function dispatch()
     {
-        $r = $this->container->get('template')->render('layout');
+        $r = $this->container->get('template')->render('onerm', $this->data->toArray());
         $this->output->setBody($r);
     }
 }

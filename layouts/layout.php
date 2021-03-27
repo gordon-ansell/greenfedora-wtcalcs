@@ -12,12 +12,41 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="apple-mobile-web-app-capable" content="yes"/>
 
-    <title></title>
+    <?php $this->insert('includes/colours') ?>
+
+    <link rel="stylesheet" href="<?=$this->e($webroot)?>css/app.css" />
+
+    <title><?=$this->e($title)?></title>
 </head>
 
 <body>
     <div class="wrapper">
-    Hello
+        <header class="sitehdr">
+            <span class="sitehdr-branding">
+                <a href="https://gordonansell.com" title="Go to the host site, Gordy's Discourse.">
+                    <img src="<?=$this->e($webroot)?>images/greenhat-60x60.png" alt="Logo for Gordy's Discourse site." />
+                    <span>Gordy's Discourse</span>
+                </a>
+            </span>
+            <nav class="sitehdr-menu">
+                <input type="checkbox" id="menu-btn" />
+                <label for="menu-btn"><span class="icon"></span></label>
+                <ul>
+                    <li>
+                        <a href="/">Home</a>
+                    </li>
+                    <li>
+                        <a href="/onerm">One Rep Maximum</a>
+                    </li>
+                    <li>
+                        <a href="wilks">Wilks Score</a>
+                    </li>
+                </ul>
+            </nav>
+        </header>
+        <main>
+            <?=$this->section('main');?>
+        </main>
     </div>
 </body>
 

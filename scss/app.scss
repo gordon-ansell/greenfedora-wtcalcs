@@ -2,4 +2,10 @@
 // Local mods.
 // ==============================================================
 
-@import '../fw/_fw';
+@import 'fw/_fw';
+@import 'fw/components/_sitehdr-menu';
+@import 'fw/components/_sitehdr-branding';
+
+.sitehdr-branding a span {
+    font-family: cursive;
+}
