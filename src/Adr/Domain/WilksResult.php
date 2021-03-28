@@ -10,11 +10,11 @@ declare(strict_types=1);
 namespace WTCalcs\Adr\Domain;
 
 /**
- * Contains a 1-rep max calculation.
+ * Contains a wilks calculation.
  *
  * @author Gordon Ansell <contact@gordonansell.com>
  */
-class Calc 
+class WilksResult 
 {
     /**
      * Name.
@@ -29,10 +29,10 @@ class Calc
     public $value = null;
 
     /**
-     * Rounded value.
-     * @var float
+     * Extra fields.
+     * @var array
      */
-    public $rounded = null;
+    public $extra = [];
 
     /**
      * Constructor.
@@ -42,9 +42,10 @@ class Calc
      *
      * @return  void
      */
-    public function __construct(string $name = null, float $value = null)
+    public function __construct(string $name = null, float $value = null, array $extra = [])
     {
         $this->name = $name;
         $this->value = $value;
+        $this->extra = $extra;
     }
 }

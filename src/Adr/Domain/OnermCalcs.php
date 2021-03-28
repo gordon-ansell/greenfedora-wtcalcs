@@ -12,7 +12,7 @@ namespace WTCalcs\Adr\Domain;
 use GreenFedora\Adr\Domain\AbstractModel;
 use GreenFedora\Adr\Domain\ModelInterface;
 
-use WTCalcs\Adr\Domain\Calc;
+use WTCalcs\Adr\Domain\OnermResult;
 
 /**
  * The 1-rep maximum calculator action.
@@ -45,40 +45,40 @@ class OnermCalcs extends AbstractModel implements ModelInterface
      * @param   float   $rounding  Number to round to.
      * @param   array   $results   Where to add the results - array of Calc objects. (optional)
      *
-     * @return  Calc               Average of the results.
+     * @return  OnermResult        Average of the results.
      */
-    public function onermcalcs(float $weight, int $reps, float $rounding, array &$results = null): Calc 
+    public function onermcalcs(float $weight, int $reps, float $rounding, array &$results = null): OnermResult
     {
         if (null === $results) {
             $results = [];
         }
     
         // Epley.
-        $tmp = new Calc('Epley', $weight * (1 + ($reps / 30)));
+        $tmp = new OnermResult('Epley', $weight * (1 + ($reps / 30)));
         array_push($results, $tmp);
     
         // Brzycki.
-        $tmp = new Calc('Brzycki', $weight * (36 / (37 - $reps)));
+        $tmp = new OnermResult('Brzycki', $weight * (36 / (37 - $reps)));
         array_push($results, $tmp);
     
         // McGlothin.
-        $tmp = new Calc('McGlothin', (100 * $weight) / (101.3 - (2.67123 * $reps)));
+        $tmp = new OnermResult('McGlothin', (100 * $weight) / (101.3 - (2.67123 * $reps)));
         array_push($results, $tmp);
     
         // Lombardi.
-        $tmp = new Calc('Lombardi', $weight * ($reps ** 0.1));
+        $tmp = new OnermResult('Lombardi', $weight * ($reps ** 0.1));
         array_push($results, $tmp);
     
         // Mayhew.
-        $tmp = new Calc('Mayhew', (100 * $weight) / (52.2 + 41.9 * (M_E ** (-0.055 * $reps))));
+        $tmp = new OnermResult('Mayhew', (100 * $weight) / (52.2 + 41.9 * (M_E ** (-0.055 * $reps))));
         array_push($results, $tmp);
     
         // Wathan.
-        $tmp = new Calc('Wathan', ($weight * 100) / (48.8 + 53.8 * (M_E ** (-0.075 * $reps))));
+        $tmp = new OnermResult('Wathan', ($weight * 100) / (48.8 + 53.8 * (M_E ** (-0.075 * $reps))));
         array_push($results, $tmp);
     
         // O'Conner.
-        $tmp = new Calc("O'Conner", $weight * (1 + ($reps / 40)));
+        $tmp = new OnermResult("O'Conner", $weight * (1 + ($reps / 40)));
         array_push($results, $tmp);
     
         // Total.
@@ -87,7 +87,7 @@ class OnermCalcs extends AbstractModel implements ModelInterface
             $item->rounded = $this->mround($item->value, $rounding);
             $tot += $item->value;
         }
-        $avg = new Calc();
+        $avg = new OnermResult();
         $avg->value = $tot / sizeof($results);
         $avg->rounded = $this->mround($avg->value, $rounding);
     

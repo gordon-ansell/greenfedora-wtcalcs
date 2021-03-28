@@ -13,6 +13,7 @@ use GreenFedora\Adr\Action\AbstractAction;
 use GreenFedora\Adr\Action\ActionInterface;
 use WTCalcs\Adr\Responder\OnermResponder;
 use GreenFedora\Payload\Payload;
+use GreenFedora\Http\CookieHandler;
 
 use WTCalcs\Adr\Domain\OnermCalcs;
 
@@ -30,6 +31,8 @@ class OnermAction extends AbstractAction implements ActionInterface
     public function dispatch()
     {
         $payload = new Payload();
+        $cookieHandler = new CookieHandler($this->input, array('weight' => 100, 'reps' => 2, 'rounding' => 2.5), 'onerm_');
+        $cookieHandler->load($payload);
 
         // Has user posted the form?
         if ($this->input->isPost()) {
@@ -43,6 +46,8 @@ class OnermAction extends AbstractAction implements ActionInterface
 
             $payload->set('results', $results);
             $payload->set('average', $average);
+
+            $cookieHandler->save($payload);
         }
 
         $responder = new OnermResponder($this->container, $this->output, $payload);
