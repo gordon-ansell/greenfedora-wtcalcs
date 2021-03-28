@@ -2,10 +2,20 @@
 // Local mods.
 // ==============================================================
 
+$ft-font-family: "Fira Code", Menlo, Monaco, Consolas, "Andale Mono", "Courier New", monospace;
+$ft-font-size: 90%;
+
 @import 'fw/_fw';
 @import 'fw/components/_sitehdr-menu';
 @import 'fw/components/_sitehdr-branding';
 
 .sitehdr-branding a span {
     font-family: cursive;
+}
+
+.flextable {
+    margin-top: 2em;
+    div.td.estimate {
+        color: var(--col-alert);
+    }
 }

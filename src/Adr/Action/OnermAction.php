@@ -12,7 +12,7 @@ namespace WTCalcs\Adr\Action;
 use GreenFedora\Adr\Action\AbstractAction;
 use GreenFedora\Adr\Action\ActionInterface;
 use WTCalcs\Adr\Responder\OnermResponder;
-use GreenFedora\Arr\Arr;
+use GreenFedora\Payload\Payload;
 
 use WTCalcs\Adr\Domain\OnermCalcs;
 
@@ -29,7 +29,7 @@ class OnermAction extends AbstractAction implements ActionInterface
      */
     public function dispatch()
     {
-        $payload = new Arr();
+        $payload = new Payload();
 
         // Has user posted the form?
         if ($this->input->isPost()) {
@@ -45,7 +45,8 @@ class OnermAction extends AbstractAction implements ActionInterface
             $payload->set('average', $average);
         }
 
-        $responder = new OnermResponder($this->container, $this->output);
+        $responder = new OnermResponder($this->container, $this->output, $payload);
         $responder->dispatch();
     }
+
 }

@@ -736,6 +736,52 @@ blockquote::after {
     grid-column-gap: 2%;
   }
 }
+.flextable {
+  display: flex;
+  flex-flow: column nowrap;
+  margin: 0.5em;
+  line-height: 1.5;
+  border-bottom: 1px solid;
+  flex: 1 1 auto;
+  font-family: "Fira Code", Menlo, Monaco, Consolas, "Andale Mono", "Courier New", monospace;
+  font-weight: 200;
+  font-size: 90%;
+}
+.flextable .th {
+  display: none;
+  font-weight: bold;
+}
+.flextable .th > .td {
+  white-space: normal;
+}
+.flextable .tr {
+  width: 100%;
+  display: flex;
+  flex-flow: row nowrap;
+}
+.flextable .td {
+  display: flex;
+  flex-flow: row nowrap;
+  flex-grow: 1;
+  flex-basis: 0;
+  padding: 0.5em;
+  word-break: break-word;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  min-width: 0px;
+  white-space: nowrap;
+  border-bottom: 1px solid;
+}
+.flextable .td.alignright {
+  display: inline;
+  flex-grow: 1;
+  align-content: flex-end;
+  text-align: right;
+}
+.flextable .tr.bold {
+  font-weight: bold;
+}
+
 * {
   border-color: var(--col-border);
 }
@@ -798,7 +844,8 @@ blockquote::before {
 .flextable .th > .td {
   border-bottom-color: var(--col-text-primary);
 }
-.flextable .tr:nth-of-type(even) {
+
+.flextable.stripe .tr:nth-of-type(even) {
   background-color: var(--col-bg-secondary);
 }
 
@@ -918,4 +965,11 @@ blockquote::before {
 
 .sitehdr-branding a span {
   font-family: cursive;
+}
+
+.flextable {
+  margin-top: 2em;
+}
+.flextable div.td.estimate {
+  color: var(--col-alert);
 }

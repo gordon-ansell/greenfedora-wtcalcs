@@ -92,6 +92,9 @@ blockquote::before {
         border-bottom-color: var(--col-text-primary);
     }
 
+}
+
+.flextable.stripe {
     .tr:nth-of-type(even) {
         background-color: var(--col-bg-secondary);
     }
