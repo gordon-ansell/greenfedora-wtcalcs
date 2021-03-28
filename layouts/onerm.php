@@ -5,7 +5,7 @@
 <?php $this->start('main') ?>
     <div class="form-container">
         <div class="form-box">
-            <form action="onerm.php" method="POST">
+            <form action="/onerm" method="POST">
 
                 <div class="three-columns-always">
                     <fieldset>
