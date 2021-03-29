@@ -17,7 +17,7 @@
             :root {
                 --col-bg-primary: #373A3C;
                 --col-bg-secondary: #2F4F4F;
-                --col-text-primary: 255, 255, 255;
+                --col-text-primary: RGB(255,255,255);
                 --col-text-secondary: #3de0d3;
                 --col-text-secondary-offset: #e0897b;
                 --col-border: #3de0d3;

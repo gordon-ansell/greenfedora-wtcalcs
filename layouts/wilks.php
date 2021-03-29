@@ -139,7 +139,7 @@
     </div>
 
     <?php if ($results): ?>
-        <a href="results"></a>
+        <a id="results"></a>
         <div class="flextable stripe">
             <div class="tr th">
                 <div class="td">Method</div>

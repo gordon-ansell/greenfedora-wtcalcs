@@ -14,6 +14,8 @@ use GreenFedora\Adr\Action\ActionInterface;
 use WTCalcs\Adr\Responder\OnermResponder;
 use GreenFedora\Payload\Payload;
 use GreenFedora\Http\CookieHandler;
+use GreenFedora\Validator\ValidatorCollection;
+use GreenFedora\Validator\Compulsory;
 
 use WTCalcs\Adr\Domain\OnermCalcs;
 
@@ -25,6 +27,25 @@ use WTCalcs\Adr\Domain\OnermCalcs;
 
 class OnermAction extends AbstractAction implements ActionInterface
 {
+    /**
+     * Validation.
+     * 
+     * @return  null|string         Null if it worked, else error message.
+     */
+    protected function validate(): ?string
+    {
+        $validateWeight = new ValidatorCollection(
+            new Compulsory(['weight']),
+            new Numeric(['weight'])
+        );
+
+        if (!$validateWeight->validate($this->input->post('weight', null))) {
+            return $validateWeight->getError();
+        }
+
+        return null;
+    }
+
     /**
      * Dispatch the action.
      */

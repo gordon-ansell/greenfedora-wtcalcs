@@ -5,6 +5,7 @@
     
     <div class="form-container">
         <div class="form-box">
+            <div class="error"><?=$this->e($error)?></div>
             <form action="/onerm" method="POST">
 
                 <div class="three-columns-always">
