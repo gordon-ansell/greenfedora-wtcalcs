@@ -14,8 +14,13 @@ use GreenFedora\Adr\Action\ActionInterface;
 use WTCalcs\Adr\Responder\OnermResponder;
 use GreenFedora\Payload\Payload;
 use GreenFedora\Http\CookieHandler;
-use GreenFedora\Validator\ValidatorCollection;
 use GreenFedora\Validator\Compulsory;
+use GreenFedora\Validator\Numeric;
+use GreenFedora\Validator\Integer;
+use GreenFedora\Validator\NumericBetween;
+use GreenFedora\Filter\FloatVal;
+use GreenFedora\Filter\IntVal;
+use GreenFedora\Form\FormValidator;
 
 use WTCalcs\Adr\Domain\OnermCalcs;
 
@@ -30,20 +35,31 @@ class OnermAction extends AbstractAction implements ActionInterface
     /**
      * Validation.
      * 
-     * @return  null|string         Null if it worked, else error message.
+     * @return  null|array         Null if it worked, else error message and failed field.
      */
-    protected function validate(): ?string
+    protected function validate(): ?array
     {
-        $validateWeight = new ValidatorCollection(
-            new Compulsory(['weight']),
-            new Numeric(['weight'])
-        );
 
-        if (!$validateWeight->validate($this->input->post('weight', null))) {
-            return $validateWeight->getError();
+        $fv = new FormValidator();
+        $fv->addFilter('weight', new FloatVal())
+            ->addValidator('weight', new Compulsory(['weight']))
+            ->addValidator('weight', new NumericBetween(['weight'], array('low' => 5, 'high' => 9999.99)));
+
+        $fv->addValidator('reps', new Compulsory(['reps']))
+            ->addValidator('reps', new Integer(['reps']))
+            ->addValidator('reps', new NumericBetween(['reps'], array('low' => 2, 'high' => 15)));
+
+        $fv->addFilter('rounding', new FloatVal())
+            ->addValidator('rounding', new Compulsory(['rounding']))
+            ->addValidator('rounding', new NumericBetween(['weight'], array('low' => 0.01, 'high' => 20)));
+
+        $result = $fv->validate($this->input->post()->toArray(), ['weight', 'reps', 'rounding']);
+
+        if (null === $result) {
+            return $result;
+        } else {
+            return [$result, $fv->getFailedField()];
         }
-
-        return null;
     }
 
     /**
@@ -52,21 +68,32 @@ class OnermAction extends AbstractAction implements ActionInterface
     public function dispatch()
     {
         $payload = new Payload();
-        $cookieHandler = new CookieHandler($this->input, array('weight' => 100, 'reps' => 2, 'rounding' => 2.5), 'onerm_');
+        $cookieHandler = new CookieHandler($this->input, array('weight' => '', 'reps' => 2, 'rounding' => 2.5), 'onerm_');
         $cookieHandler->load($payload);
 
         // Has user posted the form?
         if ($this->input->isPost()) {
-            $payload->set('weight', floatval($this->input->post('weight', 100)));
-            $payload->set('reps', intval($this->input->post('reps', 2)));
-            $payload->set('rounding', floatval($this->input->post('rounding', 2.5)));
 
-            $results = array();
-            $calculator = new OnermCalcs();
-            $average = $calculator->onermcalcs($payload->weight, $payload->reps, $payload->rounding, $results);
+            $payload->set('error', '');
+            $payload->set('weight', $this->input->post('weight', ''));
+            $payload->set('reps', $this->input->post('reps', ''));
+            $payload->set('rounding', $this->input->post('rounding', 2.5));
+            $payload->set('af', 'weight');
 
-            $payload->set('results', $results);
-            $payload->set('average', $average);
+            $error = $this->validate();
+            if (null !== $error) {
+                $payload->set('error', $error[0]);
+                $payload->set('af', $error[1]);
+            } else {
+
+                $results = array();
+                $calculator = new OnermCalcs();
+                $average = $calculator->onermcalcs(floatval($payload->weight), intval($payload->reps), 
+                    floatval($payload->rounding), $results);
+
+                $payload->set('results', $results);
+                $payload->set('average', $average);
+            }
 
             $cookieHandler->save($payload);
         }

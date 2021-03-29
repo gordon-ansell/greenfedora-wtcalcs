@@ -590,6 +590,11 @@ blockquote::after {
   padding: 15px 7px;
   box-sizing: border-box;
 }
+.form-container .form-box .error {
+  text-align: center;
+  color: var(--col-alert);
+  font-weight: bold;
+}
 .form-container .form-box form {
   width: 100%;
   display: flex;

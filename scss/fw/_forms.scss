@@ -47,6 +47,12 @@ $form-field-required-col: #B0092D !default;
         padding: $form-box-padding;
         box-sizing: border-box;
 
+        .error {
+            text-align: center;
+            color: var(--col-alert);
+            font-weight: bold;
+        }
+
         form {
             width: 100%;
             display: flex;

@@ -25,7 +25,7 @@
                 --col-code-bg: #003d00;
                 --col-code-text: #00ff80;
                 --col-bq-text: #f8f8ff;
-                --col-alert: #B0092D;
+                --col-alert: #FFCCCB;
             }
         }
     </style>

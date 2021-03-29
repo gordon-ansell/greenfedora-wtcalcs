@@ -20,6 +20,7 @@
 
     <div class="form-container">
         <div class="form-box">
+            <div class="error"><?=$this->e($error)?></div>
             <form action="/wilks#results" method="POST">
                 <div class="two-columns-always">
                     <fieldset class="radio horizontal" title="Select your gender.">
@@ -33,8 +34,9 @@
                     </fieldset>
                     <fieldset>
                         <label for="age" class="newline">Age</label>
-                        <input class="runon" type="number" name="age" id ="age" 
-                            min="0" max="90" step="1" value="<?=$this->e($age)?>" 
+                        <input class="runon" type="text" name="age" id ="age" 
+                            <?php if ('age' == $af):?>autofocus<?php endif ?>
+                            value="<?=$this->e($age)?>" 
                             title="If you want to see the adjustment for your age, enter your age here."
                             />
                     </fieldset>
@@ -42,9 +44,10 @@
                 <div class="two-columns-always">
                     <fieldset>
                         <label for="bodyWeight">Body Weight</label>
-                        <input type="number" name="bodyWeight" id ="bodyWeight" 
-                            min="20" max="500" step="any" title="Enter your body weight in kilograms."
-                            autofocus required value="<?=$this->e($bodyWeight)?>" />
+                        <input type="text" name="bodyWeight" id ="bodyWeight" 
+                            title="Enter your body weight."
+                            <?php if ('bodyWeight' == $af):?>autofocus<?php endif ?>
+                            value="<?=$this->e($bodyWeight)?>" />
                     </fieldset>
                     <fieldset>
                         <label for="bodyWeightUnits">Units</label>
@@ -67,9 +70,9 @@
                     <?php if ('separate' == $method):?>style="display:none"<?php endif ?> >
                     <fieldset>
                         <label for="weight">Total Weight Lifted</label>
-                        <input type="number" name="weight" id ="weight" 
-                            min="1" max="9999.99" step="any" required 
+                        <input type="text" name="weight" id ="weight" 
                             value="<?=$this->e($weight)?>" 
+                            <?php if ('weight' == $af):?>autofocus<?php endif ?>
                             title="This can be for an invididual lift, but a true Wilks score is based on your combined squat, bench press and deadlift weights." />
                     </fieldset>
                     <fieldset>
@@ -84,9 +87,9 @@
                     <div class="two-columns-always">
                         <fieldset>
                             <label for="squat">Squat</label>
-                            <input type="number" name="squat" id ="squat" 
-                                min="1" max="9999.99" step="any"  
-                                required value="<?=$this->e($squat)?>" 
+                            <input type="text" name="squat" id ="squat" 
+                                <?php if ('squat' == $af):?>autofocus<?php endif ?>
+                                value="<?=$this->e($squat)?>" 
                                 title="The weight you lifted for the squat." />
                         </fieldset>
                         <fieldset>
@@ -100,9 +103,9 @@
                     <div class="two-columns-always">
                         <fieldset>
                             <label for="bench">Bench Press</label>
-                            <input type="number" name="bench" id ="bench" 
-                                min="1" max="9999.99" step="any"  
-                                required value="<?=$this->e($bench)?>" 
+                            <input type="text" name="bench" id ="bench" 
+                                <?php if ('bench' == $af):?>autofocus<?php endif ?>
+                                value="<?=$this->e($bench)?>" 
                                 title="The weight you lifted for the bench press." />
                         </fieldset>
                         <fieldset>
@@ -116,9 +119,9 @@
                     <div class="two-columns-always">
                         <fieldset>
                             <label for="dead">Deadlift</label>
-                            <input type="number" name="dead" id ="dead" 
-                                min="1" max="9999.99" step="any"  
-                                required value="<?=$this->e($dead)?>" 
+                            <input type="text" name="dead" id ="dead" 
+                                <?php if ('dead' == $af):?>autofocus<?php endif ?>
+                                value="<?=$this->e($dead)?>" 
                                 title="The weight you lifted for the deadlift." />
                         </fieldset>
                         <fieldset>

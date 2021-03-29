@@ -14,6 +14,13 @@ use GreenFedora\Adr\Action\ActionInterface;
 use WTCalcs\Adr\Responder\WilksResponder;
 use GreenFedora\Payload\Payload;
 use GreenFedora\Http\CookieHandler;
+use GreenFedora\Validator\Compulsory;
+use GreenFedora\Validator\Numeric;
+use GreenFedora\Validator\Integer;
+use GreenFedora\Validator\NumericBetween;
+use GreenFedora\Filter\FloatVal;
+use GreenFedora\Filter\IntVal;
+use GreenFedora\Form\FormValidator;
 
 use WTCalcs\Adr\Domain\WilksCalculator;
 
@@ -28,6 +35,56 @@ class WilksAction extends AbstractAction implements ActionInterface
     const KGMULT = 0.45359237;
 
     /**
+     * Validation.
+     * 
+     * @return  null|array         Null if it worked, else error message and failed field.
+     */
+    protected function validate(): ?array
+    {
+        $method = $this->input->post('method', 'all');
+        $fields = ['age', 'bodyWeight'];
+
+        $fv = new FormValidator();
+
+        $fv->addValidator('age', new Integer(['age']))
+            ->addValidator('age', new NumericBetween(['age'], array('low' => 14, 'high' => 90)));
+
+        $fv->addFilter('bodyWeight', new FloatVal())
+            ->addValidator('bodyWeight', new Compulsory(['bodyWeight']))
+            ->addValidator('bodyWeight', new NumericBetween(['bodyWeight'], array('low' => 20, 'high' => 1000)));
+
+        if ('all' == $method) {
+            $fv->addFilter('weight', new FloatVal())
+                ->addValidator('weight', new Compulsory(['weight']))
+                ->addValidator('weight', new NumericBetween(['weight'], array('low' => 1, 'high' => 9999.99)));
+            $fields[] = 'weight';
+        } else {
+            $fv->addFilter('squat', new FloatVal())
+                ->addValidator('squat', new Compulsory(['squat']))
+                ->addValidator('squat', new NumericBetween(['squat'], array('low' => 1, 'high' => 9999.99)));
+            $fields[] = 'squat';
+
+            $fv->addFilter('bench', new FloatVal())
+                ->addValidator('bench', new Compulsory(['bench']))
+                ->addValidator('bench', new NumericBetween(['bench'], array('low' => 1, 'high' => 9999.99)));
+            $fields[] = 'bench';
+
+            $fv->addFilter('dead', new FloatVal())
+                ->addValidator('dead', new Compulsory(['dead']))
+                ->addValidator('dead', new NumericBetween(['dead'], array('low' => 1, 'high' => 9999.99)));
+            $fields[] = 'dead';
+        }
+        
+        $result = $fv->validate($this->input->post()->toArray(), $fields);
+
+        if (null === $result) {
+            return $result;
+        } else {
+            return [$result, $fv->getFailedField()];
+        }
+    }
+
+    /**
      * Dispatch the action.
      */
     public function dispatch()
@@ -36,74 +93,87 @@ class WilksAction extends AbstractAction implements ActionInterface
         $cookieHandler = new CookieHandler($this->input, 
             array(
                 'gender' => 'male', 
-                'bodyWeight' => 75, 
+                'age' => '',
+                'bodyWeight' => '', 
                 'bodyWeightUnits' => 'kg', 
-                'weight' => 100, 
-                'weightUnits' => 'kg', 
-                'squat' => 100,
-                'squatUnits' => 'kg',
-                'bench' => 100,
-                'benchUnits' => 'kg',
-                'dead' => 100,
-                'deadUnits' => 'kg',
-                'age' => 0,
                 'method' => 'all',
+                'weight' => '', 
+                'weightUnits' => 'kg', 
+                'squat' => '',
+                'squatUnits' => 'kg',
+                'bench' => '',
+                'benchUnits' => 'kg',
+                'dead' => '',
+                'deadUnits' => 'kg',
             ), 'wilks_');
         $cookieHandler->load($payload);
 
         // Has user posted the form?
         if ($this->input->isPost()) {
+
+            $payload->set('error', '');
             $payload->set('gender', $this->input->post('gender', 'male'));
-            $payload->set('bodyWeight', floatval($this->input->post('bodyWeight', 75)));
+            $payload->set('age', $this->input->post('age', ''));
+            $payload->set('bodyWeight', $this->input->post('bodyWeight', ''));
             $payload->set('bodyWeightUnits', $this->input->post('bodyWeightUnits', 'kg'));
-            $payload->set('weight', floatval($this->input->post('weight', 100)));
-            $payload->set('weightUnits', $this->input->post('weightUnits', 'kg'));
-            $payload->set('age', intval($this->input->post('age', 0)));
             $payload->set('method', $this->input->post('method', 'all'));
-            $payload->set('squat', floatval($this->input->post('squat', 100)));
+            $payload->set('weight', $this->input->post('weight', ''));
+            $payload->set('weightUnits', $this->input->post('weightUnits', 'kg'));
+            $payload->set('squat', $this->input->post('squat', ''));
             $payload->set('squatUnits', $this->input->post('squatUnits', 'kg'));
-            $payload->set('bench', floatval($this->input->post('bench', 100)));
+            $payload->set('bench', $this->input->post('bench', ''));
             $payload->set('benchUnits', $this->input->post('benchUnits', 'kg'));
-            $payload->set('dead', floatval($this->input->post('dead', 100)));
+            $payload->set('dead', $this->input->post('dead', ''));
             $payload->set('deadUnits', $this->input->post('deadUnits', 'kg'));
+            $payload->set('af', 'gender');
 
-            $convWeight = 0;
-            $convBodyWeight = 0;
+            $error = $this->validate();
 
-            if ('all' == $payload->get('method')) {
-                if ('lb' == $payload->get('weightUnits')) {
-                    $convWeight = $payload->get('weight') * self::KGMULT;
-                } else {
-                    $convWeight = $payload->get('weight');
-                }
+            if (null !== $error) {
+                $payload->set('error', $error[0]);
+                $payload->set('af', $error[1]);
+
             } else {
-                foreach (['squat', 'bench', 'dead'] as $e) {
-                    if ('lb' == $payload->get($e . 'Units')) {
-                        $convWeight += $payload->get($e) * self::KGMULT;
+
+                $convWeight = 0;
+                $convBodyWeight = 0;
+
+                if ('all' == $payload->get('method')) {
+                    if ('lb' == $payload->get('weightUnits')) {
+                        $convWeight = $payload->get('weight') * self::KGMULT;
                     } else {
-                        $convWeight += $payload->get($e);
+                        $convWeight = $payload->get('weight');
                     }
+                } else {
+                    foreach (['squat', 'bench', 'dead'] as $e) {
+                        if ('lb' == $payload->get($e . 'Units')) {
+                            $convWeight += $payload->get($e) * self::KGMULT;
+                        } else {
+                            $convWeight += $payload->get($e);
+                        }
+                    }
+
+                    $payload->set('weight', $convWeight);
+                    $payload->set('weightUnits', 'kg');
                 }
 
-                $payload->set('weight', $convWeight);
-                $payload->set('weightUnits', 'kg');
+                if ('lb' == $payload->get('bodyWeightUnits')) {
+                    $convBodyWeight = $payload->get('bodyWeight') * self::KGMULT;
+                } else {
+                    $convBodyWeight = $payload->get('bodyWeight');
+                }
+
+                $results = [];
+
+                $calculator = new WilksCalculator();
+                $results[] = $calculator->wilks(floatval($convWeight), floatval($convBodyWeight), $payload->gender);
+                if ($payload->age and $payload->age > 13) {
+                    $results[] = $calculator->wilksAge(floatval($convWeight), floatval($convBodyWeight), 
+                        $payload->gender, intval($payload->age));
+                }
+
+                $payload->set('results', $results);
             }
-
-            if ('lb' == $payload->get('bodyWeightUnits')) {
-                $convBodyWeight = $payload->get('bodyWeight') * self::KGMULT;
-            } else {
-                $convBodyWeight = $payload->get('bodyWeight');
-            }
-
-            $results = [];
-
-            $calculator = new WilksCalculator();
-            $results[] = $calculator->wilks($convWeight, $convBodyWeight, $payload->gender);
-            if ($payload->age and $payload->age > 13) {
-                $results[] = $calculator->wilksAge($convWeight, $convBodyWeight, $payload->gender, $payload->age);
-            }
-
-            $payload->set('results', $results);
 
             $cookieHandler->save($payload);
         }

@@ -11,23 +11,23 @@
                 <div class="three-columns-always">
                     <fieldset>
                         <label for="weight">Weight</label>
-                        <input type="number" placeholder="Weight" name="weight" id ="weight" 
-                            min="1" max="9999.99" step="any" style="width: 7em;" autofocus required 
-                            title="Enter the weight you lifted."
+                        <input type="text" placeholder="Weight" name="weight" id ="weight" 
+                            title="Enter the weight you lifted (5-9999.99)."
+                            <?php if ('weight' == $af):?>autofocus<?php endif ?>
                             value="<?=$this->e($weight)?>" />
                     </fieldset>
                     <fieldset>    
                         <label for="reps">Reps</label>
-                        <input type="number" name="reps" id="reps" 
-                            min="2" max="15" step="1" style="width: 4em;" required 
+                        <input type="text" name="reps" id="reps" style="width: 4em;"
                             title="Enter the number of reps you performed (2-15)."
+                            <?php if ('reps' == $af):?>autofocus<?php endif ?>
                             value="<?=$this->e($reps)?>" /> 
                     </fieldset>
                     <fieldset>
                         <label for="rounding">Rounding</label>
-                        <input type="number" name="rounding" id="rounding" 
-                            min="0.01" max="20" step="any" style="width: 5em;" required 
+                        <input type="text" name="rounding" id="rounding" style="width: 5em;" 
                             title="Enter the rounding value (0.01 - 20). This will typically be twice the smallest weight plate you have."
+                            <?php if ('rounding' == $af):?>autofocus<?php endif ?>
                             value="<?=$this->e($rounding)?>" /> 
                     </fieldset>
                 </div>
