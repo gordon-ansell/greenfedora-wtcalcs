@@ -8,6 +8,10 @@
  * @license   https://github.com/gordon-ansell/greenfedora-wtcalcs/blob/master/LICENSE.md New BSD License.
  */
 
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+
 require __DIR__ . "/vendor/autoload.php";
 
 use WTCalcs\Application\WTCalcsApplication;
@@ -21,7 +25,7 @@ define('APP_VERSION', '1.0.0.dev1');
 // Kick off the application
 $output = new HttpApplicationOutput();
 
-$app = new WTCalcsApplication(new HttpApplicationInput, $output, 'dev');
+$app = new WTCalcsApplication(new HttpApplicationInput, $output, 'prod');
 $app->main();
 
 // Display output.

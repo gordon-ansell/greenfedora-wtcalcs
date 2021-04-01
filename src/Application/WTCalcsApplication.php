@@ -26,6 +26,20 @@ class WTCalcsApplication extends AbstractHttpApplication implements ApplicationI
 {
 
 	/**
+	 * Constructor.
+	 *
+	 * @param	ApplicationInputInterface	$input 		Input.
+	 * @param	ApplicationOutputInterface	$output 	Output.
+	 * @param	string						$mode 		The mode we're running in: 'dev', 'test' or 'prod'.
+	 *
+	 * @return	void
+	 */
+	public function __construct(ApplicationInputInterface $input, ApplicationOutputInterface $output, string $mode = 'prod')
+	{
+		parent::__construct($input, $output, $mode);
+	}
+
+	/**
 	 * Run.
 	 *
 	 * @return 	void

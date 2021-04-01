@@ -27,6 +27,6 @@ return array(
 		'templateDir'	=>	'layouts'
 	),
 	'locations' => array(
-		'webroot'	=>	'/',
+		'webroot'	=>	'https://gordonansell.com/wtcalcs/public/',
 	)
 );
