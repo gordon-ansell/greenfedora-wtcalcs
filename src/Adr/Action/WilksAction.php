@@ -110,10 +110,13 @@ class WilksAction extends AbstractAction implements ActionInterface
             ), 'wilks_');
         $cookieHandler->load($payload);
 
+        $payload->set('af', 'gender');
+        $payload->set('error', '');
+        $payload->set('results', []);
+
         // Has user posted the form?
         if ($this->input->isPost()) {
 
-            $payload->set('error', '');
             $payload->set('gender', $this->input->post('gender', 'male'));
             $payload->set('age', $this->input->post('age', ''));
             $payload->set('bodyWeight', $this->input->post('bodyWeight', ''));
@@ -127,7 +130,6 @@ class WilksAction extends AbstractAction implements ActionInterface
             $payload->set('benchUnits', $this->input->post('benchUnits', 'kg'));
             $payload->set('dead', $this->input->post('dead', ''));
             $payload->set('deadUnits', $this->input->post('deadUnits', 'kg'));
-            $payload->set('af', 'gender');
 
             $error = $this->validate();
 

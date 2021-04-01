@@ -71,14 +71,16 @@ class OnermAction extends AbstractAction implements ActionInterface
         $cookieHandler = new CookieHandler($this->input, array('weight' => '', 'reps' => 2, 'rounding' => 2.5), 'onerm_');
         $cookieHandler->load($payload);
 
+        $payload->set('error', '');
+        $payload->set('af', 'weight');
+        $payload->set('results', []);
+
         // Has user posted the form?
         if ($this->input->isPost()) {
 
-            $payload->set('error', '');
             $payload->set('weight', $this->input->post('weight', ''));
             $payload->set('reps', $this->input->post('reps', ''));
             $payload->set('rounding', $this->input->post('rounding', 2.5));
-            $payload->set('af', 'weight');
 
             $error = $this->validate();
             if (null !== $error) {
