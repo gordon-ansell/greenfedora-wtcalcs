@@ -178,7 +178,7 @@
             <h4>Allometric Results</h4>
             <p>See <a href="https://journals.lww.com/nsca-jscr/Abstract/2000/02000/Allometric_Modeling_of_the_Bench_Press_and_Squat_.6.aspx" tarket="_blank">here</a> for more details.</p>
             <?php if ($age): ?>
-                <p>Not that there's no formal age adjustment here and I've just used the Wilks age adjustments.</p>
+                <p>Note that there's no formal age adjustment here and I've just used the Wilks age adjustments.</p>
             <?php endif ?>
             <div class="flextable stripe">
                 <div class="tr th">
@@ -215,7 +215,7 @@
         <h4>SIFF Results</h4>
         <p>See <a href="http://web.archive.org/web/20050304042306/http://www.sportsci.com/SPORTSCI/JANUARY/evolution_of_bodymass_adjustment.htm" tarket="_blank">here</a> for more details.</p>
         <?php if ($age): ?>
-            <p>Not that there's no formal age adjustment here and I've just used the Wilks age adjustments.</p>
+            <p>Note that there's no formal age adjustment here and I've just used the Wilks age adjustments.</p>
         <?php endif ?>
         <div class="flextable stripe">
             <div class="tr th">
