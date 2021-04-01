@@ -12,15 +12,15 @@ namespace WTCalcs\Adr\Action;
 use GreenFedora\Adr\Action\AbstractAction;
 use GreenFedora\Adr\Action\ActionInterface;
 use GreenFedora\Payload\Payload;
-use WTCalcs\Adr\Responder\IndexResponder;
+use WTCalcs\Adr\Responder\NotFoundResponder;
 
 /**
- * The index action.
+ * The not found action.
  *
  * @author Gordon Ansell <contact@gordonansell.com>
  */
 
-class IndexAction extends AbstractAction implements ActionInterface
+class NotFoundAction extends AbstractAction implements ActionInterface
 {
 
     /**
@@ -29,7 +29,7 @@ class IndexAction extends AbstractAction implements ActionInterface
     public function dispatch()
     {
         $payload = new Payload();
-        $responder = new IndexResponder($this->container, $this->output, $payload);
+        $responder = new NotFoundResponder($this->container, $this->output, $payload);
         $responder->dispatch();
     }
 

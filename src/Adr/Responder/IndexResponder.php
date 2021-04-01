@@ -25,7 +25,7 @@ class IndexResponder extends AbstractResponder implements ResponderInterface
      */
     public function dispatch()
     {
-        $r = $this->container->get('template')->render('index');
+        $r = $this->container->get('template')->render('index', $this->payload->toArray());
         $this->output->setBody($r);
     }
 }

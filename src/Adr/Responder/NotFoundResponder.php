@@ -7,30 +7,25 @@
  */
 
 declare(strict_types=1);
-namespace WTCalcs\Adr\Action;
+namespace WTCalcs\Adr\Responder;
 
-use GreenFedora\Adr\Action\AbstractAction;
-use GreenFedora\Adr\Action\ActionInterface;
-use GreenFedora\Payload\Payload;
-use WTCalcs\Adr\Responder\IndexResponder;
+use GreenFedora\Adr\Responder\AbstractResponder;
+use GreenFedora\Adr\Responder\ResponderInterface;
 
 /**
- * The index action.
+ * The not found responder.
  *
  * @author Gordon Ansell <contact@gordonansell.com>
  */
 
-class IndexAction extends AbstractAction implements ActionInterface
+class NotFoundResponder extends AbstractResponder implements ResponderInterface
 {
-
     /**
-     * Dispatch the action.
+     * Dispatch the responder.
      */
     public function dispatch()
     {
-        $payload = new Payload();
-        $responder = new IndexResponder($this->container, $this->output, $payload);
-        $responder->dispatch();
+        $r = $this->container->get('template')->render('404', $this->payload->toArray());
+        $this->output->setBody($r);
     }
-
 }

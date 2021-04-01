@@ -7,7 +7,7 @@
  */
 
 declare(strict_types=1);
-namespace WTCalcs\Adr\Domain;
+namespace WTCalcs\Adr\Domain\Wilks;
 
 /**
  * Contains a wilks calculation.

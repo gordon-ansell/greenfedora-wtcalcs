@@ -978,3 +978,11 @@ blockquote::before {
 .flextable div.td.estimate {
   color: var(--col-alert);
 }
+
+.explain {
+  margin-top: 2em;
+  font-size: 85%;
+}
+.explain li {
+  margin-bottom: 1em;
+}

@@ -22,7 +22,7 @@ use GreenFedora\Filter\FloatVal;
 use GreenFedora\Filter\IntVal;
 use GreenFedora\Form\FormValidator;
 
-use WTCalcs\Adr\Domain\OnermCalcs;
+use WTCalcs\Adr\Domain\Onerm\OnermCalcs;
 
 /**
  * The 1-rep maximum calculator action.

@@ -22,7 +22,9 @@ use GreenFedora\Filter\FloatVal;
 use GreenFedora\Filter\IntVal;
 use GreenFedora\Form\FormValidator;
 
-use WTCalcs\Adr\Domain\WilksCalculator;
+use WTCalcs\Adr\Domain\Wilks\WilksCalculator;
+use WTCalcs\Adr\Domain\Wilks\AllometricCalculator;
+use WTCalcs\Adr\Domain\Wilks\SiffCalculator;
 
 /**
  * The Wilks score calculator action.
@@ -137,6 +139,7 @@ class WilksAction extends AbstractAction implements ActionInterface
 
                 $convWeight = 0;
                 $convBodyWeight = 0;
+                $convSingles = array();
 
                 if ('all' == $payload->get('method')) {
                     if ('lb' == $payload->get('weightUnits')) {
@@ -147,8 +150,10 @@ class WilksAction extends AbstractAction implements ActionInterface
                 } else {
                     foreach (['squat', 'bench', 'dead'] as $e) {
                         if ('lb' == $payload->get($e . 'Units')) {
+                            $convSingles[$e] = $payload->get($e) * self::KGMULT;
                             $convWeight += $payload->get($e) * self::KGMULT;
                         } else {
+                            $convSingles[$e] = $payload->get($e);
                             $convWeight += $payload->get($e);
                         }
                     }
@@ -172,6 +177,54 @@ class WilksAction extends AbstractAction implements ActionInterface
                         $payload->gender, intval($payload->age));
                 }
 
+                if ('separate' == $payload->get('method')) {
+                    $allo = new AllometricCalculator();
+                    $results[] = $allo->squat(floatval($convSingles['squat']), floatval($convBodyWeight));
+                    if ($payload->age and $payload->age > 13) {
+                        $results[] = $allo->squatAge(floatval($convSingles['squat']), floatval($convBodyWeight), 
+                        intval($payload->age));
+                    }
+                    $results[] = $allo->bench(floatval($convSingles['bench']), floatval($convBodyWeight));
+                    if ($payload->age and $payload->age > 13) {
+                        $results[] = $allo->benchAge(floatval($convSingles['bench']), floatval($convBodyWeight),
+                        intval($payload->age));
+                    }
+                    $results[] = $allo->dead(floatval($convSingles['dead']), floatval($convBodyWeight));
+                    if ($payload->age and $payload->age > 13) {
+                        $results[] = $allo->deadAge(floatval($convSingles['dead']), floatval($convBodyWeight),
+                        intval($payload->age));
+                    }
+                }
+
+                $siff = new SiffCalculator();
+                if ('separate' == $payload->get('method')) {
+                    $results[] = $siff->squat(floatval($convSingles['squat']), floatval($convBodyWeight));
+                    if ($payload->age and $payload->age > 13) {
+                        $results[] = $siff->squatAge(floatval($convSingles['squat']), floatval($convBodyWeight), 
+                        intval($payload->age));
+                    }
+                    $results[] = $siff->bench(floatval($convSingles['bench']), floatval($convBodyWeight));
+                    if ($payload->age and $payload->age > 13) {
+                        $results[] = $siff->benchAge(floatval($convSingles['bench']), floatval($convBodyWeight),
+                        intval($payload->age));
+                    }
+                    $results[] = $siff->dead(floatval($convSingles['dead']), floatval($convBodyWeight));
+                    if ($payload->age and $payload->age > 13) {
+                        $results[] = $siff->deadAge(floatval($convSingles['dead']), floatval($convBodyWeight),
+                        intval($payload->age));
+                    }
+                    $results[] = $siff->total(floatval($convSingles['dead'] + $convSingles['bench'] + $convSingles['squat']), 
+                        floatval($convBodyWeight));
+                    if ($payload->age and $payload->age > 13) {
+                        $results[] = $siff->totalAge(floatval($convSingles['dead'] + $convSingles['bench'] + $convSingles['squat']), 
+                            floatval($convBodyWeight), intval($payload->age));
+                    }
+                } else {
+                    $results[] = $siff->total(floatval($convWeight), floatval($convBodyWeight));
+                    if ($payload->age and $payload->age > 13) {
+                        $results[] = $siff->totalAge(floatval($convWeight), floatval($convBodyWeight), intval($payload->age));
+                    }
+                }
                 $payload->set('results', $results);
             }
 

@@ -7,12 +7,12 @@
  */
 
 declare(strict_types=1);
-namespace WTCalcs\Adr\Domain;
+namespace WTCalcs\Adr\Domain\Onerm;
 
 use GreenFedora\Adr\Domain\AbstractModel;
 use GreenFedora\Adr\Domain\ModelInterface;
 
-use WTCalcs\Adr\Domain\OnermResult;
+use WTCalcs\Adr\Domain\Onerm\OnermResult;
 
 /**
  * The 1-rep maximum calculator action.

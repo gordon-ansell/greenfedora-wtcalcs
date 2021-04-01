@@ -7,7 +7,7 @@
  */
 
 declare(strict_types=1);
-namespace WTCalcs\Adr\Domain;
+namespace WTCalcs\Adr\Domain\Onerm;
 
 /**
  * Contains a 1-rep max calculation.
