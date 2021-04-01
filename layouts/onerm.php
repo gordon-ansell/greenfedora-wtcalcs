@@ -1,4 +1,4 @@
-<?php $this->layout('layout', ['webroot' => $webroot]) ?>
+<?php $this->layout('layout', ['webroot' => $webroot, 'assets' => $assets]) ?>
 
 <?php $this->start('headdesc') ?>
     <title>1-Rep Maximum Calculator</title>

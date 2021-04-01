@@ -15,6 +15,7 @@
 
 return array(
 	'locations' => array(
-		'webroot'	=>	'http://0.0.0.0:8080/public/'
+		'webroot'	=>	'http://0.0.0.0:8080/',
+		'assets'	=>	'http://0.0.0.0:8080/public/'
 	)
 );
