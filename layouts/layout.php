@@ -49,13 +49,13 @@
                 <label for="menu-btn"><span class="icon"></span></label>
                 <ul>
                     <li>
-                        <a href="<?=$this->e($webroot)?>">Home</a>
+                        <a href="/">Home</a>
                     </li>
                     <li>
-                        <a href="<?=$this->e($webroot)?>onerm">One Rep Maximum</a>
+                        <a href="/onerm">One Rep Maximum</a>
                     </li>
                     <li>
-                        <a href="<?=$this->e($webroot)?>wilks">Wilks Score</a>
+                        <a href="/wilks">Wilks Score</a>
                     </li>
                 </ul>
             </nav>

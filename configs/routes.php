@@ -26,9 +26,9 @@ return array(
 		'prefixNamespace'	=>	'\WTCalcs\Adr\Action',
 
 		'routes'	=>	array(
-			'/'				=>  'IndexAction',
 			'/wilks'     	=>  'WilksAction',
 			'/onerm'     	=>  'OnermAction',
+			'/'				=>  'IndexAction',
 			'_404_'			=>	'NotFoundAction',
 		)
 	)
