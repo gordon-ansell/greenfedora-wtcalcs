@@ -5,9 +5,9 @@
 $ft-font-family: "Fira Code", Menlo, Monaco, Consolas, "Andale Mono", "Courier New", monospace;
 $ft-font-size: 90%;
 
-@import 'fw/_fw';
-@import 'fw/components/_sitehdr-menu';
-@import 'fw/components/_sitehdr-branding';
+@import '../vendor/gordon-ansell/greenfedora-scss/fw/_fw';
+@import '../vendor/gordon-ansell/greenfedora-scss/fw/components/_sitehdr-menu';
+@import '../vendor/gordon-ansell/greenfedora-scss/fw/components/_sitehdr-branding';
 
 .sitehdr-branding a span {
     font-family: cursive;
