@@ -592,7 +592,6 @@ blockquote::after {
 }
 .form-container .form-box .error {
   text-align: center;
-  color: var(--col-alert);
   font-weight: bold;
 }
 .form-container .form-box form {
@@ -620,7 +619,6 @@ blockquote::after {
   display: inline-block;
   margin: 0.5rem 0;
   font-size: 85%;
-  color: var(--col-text-primary);
 }
 .form-container .form-box form .label {
   display: block;
@@ -630,15 +628,11 @@ blockquote::after {
   width: 100%;
   outline: 0;
   box-sizing: border-box;
-  background: var(--col-muted);
-  color: var(--col-text-primary);
   border: 0.25px solid;
-  border-color: var(--col-border);
   border-radius: 4px;
   padding: 10px 5px;
 }
 .form-container .form-box form input::placeholder, .form-container .form-box form select::placeholder {
-  color: var(--col-text-secondary);
   font-size: 80%;
   font-weight: 100;
   font-style: italic;
@@ -652,7 +646,6 @@ blockquote::after {
 }
 .form-container .form-box form input[type=radio]:focus + label {
   border: 1px solid;
-  border-color: var(--col-border);
 }
 .form-container .form-box form select {
   -webkit-appearance: none;
@@ -707,16 +700,12 @@ blockquote::after {
 .form-container .form-box form button {
   cursor: pointer;
   border: 1px solid;
-  border-color: var(--col-border);
   border-radius: 4px;
   outline: none;
   width: 100%;
   text-align: center;
   padding: 12px;
   margin-top: 15px;
-  color: var(--col-text-primary);
-  background: var(--col-bg-secondary);
-  box-shadow: inset 0 -3em 3em rgba(var(--col-text-primary), 0.1), 0.3em 0.3em 1em rgba(var(--col-text-primary), 0.3);
 }
 .form-container .form-box form button:focus {
   border: 1px solid;
@@ -852,6 +841,30 @@ blockquote::before {
 
 .flextable.stripe .tr:nth-of-type(even) {
   background-color: var(--col-bg-secondary);
+}
+
+.form-container .form-box .error {
+  color: var(--col-alert);
+}
+.form-container .form-box form label, .form-container .form-box form .label {
+  color: var(--col-text-primary);
+}
+.form-container .form-box form input, .form-container .form-box form select {
+  background: var(--col-muted);
+  color: var(--col-text-primary);
+  border-color: var(--col-border);
+}
+.form-container .form-box form input::placeholder, .form-container .form-box form select::placeholder {
+  color: var(--col-text-secondary);
+}
+.form-container .form-box form input[type=radio]:focus + label {
+  border-color: var(--col-border);
+}
+.form-container .form-box form button {
+  border-color: var(--col-border);
+  color: var(--col-text-primary);
+  background: var(--col-bg-secondary);
+  box-shadow: inset 0 -3em 3em rgba(var(--col-text-primary), 0.1), 0.3em 0.3em 1em rgba(var(--col-text-primary), 0.3);
 }
 
 .sitehdr-menu {

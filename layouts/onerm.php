@@ -1,5 +1,11 @@
 <?php $this->layout('layout', ['webroot' => $webroot]) ?>
 
+<?php $this->start('headdesc') ?>
+    <title>1-Rep Maximum Calculator</title>
+    <meta name="description" content="Calculate your weight training 1-rep maximum from 2-15 reps. Displays the results for many formulae and gives an average. Epley, Brzycki, McGlothin, Lombardi, Mayhew, Wathan, O'Conner." />
+    <meta name="keywords" content="1-rep maximum,one-rep maximum,weight-training,Epley,Brzycki,McGlothin,Lombardi,Mayhew,Wathan,O'Conner" />
+<?php $this->stop() ?>
+
 <?php $this->start('main') ?>
     <h2>1-Rep Max Calculator</h2>
     

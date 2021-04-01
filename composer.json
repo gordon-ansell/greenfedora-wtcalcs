@@ -12,6 +12,7 @@
     "require": {
         "php": "^7.0",
         "gordon-ansell/greenfedora-framework": "*",
+        "gordon-ansell/greenfedora-scss": "*",
         "league/plates": "3.*"
     },
 	"minimum-stability": "dev",
@@ -19,6 +20,10 @@
 		{
 			"type": "vcs",
 			"url": "git@github.com:gordon-ansell/greenfedora-framework.git"
+		},
+		{
+			"type": "vcs",
+			"url": "git@github.com:gordon-ansell/greenfedora-scss.git"
 		}
 	],
     "autoload": {

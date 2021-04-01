@@ -1,5 +1,12 @@
 <?php $this->layout('layout', ['webroot' => $webroot]) ?>
 
+<?php $this->start('headdesc') ?>
+    <title>Wilks Score Calculator</title>
+    <meta name="description" content="Calculate your weight training Wilks score, used in powerlifting competitions. Bodyweight and age-adjusted. Also calculates allometric and SIFF scores." />
+    <meta name="keywords" content="Wilks,score,weight-training,powerlifting,SIFF,allometric" />
+<?php $this->stop() ?>
+
+
 <?php $this->start('main') ?>
 
     <script type="text/javascript">

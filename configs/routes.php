@@ -29,6 +29,7 @@ return array(
 			'/'				=>  'IndexAction',
 			'/wilks'     	=>  'WilksAction',
 			'/onerm'     	=>  'OnermAction',
+			'_404_'			=>	'NotFoundAction',
 		)
 	)
 );

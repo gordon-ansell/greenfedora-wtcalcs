@@ -5,7 +5,7 @@
     <div>
         <ul>
             <li><a href="/onerm">1-Rep Max Calculator</a>: Calculate your one-rep maximum from the weight you lifted from 2-15 reps.</li>
-            <li><a href="/wilks">Wilks Score Calculator</a>: Calculate your Wilks score.</li>
+            <li><a href="/wilks">Wilks Score Calculator</a>: Calculate your Wilks score (also calculates weight-adjusted allometric and SIFF scores).</li>
         </ul>
     </div>
  <?php $this->stop() ?>
