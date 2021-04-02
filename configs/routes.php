@@ -11,13 +11,6 @@
  
 /**
  * Routing configs.
- * 
- * :any - This matches anything from that point on in the URI, does not match "nothing".
- * :everything - Like :any, but also matches "nothing".
- * :segment - This matches only 1 segment in the URI, but that segment can be anything.
- * :num - This matches any numbers.
- * :alpha - This matches any alpha characters, including UTF-8.
- * :alnum - This matches any alphanumeric characters, including UTF-8.
  */
 
 return array(
@@ -26,6 +19,7 @@ return array(
 		'prefixNamespace'	=>	'\WTCalcs\Adr\Action',
 
 		'routes'	=>	array(
+			//'/test/:uid/'	=>	'IndexAction',
 			'/wilks'     	=>  'WilksAction',
 			'/onerm'     	=>  'OnermAction',
 			'/'				=>  'IndexAction',
