@@ -19,10 +19,10 @@ return array(
 		'prefixNamespace'	=>	'\WTCalcs\Adr\Action',
 
 		'routes'	=>	array(
-			//'/test/:uid/'	=>	'IndexAction',
+			//'^\/test(?P<params>[a-zA-Z0-9_\-\/]*)$'	=>	'IndexAction',
 			'/wilks'     	=>  'WilksAction',
 			'/onerm'     	=>  'OnermAction',
-			'/'				=>  'IndexAction',
+			'_default_'		=>  'IndexAction',
 			'_404_'			=>	'NotFoundAction',
 		)
 	)

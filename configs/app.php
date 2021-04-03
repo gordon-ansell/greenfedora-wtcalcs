@@ -29,5 +29,14 @@ return array(
 	'locations' => array(
 		'webroot'	=>	'https://wtcalcs.gordonansell.com/',
 		'assets'	=>	'https://wtcalcs.gordonansell.com/public/'
-	)
+	),
+    'session' => array(
+        'cookie_lifetime'   =>  '86400',
+        'cookie_path'       =>  '/',
+        'gc_maxlifetime'    =>  '86400',
+        'gc_probability'    =>  '1',
+        'gc_divisor'        =>  '100',
+        'prefix'            =>  '',
+        'save_path'			=>	'',
+    ),
 );

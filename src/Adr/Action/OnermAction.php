@@ -13,7 +13,6 @@ use GreenFedora\Adr\Action\AbstractAction;
 use GreenFedora\Adr\Action\ActionInterface;
 use WTCalcs\Adr\Responder\OnermResponder;
 use GreenFedora\Payload\Payload;
-use GreenFedora\Http\CookieHandler;
 use GreenFedora\Validator\Compulsory;
 use GreenFedora\Validator\Numeric;
 use GreenFedora\Validator\Integer;
@@ -21,6 +20,7 @@ use GreenFedora\Validator\NumericBetween;
 use GreenFedora\Filter\FloatVal;
 use GreenFedora\Filter\IntVal;
 use GreenFedora\Form\FormValidator;
+use GreenFedora\Form\FormPersistHandler;
 
 use WTCalcs\Adr\Domain\Onerm\OnermCalcs;
 
@@ -68,7 +68,8 @@ class OnermAction extends AbstractAction implements ActionInterface
     public function dispatch()
     {
         $payload = new Payload();
-        $cookieHandler = new CookieHandler($this->input, array('weight' => '', 'reps' => 2, 'rounding' => 2.5), 'onerm_');
+        $cookieHandler = new FormPersistHandler($this->getInstance('session'), $this->input, 
+            array('weight' => '', 'reps' => 2, 'rounding' => 2.5), 'onerm_');
         $cookieHandler->load($payload);
 
         $payload->set('error', '');

@@ -13,7 +13,6 @@ use GreenFedora\Adr\Action\AbstractAction;
 use GreenFedora\Adr\Action\ActionInterface;
 use WTCalcs\Adr\Responder\WilksResponder;
 use GreenFedora\Payload\Payload;
-use GreenFedora\Http\CookieHandler;
 use GreenFedora\Validator\Compulsory;
 use GreenFedora\Validator\Numeric;
 use GreenFedora\Validator\Integer;
@@ -21,6 +20,7 @@ use GreenFedora\Validator\NumericBetween;
 use GreenFedora\Filter\FloatVal;
 use GreenFedora\Filter\IntVal;
 use GreenFedora\Form\FormValidator;
+use GreenFedora\Form\FormPersistHandler;
 
 use WTCalcs\Adr\Domain\Wilks\WilksCalculator;
 use WTCalcs\Adr\Domain\Wilks\AllometricCalculator;
@@ -92,7 +92,7 @@ class WilksAction extends AbstractAction implements ActionInterface
     public function dispatch()
     {
         $payload = new Payload();
-        $cookieHandler = new CookieHandler($this->input, 
+        $cookieHandler = new FormPersistHandler($this->getInstance('session'), $this->input, 
             array(
                 'gender' => 'male', 
                 'age' => '',
