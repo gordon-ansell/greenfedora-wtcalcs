@@ -47,18 +47,36 @@
     </div>
 
     <?php if ($results): ?>
+        <div class="table1">
+            <div class="flextable stripe">
+                <div class="tr th">
+                    <div class="td">Method</div>
+                    <div class="td alignright">Result (to nearest <?=$rounding?>)</div>
+                </div>
+                <?php foreach($results as $item): ?>
+                    <div class="tr"><div class="td"><?=$item->name?></div>
+                    <div class="td alignright"><?=number_format($item->rounded, 2)?></div></div>
+                <?php endforeach ?>
+                <div class="tr bold"><div class="td">Average</div>
+                <div class="td alignright"><?=number_format($average->rounded, 2)?></div>
+            </div>
+        </div>
+    <?php endif ?>
+
+    <?php if ($percents): ?>
+    <div class="table2">
+        <p>The following lists shows the various percentages of your 1-rep maximum. Handy when choosing weights to use for various sets.</p> 
         <div class="flextable stripe">
             <div class="tr th">
-                <div class="td">Method</div>
+                <div class="td">Percentage</div>
                 <div class="td alignright">Result (to nearest <?=$rounding?>)</div>
             </div>
-            <?php foreach($results as $item): ?>
-                <div class="tr"><div class="td"><?=$item->name?></div>
+            <?php foreach($percents as $item): ?>
+                <div class="tr"><div class="td"><?=$item->name?>%</div>
                 <div class="td alignright"><?=number_format($item->rounded, 2)?></div></div>
             <?php endforeach ?>
-            <div class="tr bold"><div class="td">Average</div>
-            <div class="td alignright"><?=number_format($average->rounded, 2)?></div>
         </div>
+    </div>
     <?php endif ?>
 
  <?php $this->stop() ?>

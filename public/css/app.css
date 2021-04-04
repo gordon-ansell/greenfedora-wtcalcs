@@ -999,3 +999,7 @@ blockquote::before {
 .explain li {
   margin-bottom: 1em;
 }
+
+.table2 {
+  margin-top: 2em;
+}

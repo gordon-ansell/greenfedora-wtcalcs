@@ -47,7 +47,7 @@ class OnermAction extends AbstractAction implements ActionInterface
 
         $fv->addValidator('reps', new Compulsory(['reps']))
             ->addValidator('reps', new Integer(['reps']))
-            ->addValidator('reps', new NumericBetween(['reps'], array('low' => 2, 'high' => 15)));
+            ->addValidator('reps', new NumericBetween(['reps'], array('low' => 1, 'high' => 15)));
 
         $fv->addFilter('rounding', new FloatVal())
             ->addValidator('rounding', new Compulsory(['rounding']))
@@ -75,6 +75,7 @@ class OnermAction extends AbstractAction implements ActionInterface
         $payload->set('error', '');
         $payload->set('af', 'weight');
         $payload->set('results', []);
+        $payload->set('percents', []);
 
         // Has user posted the form?
         if ($this->input->isPost()) {
@@ -96,6 +97,10 @@ class OnermAction extends AbstractAction implements ActionInterface
 
                 $payload->set('results', $results);
                 $payload->set('average', $average);
+
+                $percents = array();
+                $calculator->onermpercents(floatval($average->value), floatval($payload->rounding), $percents);
+                $payload->set('percents', $percents);
             }
 
             $cookieHandler->save($payload);

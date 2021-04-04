@@ -52,34 +52,44 @@ class OnermCalcs extends AbstractModel implements ModelInterface
         if (null === $results) {
             $results = [];
         }
+
+        if (1 === $reps) {
+
+            foreach(['Epley', 'Brzycki', 'McGlothin', 'Lombardi', 'Mayhew', 'Wathan', "O'Conner"] as $item) {
+                $tmp = new OnermResult($item, $weight);
+                array_push($results, $tmp);
+            }
+
+        } else {
     
-        // Epley.
-        $tmp = new OnermResult('Epley', $weight * (1 + ($reps / 30)));
-        array_push($results, $tmp);
-    
-        // Brzycki.
-        $tmp = new OnermResult('Brzycki', $weight * (36 / (37 - $reps)));
-        array_push($results, $tmp);
-    
-        // McGlothin.
-        $tmp = new OnermResult('McGlothin', (100 * $weight) / (101.3 - (2.67123 * $reps)));
-        array_push($results, $tmp);
-    
-        // Lombardi.
-        $tmp = new OnermResult('Lombardi', $weight * ($reps ** 0.1));
-        array_push($results, $tmp);
-    
-        // Mayhew.
-        $tmp = new OnermResult('Mayhew', (100 * $weight) / (52.2 + 41.9 * (M_E ** (-0.055 * $reps))));
-        array_push($results, $tmp);
-    
-        // Wathan.
-        $tmp = new OnermResult('Wathan', ($weight * 100) / (48.8 + 53.8 * (M_E ** (-0.075 * $reps))));
-        array_push($results, $tmp);
-    
-        // O'Conner.
-        $tmp = new OnermResult("O'Conner", $weight * (1 + ($reps / 40)));
-        array_push($results, $tmp);
+            // Epley.
+            $tmp = new OnermResult('Epley', $weight * (1 + ($reps / 30)));
+            array_push($results, $tmp);
+        
+            // Brzycki.
+            $tmp = new OnermResult('Brzycki', $weight * (36 / (37 - $reps)));
+            array_push($results, $tmp);
+        
+            // McGlothin.
+            $tmp = new OnermResult('McGlothin', (100 * $weight) / (101.3 - (2.67123 * $reps)));
+            array_push($results, $tmp);
+        
+            // Lombardi.
+            $tmp = new OnermResult('Lombardi', $weight * ($reps ** 0.1));
+            array_push($results, $tmp);
+        
+            // Mayhew.
+            $tmp = new OnermResult('Mayhew', (100 * $weight) / (52.2 + 41.9 * (M_E ** (-0.055 * $reps))));
+            array_push($results, $tmp);
+        
+            // Wathan.
+            $tmp = new OnermResult('Wathan', ($weight * 100) / (48.8 + 53.8 * (M_E ** (-0.075 * $reps))));
+            array_push($results, $tmp);
+        
+            // O'Conner.
+            $tmp = new OnermResult("O'Conner", $weight * (1 + ($reps / 40)));
+            array_push($results, $tmp);
+        }
     
         // Total.
         $tot = 0;
@@ -87,10 +97,37 @@ class OnermCalcs extends AbstractModel implements ModelInterface
             $item->rounded = $this->mround($item->value, $rounding);
             $tot += $item->value;
         }
+
         $avg = new OnermResult();
         $avg->value = $tot / sizeof($results);
         $avg->rounded = $this->mround($avg->value, $rounding);
     
         return $avg;
+    }
+
+    /**
+     * Calculate the various percentages of the one rep maximum.
+     *
+     * @param   float   $weight    Weight lifted.
+     * @param   float   $rounding  Number to round to.
+     * @param   array   $results   Where to add the results - array of Calc objects. (optional)
+     *
+     * @return  void
+     */
+    public function onermpercents(float $weight, float $rounding, array &$results = null)
+    {
+        for ($i = 100; $i >= 5; $i = $i - 5) {
+            if (100 === $i) {
+                $tmp = new OnermResult("100", $weight);
+                array_push($results, $tmp);
+            } else {
+                $tmp = new OnermResult(strval($i), ($weight / 100) * $i);
+                array_push($results, $tmp);
+            }
+        }
+
+        foreach($results as $item) {
+            $item->rounded = $this->mround($item->value, $rounding);
+        }
     }
 }
