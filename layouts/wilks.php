@@ -262,3 +262,63 @@
    <?php endif ?>
 
 <?php $this->end() ?>
+
+<?php $this->start('schema') ?>
+<script type="application/ld+json">
+{
+     "@context":"https://schema.org",
+     "@graph":[
+        {
+            "@id":"/#publisher",
+            "@type":"Organization",
+            "name":"Gordy's Discourse",
+            "url":"/",
+            "logo":{
+                "@type":"ImageObject",
+                "url":["https://gordonansell.com/assets/images/greenhat-1024x1024.png"]
+            }
+        },
+        {
+            "@id":"/#author-gordon-ansell",
+            "@type":"Person",
+            "name":"Gordon Ansell",
+            "url":"https://gordonansell.com/about/",
+            "image":{
+                "@type":"ImageObject",
+                "url":["https://gordonansell.com/assets/images/greenhat-1024x1024.png"]
+            }
+        },
+        {
+            "@id":"/#website",
+            "@type":"WebSite",
+            "name":"Weight Training Calculations",
+            "url":"/",
+            "description":"Calculate 1-rep maximum, Wilks score, SIFF score and allometric scores. A range of bodyweight and age-adjusted weight training calculations.",
+            "image":{
+                "@type":"ImageObject",
+                "url":["https://gordonansell.com/assets/images/greenhat-1024x1024.png"]
+            }
+        },
+        {
+            "@id":"/#webpage",
+            "@type":"WebPage",
+            "name":"Wilks Score Calculator",
+            "description":"Calculate your weight training Wilks score, used in powerlifting competitions. Bodyweight and age-adjusted. Also calculates allometric and SIFF scores.",
+            "url":"/onerm",
+            "isPartOf":{
+                "@id":"/#website"
+            },
+            "lastReviewed":"2021-04-08T08:00:00.000Z"
+        },
+        {
+            "@type":"WebApplication",
+            "name":"Wilks Score Calculator",
+            "description":"Calculate your weight training Wilks score, used in powerlifting competitions. Bodyweight and age-adjusted. Also calculates allometric and SIFF scores.",
+            "applicationCategory":"Productivity",
+            "operatingSystem":"Any"
+        }
+    ]
+}
+</script>
+<?php $this->stop() ?>
+

@@ -66,4 +66,6 @@
     </div>
 </body>
 
+<?= $this->section('schema') ?>
+
 </html>
