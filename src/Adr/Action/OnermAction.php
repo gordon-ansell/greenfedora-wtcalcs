@@ -21,6 +21,8 @@ use GreenFedora\Filter\FloatVal;
 use GreenFedora\Filter\IntVal;
 use GreenFedora\Form\FormValidator;
 use GreenFedora\Form\FormPersistHandler;
+use GreenFedora\Form\Form;
+use GreenFedora\Html\Html;
 
 use WTCalcs\Adr\Domain\Onerm\OnermCalcs;
 
@@ -63,6 +65,24 @@ class OnermAction extends AbstractAction implements ActionInterface
     }
 
     /**
+     * Create the form.
+     * 
+     * @return  FormInterface
+     */
+    protected function createForm()
+    {
+        $form = new Form('/onerm');
+
+        $form->addField('divopen', 'row1', ['class' => 'three-columns-always'])
+            ->addField('fieldsetopen', 'fs1')
+            ->addField('label', 'weightLabel', ['for' => 'weight', 'value' => 'Weight'])
+            ->addField('input', null, ['type' => 'text', 'placeholder' => 'Weight', 'name' => 'weight'])
+            ->addField('fieldsetclose', 'fs1close');
+
+        return $form;
+    }
+
+    /**
      * Dispatch the action.
      */
     public function dispatch()
@@ -76,6 +96,8 @@ class OnermAction extends AbstractAction implements ActionInterface
         $payload->set('af', 'weight');
         $payload->set('results', []);
         $payload->set('percents', []);
+
+        $payload->set('form', $this->createForm());
 
         // Has user posted the form?
         if ($this->input->isPost()) {

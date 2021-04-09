@@ -46,6 +46,12 @@
         </div>
     </div>
 
+    <div class="form-container">
+        <div class="form-box">
+            <?= $form->render(); ?>
+        </div>
+    </div>
+
     <?php if ($results): ?>
         <div class="table1">
             <div class="flextable stripe">
