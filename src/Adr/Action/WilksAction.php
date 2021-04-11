@@ -22,6 +22,7 @@ use GreenFedora\Filter\FloatVal;
 use GreenFedora\Filter\IntVal;
 use GreenFedora\Form\FormValidator;
 use GreenFedora\Form\FormPersistHandler;
+use GreenFedora\Form\FormPersistHandlerInterface;
 use GreenFedora\Form\Form;
 use GreenFedora\Form\FormInterface;
 
@@ -108,7 +109,6 @@ class WilksAction extends AbstractAction implements ActionInterface
 
         $form->closeField();
 
-
         // Row 2. Bodyweight.
 
         $form->addField('divopen', ['name' => 'row2', 'class' => 'two-columns-always']);
@@ -116,7 +116,6 @@ class WilksAction extends AbstractAction implements ActionInterface
             $this->weightUnits($form, 'bodyWeight', 'Body Weight', "Enter your body weight.");
 
         $form->closeField();
-
 
         // Row 3. Method.
 

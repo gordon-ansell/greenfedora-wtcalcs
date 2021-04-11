@@ -20,6 +20,7 @@ use GreenFedora\Validator\NumericBetween;
 use GreenFedora\Filter\FloatVal;
 use GreenFedora\Filter\IntVal;
 use GreenFedora\Form\FormPersistHandler;
+use GreenFedora\Form\FormPersistHandlerInterface;
 use GreenFedora\Form\Form;
 use GreenFedora\Html\Html;
 
