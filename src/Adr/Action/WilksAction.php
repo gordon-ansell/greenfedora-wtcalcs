@@ -13,6 +13,7 @@ use GreenFedora\Adr\Action\AbstractAction;
 use GreenFedora\Adr\Action\ActionInterface;
 use WTCalcs\Adr\Responder\WilksResponder;
 use GreenFedora\Payload\Payload;
+use GreenFedora\Payload\PayloadInterface;
 use GreenFedora\Validator\Compulsory;
 use GreenFedora\Validator\Numeric;
 use GreenFedora\Validator\Integer;
@@ -21,6 +22,8 @@ use GreenFedora\Filter\FloatVal;
 use GreenFedora\Filter\IntVal;
 use GreenFedora\Form\FormValidator;
 use GreenFedora\Form\FormPersistHandler;
+use GreenFedora\Form\Form;
+use GreenFedora\Form\FormInterface;
 
 use WTCalcs\Adr\Domain\Wilks\WilksCalculator;
 use WTCalcs\Adr\Domain\Wilks\AllometricCalculator;
@@ -37,62 +40,39 @@ class WilksAction extends AbstractAction implements ActionInterface
     const KGMULT = 0.45359237;
 
     /**
-     * Validation.
+     * Add a weight/units pair of fields.
      * 
-     * @return  null|array         Null if it worked, else error message and failed field.
+     * @param   FormInterface   $form   Form to add it to.
+     * @param   string          $name   Name of field.
+     * @param   string          $label  Label.
+     * @param   string          $title  Title field.
+     * @return  FormInterface
      */
-    protected function validate(): ?array
+    protected function weightUnits(FormInterface &$form, string $name, string $label, string $title): FormInterface
     {
-        $method = $this->input->post('method', 'all');
-        $fields = ['age', 'bodyWeight'];
+        $form->addField('inputtext', ['name' => $name, 'label' => $label, 
+            'title' => $title])
+            ->addValidator(new Compulsory([$name]))
+            ->addValidator(new NumericBetween([$name], array('low' => 1, 'high' => 9999.99)));
 
-        $fv = new FormValidator();
+        $form->addField('select', ['name' => $name . 'Units', 'label' => 'Units',
+            'options' => ['kg' => 'kg', 'lb' => 'lb'],
+            'title' => "Select the units."])
+            ->setAfter('<span class="caret">&#9660;</span>');
 
-        $fv->addValidator('age', new Integer(['age']))
-            ->addValidator('age', new NumericBetween(['age'], array('low' => 14, 'high' => 90)));
-
-        $fv->addFilter('bodyWeight', new FloatVal())
-            ->addValidator('bodyWeight', new Compulsory(['bodyWeight']))
-            ->addValidator('bodyWeight', new NumericBetween(['bodyWeight'], array('low' => 20, 'high' => 1000)));
-
-        if ('all' == $method) {
-            $fv->addFilter('weight', new FloatVal())
-                ->addValidator('weight', new Compulsory(['weight']))
-                ->addValidator('weight', new NumericBetween(['weight'], array('low' => 1, 'high' => 9999.99)));
-            $fields[] = 'weight';
-        } else {
-            $fv->addFilter('squat', new FloatVal())
-                ->addValidator('squat', new Compulsory(['squat']))
-                ->addValidator('squat', new NumericBetween(['squat'], array('low' => 1, 'high' => 9999.99)));
-            $fields[] = 'squat';
-
-            $fv->addFilter('bench', new FloatVal())
-                ->addValidator('bench', new Compulsory(['bench']))
-                ->addValidator('bench', new NumericBetween(['bench'], array('low' => 1, 'high' => 9999.99)));
-            $fields[] = 'bench';
-
-            $fv->addFilter('dead', new FloatVal())
-                ->addValidator('dead', new Compulsory(['dead']))
-                ->addValidator('dead', new NumericBetween(['dead'], array('low' => 1, 'high' => 9999.99)));
-            $fields[] = 'dead';
-        }
-        
-        $result = $fv->validate($this->input->post()->toArray(), $fields);
-
-        if (null === $result) {
-            return $result;
-        } else {
-            return [$result, $fv->getFailedField()];
-        }
+        return $form;
     }
 
     /**
-     * Dispatch the action.
+     * Create the form.
+     * 
+     * @return  FormInterface
      */
-    public function dispatch()
+    protected function createForm()
     {
-        $payload = new Payload();
-        $cookieHandler = new FormPersistHandler($this->getInstance('session'), $this->input, 
+        $method = $this->input->post('method', $this->getInstance('session')->get('wilks_method', 'all'));
+
+        $ph = new FormPersistHandler($this->getInstance('session'), $this->input, 
             array(
                 'gender' => 'male', 
                 'age' => '',
@@ -108,10 +88,105 @@ class WilksAction extends AbstractAction implements ActionInterface
                 'dead' => '',
                 'deadUnits' => 'kg',
             ), 'wilks_');
-        $cookieHandler->load($payload);
 
-        $payload->set('af', 'gender');
-        $payload->set('error', '');
+        $form = new Form('/wilks#results', $ph, ['onload' => "javascript:methodCheck();"]);
+        $form->setAutoWrap('fieldset');
+
+        $form->addField('errors', ['name' => 'errors', 'class' => 'error']);
+
+        // Row 1. Gender, age.
+
+        $form->addField('divopen', ['name' => 'row1', 'class' => 'two-columns-always']);
+
+            $form->addField('radioset', ['name' => 'gender', 'label' => 'Gender', 'class' => 'radio horizontal', 
+                'options' => ['male' => 'Male', 'female' => 'Female'], 'title' => "Select your gender."]);
+
+            $form->addField('inputtext', ['name' => 'age', 'label' => 'Age', 
+                'title' => "If you want to see the adjustment for your age, enter your age here."])
+                ->addValidator(new Integer(['age']))
+                ->addValidator(new NumericBetween(['age'], array('low' => 14, 'high' => 90)));
+
+        $form->closeField();
+
+
+        // Row 2. Bodyweight.
+
+        $form->addField('divopen', ['name' => 'row2', 'class' => 'two-columns-always']);
+
+            $this->weightUnits($form, 'bodyWeight', 'Body Weight', "Enter your body weight.");
+
+        $form->closeField();
+
+
+        // Row 3. Method.
+
+        $form->addField('radioset', ['name' => 'method', 'label' => 'Method', 'class' => 'radio horizontal', 
+            'options' => ['all' => 'Total', 'separate' => 'Separate Lifts'], 'onclick' => "javascript:methodCheck();",
+            'title' => "Select the method of calculation: total of all lifts together or enter weights for each lift separately?"]);
+
+        // Work out the styles for all/separate.
+
+        $styleAll = 'display:grid';
+        $styleSeparate = 'display:none';
+        if ("separate" == $method) {
+            $styleAll = "display:none";
+            $styleSeparate = "display:inline";
+        }
+
+        // Row 4. Weight.
+
+        $form->addField('divopen', ['name' => 'row4', 'id' => 'methodAll', 'class' => 'two-columns-always', 'style' => $styleAll]);
+
+            $this->weightUnits($form, 'weight', 'Total Weight Lifted',
+                "This can be for an invididual lift, but a true Wilks score is based on your combined squat, bench press and deadlift weights."
+            );
+            if ("separate" == $method) {
+                $form->getField('weight')->disableValidators();
+            }
+
+        $form->closeField();
+
+        // Rows 5-7. Squat, Bench Press, Deadlift.
+
+        $rows = ['squat' => 'Squat', 'bench' => 'Bench Press', 'dead' => 'Deadlift'];
+        $count = 5;
+
+        $form->addField('spanopen', ['name' => 'allblock', 'id' => 'methodSeparate', 'style' => $styleSeparate]);
+
+            foreach ($rows as $k => $v) {
+                $form->addField('divopen', ['name' => 'row' . $count, 'class' => 'two-columns-always']);
+
+                    $this->weightUnits($form, $k, $v, "Enter the weight you lifted in the " . $k . ".");
+
+                    if ("all" == $method) {
+                        $form->getField($k)->disableValidators();
+                    }
+            
+                $form->closeField();
+                $count++;
+            }
+
+        $form->closeField();
+
+        // Last row.
+
+        $form->addField('buttonsubmit', ['name' => 'submit', 'value' => 'Submit']);
+
+        $form->setAutofocus('age');
+
+        return $form;
+    }
+
+    /**
+     * Dispatch the action.
+     */
+    public function dispatch()
+    {
+        $payload = new Payload();
+
+        $form = $this->createForm()->load($payload);
+        $payload->set('form', $form);
+
         $payload->set('results', []);
 
         // Has user posted the form?
@@ -131,13 +206,7 @@ class WilksAction extends AbstractAction implements ActionInterface
             $payload->set('dead', $this->input->post('dead', ''));
             $payload->set('deadUnits', $this->input->post('deadUnits', 'kg'));
 
-            $error = $this->validate();
-
-            if (null !== $error) {
-                $payload->set('error', $error[0]);
-                $payload->set('af', $error[1]);
-
-            } else {
+            if ($form->validate($this->input->post()->toArray())) {
 
                 $convWeight = 0;
                 $convBodyWeight = 0;
@@ -227,10 +296,15 @@ class WilksAction extends AbstractAction implements ActionInterface
                         $results[] = $siff->totalAge(floatval($convWeight), floatval($convBodyWeight), intval($payload->age));
                     }
                 }
+
                 $payload->set('results', $results);
             }
 
-            $cookieHandler->save($payload);
+            $form->save($payload);
+        }
+
+        if ($form->getPersistHandler()->hasDebugging()) {
+            $form->getPersistHandler()->outputDebugging($this->container->get('logger'));
         }
 
         $responder = new WilksResponder($this->container, $this->output, $payload);

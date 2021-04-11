@@ -19,7 +19,6 @@ use GreenFedora\Validator\Integer;
 use GreenFedora\Validator\NumericBetween;
 use GreenFedora\Filter\FloatVal;
 use GreenFedora\Filter\IntVal;
-use GreenFedora\Form\FormValidator;
 use GreenFedora\Form\FormPersistHandler;
 use GreenFedora\Form\Form;
 use GreenFedora\Html\Html;
@@ -34,35 +33,6 @@ use WTCalcs\Adr\Domain\Onerm\OnermCalcs;
 
 class OnermAction extends AbstractAction implements ActionInterface
 {
-    /**
-     * Validation.
-     * 
-     * @return  null|array         Null if it worked, else error message and failed field.
-     */
-    protected function validate(): ?array
-    {
-
-        $fv = new FormValidator();
-        $fv->addFilter('weight', new FloatVal())
-            ->addValidator('weight', new Compulsory(['weight']))
-            ->addValidator('weight', new NumericBetween(['weight'], array('low' => 5, 'high' => 9999.99)));
-
-        $fv->addValidator('reps', new Compulsory(['reps']))
-            ->addValidator('reps', new Integer(['reps']))
-            ->addValidator('reps', new NumericBetween(['reps'], array('low' => 1, 'high' => 15)));
-
-        $fv->addFilter('rounding', new FloatVal())
-            ->addValidator('rounding', new Compulsory(['rounding']))
-            ->addValidator('rounding', new NumericBetween(['weight'], array('low' => 0.01, 'high' => 20)));
-
-        $result = $fv->validate($this->input->post()->toArray(), ['weight', 'reps', 'rounding']);
-
-        if (null === $result) {
-            return $result;
-        } else {
-            return [$result, $fv->getFailedField()];
-        }
-    }
 
     /**
      * Create the form.
@@ -71,13 +41,38 @@ class OnermAction extends AbstractAction implements ActionInterface
      */
     protected function createForm()
     {
-        $form = new Form('/onerm');
+        $ph = new FormPersistHandler($this->getInstance('session'), $this->input, 
+            array('weight' => '', 'reps' => 2, 'rounding' => 2.5), 'onerm_');
 
-        $form->addField('divopen', 'row1', ['class' => 'three-columns-always'])
-            ->addField('fieldsetopen', 'fs1')
-            ->addField('label', 'weightLabel', ['for' => 'weight', 'value' => 'Weight'])
-            ->addField('input', null, ['type' => 'text', 'placeholder' => 'Weight', 'name' => 'weight'])
-            ->addField('fieldsetclose', 'fs1close');
+        $form = new Form('/onerm', $ph);
+        $form->setAutoWrap('fieldset');
+
+        $form->addField('errors', ['name' => 'errors', 'class' => 'error']);
+        $form->addField('divopen', ['name' => 'row1', 'class' => 'three-columns-always']);
+
+            $form->addField('inputtext', ['name' => 'weight', 'label' => 'Weight', 
+                'placeholder' => 'Weight', 'title' => "Enter the weight you lifted (5-9999.99)."])
+                ->addFilter(new FloatVal())
+                ->addValidator(new Compulsory(['weight']))
+                ->addValidator(new NumericBetween(['weight'], array('low' => 5, 'high' => 9999.99)));
+
+            $form->addField('inputtext', ['name' => 'reps', 'label' => 'Reps', 
+                'title' => "Enter the number of reps you performed (1-15).", 'style' => "width: 4em;"])
+                ->addValidator(new Compulsory(['reps']))
+                ->addValidator(new Integer(['reps']))
+                ->addValidator(new NumericBetween(['reps'], array('low' => 1, 'high' => 15)));
+
+            $form->addField('inputtext', ['name' => 'rounding', 'label' => 'Rounding', 
+                'title' => "Enter the rounding value (0.01 - 20). This will typically be twice the smallest weight plate you have.", 
+                'style' => "width: 5em;"])
+                ->addFilter(new FloatVal())
+                ->addValidator(new Compulsory(['rounding']))
+                ->addValidator(new NumericBetween(['weight'], array('low' => 0.01, 'high' => 20)));
+
+        $form->addField('divclose', ['name' => 'row1close']);
+        $form->addField('buttonsubmit', ['name' => 'submit', 'value' => 'Submit']);
+
+        $form->setAutofocus('weight');
 
         return $form;
     }
@@ -88,16 +83,14 @@ class OnermAction extends AbstractAction implements ActionInterface
     public function dispatch()
     {
         $payload = new Payload();
-        $cookieHandler = new FormPersistHandler($this->getInstance('session'), $this->input, 
-            array('weight' => '', 'reps' => 2, 'rounding' => 2.5), 'onerm_');
-        $cookieHandler->load($payload);
 
-        $payload->set('error', '');
+        $form = $this->createForm()->load($payload);
+        $payload->set('form', $form);
+
         $payload->set('af', 'weight');
         $payload->set('results', []);
         $payload->set('percents', []);
 
-        $payload->set('form', $this->createForm());
 
         // Has user posted the form?
         if ($this->input->isPost()) {
@@ -106,12 +99,7 @@ class OnermAction extends AbstractAction implements ActionInterface
             $payload->set('reps', $this->input->post('reps', ''));
             $payload->set('rounding', $this->input->post('rounding', 2.5));
 
-            $error = $this->validate();
-            if (null !== $error) {
-                $payload->set('error', $error[0]);
-                $payload->set('af', $error[1]);
-            } else {
-
+            if ($form->validate($this->input->post()->toArray())) {
                 $results = array();
                 $calculator = new OnermCalcs();
                 $average = $calculator->onermcalcs(floatval($payload->weight), intval($payload->reps), 
@@ -125,7 +113,12 @@ class OnermAction extends AbstractAction implements ActionInterface
                 $payload->set('percents', $percents);
             }
 
-            $cookieHandler->save($payload);
+
+            $form->save($payload);
+        }
+
+        if ($form->getPersistHandler()->hasDebugging()) {
+            $form->getPersistHandler()->outputDebugging($this->container->get('logger'));
         }
 
         $responder = new OnermResponder($this->container, $this->output, $payload);

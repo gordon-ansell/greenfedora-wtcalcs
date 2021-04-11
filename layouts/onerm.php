@@ -11,43 +11,6 @@
     
     <div class="form-container">
         <div class="form-box">
-            <div class="error"><?=$this->e($error)?></div>
-            <form action="/onerm" method="POST">
-
-                <div class="three-columns-always">
-                    <fieldset>
-                        <label for="weight">Weight</label>
-                        <input type="text" placeholder="Weight" name="weight" id ="weight" 
-                            title="Enter the weight you lifted (5-9999.99)."
-                            <?php if ('weight' == $af):?>autofocus<?php endif ?>
-                            value="<?=$this->e($weight)?>" />
-                    </fieldset>
-                    <fieldset>    
-                        <label for="reps">Reps</label>
-                        <input type="text" name="reps" id="reps" style="width: 4em;"
-                            title="Enter the number of reps you performed (2-15)."
-                            <?php if ('reps' == $af):?>autofocus<?php endif ?>
-                            value="<?=$this->e($reps)?>" /> 
-                    </fieldset>
-                    <fieldset>
-                        <label for="rounding">Rounding</label>
-                        <input type="text" name="rounding" id="rounding" style="width: 5em;" 
-                            title="Enter the rounding value (0.01 - 20). This will typically be twice the smallest weight plate you have."
-                            <?php if ('rounding' == $af):?>autofocus<?php endif ?>
-                            value="<?=$this->e($rounding)?>" /> 
-                    </fieldset>
-                </div>
-                <fieldset>
-                    <input type="hidden" name="form_submitted" value="1" />
-                    <button type="submit">Submit</button>
-                </fieldset>
-
-            </form>
-        </div>
-    </div>
-
-    <div class="form-container">
-        <div class="form-box">
             <?= $form->render(); ?>
         </div>
     </div>
