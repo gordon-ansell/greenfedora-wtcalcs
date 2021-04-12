@@ -7,6 +7,7 @@
             --col-text-secondary-offset: #B56357;
             --col-border: #207871;
             --col-muted: #F4F4F4;
+            --col-muted2: #edbbbb;
             --col-code-bg: #003d00;
             --col-code-text: #00ff80;
             --col-bq-text: #555555;
@@ -22,6 +23,7 @@
                 --col-text-secondary-offset: #e0897b;
                 --col-border: #3de0d3;
                 --col-muted: #0e0f0f;
+                --col-muted2: #133535;
                 --col-code-bg: #003d00;
                 --col-code-text: #00ff80;
                 --col-bq-text: #f8f8ff;

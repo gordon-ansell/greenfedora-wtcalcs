@@ -17,7 +17,7 @@
                 document.getElementById('methodSeparate').style.display = 'none';
             } else {
                 document.getElementById('methodAll').style.display = 'none';
-                document.getElementById('methodSeparate').style.display = 'inline';
+                document.getElementById('methodSeparate').style.display = 'flex';
             }
         }
 

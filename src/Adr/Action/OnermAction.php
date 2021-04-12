@@ -70,6 +70,7 @@ class OnermAction extends AbstractAction implements ActionInterface
                 ->addValidator(new Compulsory(['rounding']))
                 ->addValidator(new NumericBetween(['weight'], array('low' => 0.01, 'high' => 20)));
 
+
         $form->addField('divclose', ['name' => 'row1close']);
         $form->addField('buttonsubmit', ['name' => 'submit', 'value' => 'Submit']);
 

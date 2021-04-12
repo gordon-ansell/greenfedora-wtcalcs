@@ -654,13 +654,20 @@ blockquote::after {
   -o-appearance: none;
   appearance: none;
   padding: 10px 5px;
-}
-.form-container .form-box form .caret {
+  width: 100%;
   display: inline;
+  padding-right: 1.5em;
+}
+.form-container .form-box form .select-wrapper {
+  overflow: hidden;
+  display: block;
+}
+.form-container .form-box form .select-wrapper:after {
   position: absolute;
+  content: "▼";
+  margin-left: -1em;
+  margin-top: 0.3em;
   cursor: pointer;
-  margin-top: -35px;
-  margin-left: 43%;
   pointer-events: none;
 }
 .form-container .form-box form .required {
@@ -696,6 +703,17 @@ blockquote::after {
   display: grid;
   grid-template-columns: 23.5% 23.5% 23.5% 23.5%;
   grid-column-gap: 2%;
+}
+.form-container .form-box form span.duowrap {
+  display: flex;
+}
+.form-container .form-box form span.duowrap input {
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+}
+.form-container .form-box form span.duowrap select {
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
 }
 .form-container .form-box form button {
   cursor: pointer;
@@ -860,6 +878,9 @@ blockquote::before {
 .form-container .form-box form input[type=radio]:focus + label {
   border-color: var(--col-border);
 }
+.form-container .form-box form span.duowrap select {
+  background-color: var(--col-bg-secondary);
+}
 .form-container .form-box form button {
   border-color: var(--col-border);
   color: var(--col-text-primary);
@@ -1002,4 +1023,12 @@ blockquote::before {
 
 .table2 {
   margin-top: 2em;
+}
+
+.form-container .form-box form .spread {
+  display: flex;
+  justify-content: space-between;
+}
+.form-container .form-box form fieldset.duofield {
+  display: inline;
 }

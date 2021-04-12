@@ -51,6 +51,7 @@ class WilksAction extends AbstractAction implements ActionInterface
      */
     protected function weightUnits(FormInterface &$form, string $name, string $label, string $title): FormInterface
     {
+        /*
         $form->addField('inputtext', ['name' => $name, 'label' => $label, 
             'title' => $title])
             ->addValidator(new Compulsory([$name]))
@@ -58,8 +59,15 @@ class WilksAction extends AbstractAction implements ActionInterface
 
         $form->addField('select', ['name' => $name . 'Units', 'label' => 'Units',
             'options' => ['kg' => 'kg', 'lb' => 'lb'],
-            'title' => "Select the units."])
-            ->setAfter('<span class="caret">&#9660;</span>');
+            'title' => "Select the units."]);
+            //->setAfter('<span class="caret">&#9660;</span>');
+        */
+
+        $form->addField('weight', ['name' => $name, 'label' => $label,
+            'title' => $title])
+            ->addValidator(new Compulsory([$name]))
+            ->addValidator(new NumericBetween([$name], array('low' => 1, 'high' => 9999.99)));
+
 
         return $form;
     }
@@ -102,7 +110,7 @@ class WilksAction extends AbstractAction implements ActionInterface
             $form->addField('radioset', ['name' => 'gender', 'label' => 'Gender', 'class' => 'radio horizontal', 
                 'options' => ['male' => 'Male', 'female' => 'Female'], 'title' => "Select your gender."]);
 
-            $form->addField('inputtext', ['name' => 'age', 'label' => 'Age', 
+            $form->addField('inputtext', ['name' => 'age', 'label' => 'Age', 'style' => 'max-width: 4em',
                 'title' => "If you want to see the adjustment for your age, enter your age here."])
                 ->addValidator(new Integer(['age']))
                 ->addValidator(new NumericBetween(['age'], array('low' => 14, 'high' => 90)));
@@ -129,12 +137,12 @@ class WilksAction extends AbstractAction implements ActionInterface
         $styleSeparate = 'display:none';
         if ("separate" == $method) {
             $styleAll = "display:none";
-            $styleSeparate = "display:inline";
+            $styleSeparate = "display:flex";
         }
 
         // Row 4. Weight.
 
-        $form->addField('divopen', ['name' => 'row4', 'id' => 'methodAll', 'class' => 'two-columns-always', 'style' => $styleAll]);
+        $form->addField('divopen', ['name' => 'row4', 'id' => 'methodAll', 'style' => $styleAll]);
 
             $this->weightUnits($form, 'weight', 'Total Weight Lifted',
                 "This can be for an invididual lift, but a true Wilks score is based on your combined squat, bench press and deadlift weights."
@@ -150,20 +158,24 @@ class WilksAction extends AbstractAction implements ActionInterface
         $rows = ['squat' => 'Squat', 'bench' => 'Bench Press', 'dead' => 'Deadlift'];
         $count = 5;
 
-        $form->addField('spanopen', ['name' => 'allblock', 'id' => 'methodSeparate', 'style' => $styleSeparate]);
+        $form->addField('divopen', ['name' => 'allblock', 'id' => 'methodSeparate', 'class' => 'spread', 'style' => $styleSeparate]);
 
-            foreach ($rows as $k => $v) {
-                $form->addField('divopen', ['name' => 'row' . $count, 'class' => 'two-columns-always']);
+            //$form->addField('spanopen', ['name' => 'allblock', 'id' => 'methodSeparate', 'style' => $styleSeparate]);
 
-                    $this->weightUnits($form, $k, $v, "Enter the weight you lifted in the " . $k . ".");
+                foreach ($rows as $k => $v) {
+                    //$form->addField('divopen', ['name' => 'row' . $count, 'class' => 'two-columns-always']);
 
-                    if ("all" == $method) {
-                        $form->getField($k)->disableValidators();
-                    }
-            
-                $form->closeField();
-                $count++;
-            }
+                        $this->weightUnits($form, $k, $v, "Enter the weight you lifted in the " . $k . ".");
+
+                        if ("all" == $method) {
+                            $form->getField($k)->disableValidators();
+                        }
+                
+                    //$form->closeField();
+                    $count++;
+                }
+
+            //$form->closeField();
 
         $form->closeField();
 
