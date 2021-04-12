@@ -74,6 +74,6 @@ class WilksCalculator extends AbstractCalculator implements ModelInterface
         $wilksAge = $this->wilks($weight, $bodyWeight, $gender)->value;
         $ret = $this->applyAge($wilksAge, $age);
 
-        return new WilksResult('Wilks (AGE)', ($ret[0]), ['mult' => $ret[1]]);
+        return new WilksResult('Wilks/Age', ($ret[0]), ['mult' => $ret[1]]);
     }
 }

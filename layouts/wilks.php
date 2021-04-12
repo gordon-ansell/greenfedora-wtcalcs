@@ -31,7 +31,7 @@
         </div>
     </div>
 
-    <?php if ($results): ?>
+    <?php if ($resultsWilks): ?>
         <a id="results"></a>
         <h4>Wilks Results</h4>
         <div class="flextable stripe">
@@ -40,19 +40,17 @@
                 <div class="td alignright">Result</div>
                 <div class="td alignright">Multiplier</div>
             </div>
-            <?php foreach($results as $item): ?>
-                <?php if (substr($item->name, 0, strlen("Wilks")) === "Wilks"): ?>
-                    <div class="tr"><div class="td"><?=$item->name?></div>
-                    <div class="td alignright"><?=number_format($item->value, 2)?></div>
-                    <div class="td alignright"><?=number_format($item->extra['mult'], 4)?></div></div>
-                <?php endif ?>
+            <?php foreach($resultsWilks as $item): ?>
+                <div class="tr"><div class="td"><?=$item->name?></div>
+                <div class="td alignright"><?=number_format($item->value, 2)?></div>
+                <div class="td alignright"><?=number_format($item->extra['mult'], 4)?></div></div>
             <?php endforeach ?>
         </div>
         <div class="explain">
             <ul>
                 <li><strong>Wilks</strong> is your raw Wilks score. The multiplier column shows the multiplier applied to the score for your body weight. The heavier you are, the bigger the penalty against you. This allows light people to compete fairly with heavy people.</li>
                 <?php if ($age): ?>
-                    <li><strong>Wilks (AGE)</strong> is your age-adjusted Wilks score. People between 23 and 40 get no adjustment because this is considered the age when you are at maximum strength capacity. People outside these ages get an adjustment for being older or younger. The multiplier column shows what your Wilks score is multiplied by to account for your age.</li>
+                    <li><strong>Wilks/Age</strong> is your age-adjusted Wilks score. People between 23 and 40 get no adjustment because this is considered the age when you are at maximum strength capacity. People outside these ages get an adjustment for being older or younger. The multiplier column shows what your Wilks score is multiplied by to account for your age.</li>
                 <?php endif ?>
             </ul>
         </div>
@@ -69,27 +67,25 @@
                     <div class="td alignright">Result</div>
                     <div class="td alignright">Multiplier</div>
                 </div>
-                <?php foreach($results as $item): ?>
-                    <?php if (substr($item->name, 0, strlen("AM")) === "AM"): ?>
-                        <div class="tr"><div class="td"><?=$item->name?></div>
-                        <div class="td alignright"><?=number_format($item->value, 2)?></div>
-                        <div class="td alignright"><?=number_format($item->extra['mult'], 4)?></div></div>
-                    <?php endif ?>
+                <?php foreach($resultsAllometric as $item): ?>
+                    <div class="tr"><div class="td"><?=$item->name?></div>
+                    <div class="td alignright"><?=number_format($item->value, 2)?></div>
+                    <div class="td alignright"><?=number_format($item->extra['mult'], 4)?></div></div>
                 <?php endforeach ?>
             </div>
             <div class="explain">
                 <ul>
-                    <li><strong>AM Squat</strong> is an 'allometric' body weight-adjusted measure for your squat.</li>
+                    <li><strong>Squat</strong> is an 'allometric' body weight-adjusted measure for your squat.</li>
                     <?php if ($age): ?>
-                        <li><strong>AM Squat (AGE)</strong> is an age-adjusted version of above.</li>
+                        <li><strong>Squat/Age</strong> is an age-adjusted version of above.</li>
                     <?php endif ?>
-                    <li><strong>AM Bench</strong> is an 'allometric' body weight-adjusted measure for your bench press.</li>
+                    <li><strong>Bench</strong> is an 'allometric' body weight-adjusted measure for your bench press.</li>
                     <?php if ($age): ?>
-                        <li><strong>AM Bench (AGE)</strong> is an age-adjusted version of above.</li>
+                        <li><strong>Bench/Age</strong> is an age-adjusted version of above.</li>
                     <?php endif ?>
-                    <li><strong>AM Deadlift</strong> is an 'allometric' body weight-adjusted measure for your deadlift. <strong>Note</strong>: the allometric deadlift figure is known to be less reliable than those for the squat and bench press.</li>
+                    <li><strong>Dead</strong> is an 'allometric' body weight-adjusted measure for your deadlift. <strong>Note</strong>: the allometric deadlift figure is known to be less reliable than those for the squat and bench press.</li>
                     <?php if ($age): ?>
-                        <li><strong>AM Deadlift (AGE)</strong> is an age-adjusted version of above.</li>
+                        <li><strong>Dead/Age</strong> is an age-adjusted version of above.</li>
                     <?php endif ?>
                 </ul>
             </div>
@@ -106,39 +102,37 @@
                 <div class="td alignright">Result</div>
                 <div class="td alignright">Multiplier</div>
             </div>
-            <?php foreach($results as $item): ?>
-                <?php if (substr($item->name, 0, strlen("SIFF")) === "SIFF"): ?>
-                    <?php if (('separate' == $method) and (substr($item->name, 0, strlen("SIFF Total")) === "SIFF Total")): ?>
-                        <div class="tr bold"><div class="td"><?=$item->name?></div>
-                        <div class="td alignright"><?=number_format($item->value, 2)?></div>
-                        <div class="td alignright"><?=number_format($item->extra['mult'], 4)?></div></div>
-                    <?php else: ?>
-                        <div class="tr"><div class="td"><?=$item->name?></div>
-                        <div class="td alignright"><?=number_format($item->value, 2)?></div>
-                        <div class="td alignright"><?=number_format($item->extra['mult'], 4)?></div></div>
-                    <?php endif ?>
+            <?php foreach($resultsSiff as $item): ?>
+                <?php if (('separate' == $method) and (substr($item->name, 0, strlen("Total")) === "Total")): ?>
+                    <div class="tr bold"><div class="td"><?=$item->name?></div>
+                    <div class="td alignright"><?=number_format($item->value, 2)?></div>
+                    <div class="td alignright"><?=number_format($item->extra['mult'], 4)?></div></div>
+                <?php else: ?>
+                    <div class="tr"><div class="td"><?=$item->name?></div>
+                    <div class="td alignright"><?=number_format($item->value, 2)?></div>
+                    <div class="td alignright"><?=number_format($item->extra['mult'], 4)?></div></div>
                 <?php endif ?>
             <?php endforeach ?>
         </div>
         <div class="explain">
             <ul>
                 <?php if ("separate" == $method): ?>
-                    <li><strong>SIFF Squat</strong> is the SIFF body weight-adjusted measure for your squat.</li>
+                    <li><strong>Squat</strong> is the SIFF body weight-adjusted measure for your squat.</li>
                     <?php if ($age): ?>
-                        <li><strong>SIFF Squat (AGE)</strong> is an age-adjusted version of above.</li>
+                        <li><strong>Squat/Age</strong> is an age-adjusted version of above.</li>
                     <?php endif ?>
-                    <li><strong>SIFF Bench</strong> is the SIFF body weight-adjusted measure for your bench press.</li>
+                    <li><strong>Bench</strong> is the SIFF body weight-adjusted measure for your bench press.</li>
                     <?php if ($age): ?>
-                        <li><strong>SIFF Bench (AGE)</strong> is an age-adjusted version of above.</li>
+                        <li><strong>Bench/Age</strong> is an age-adjusted version of above.</li>
                     <?php endif ?>
-                    <li><strong>SIFF Deadlift</strong> is the SIFF body weight-adjusted measure for your deadlift.
+                    <li><strong>Dead</strong> is the SIFF body weight-adjusted measure for your deadlift.
                     <?php if ($age): ?>
-                        <li><strong>SIFF Deadlift (AGE)</strong> is an age-adjusted version of above.</li>
+                        <li><strong>Dead/Age</strong> is an age-adjusted version of above.</li>
                     <?php endif ?>
                 <?php endif ?>
-                <li><strong>SIFF Total</strong> is the SIFF body weight-adjusted measure for your lifts.</li>
+                <li><strong>Total</strong> is the SIFF body weight-adjusted measure for your lifts.</li>
                 <?php if ($age): ?>
-                    <li><strong>SIFF Total (AGE)</strong> is an age-adjusted version of above.</li>
+                    <li><strong>Total/Age</strong> is an age-adjusted version of above.</li>
                 <?php endif ?>
             </ul>
         </div>

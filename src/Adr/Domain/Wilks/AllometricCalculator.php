@@ -36,7 +36,7 @@ class AllometricCalculator extends AbstractCalculator implements ModelInterface
         $smult = $bodyWeight ** -0.60;
         $sresult = $weight * $smult;
 
-        return new WilksResult('AM Squat', $sresult, ['mult' => $smult]);
+        return new WilksResult('Squat', $sresult, ['mult' => $smult]);
     }
 
     /**
@@ -52,7 +52,7 @@ class AllometricCalculator extends AbstractCalculator implements ModelInterface
         $bmult = $bodyWeight ** -0.57;
         $bresult = $weight * $bmult;
 
-        return new WilksResult('AM Bench', $bresult, ['mult' => $bmult]);
+        return new WilksResult('Bench', $bresult, ['mult' => $bmult]);
     }
 
     /**
@@ -68,7 +68,7 @@ class AllometricCalculator extends AbstractCalculator implements ModelInterface
         $bmult = $bodyWeight ** -0.46;
         $bresult = $weight * $bmult;
 
-        return new WilksResult('AM Deadlift', $bresult, ['mult' => $bmult]);
+        return new WilksResult('Dead', $bresult, ['mult' => $bmult]);
     }
 
     /**
@@ -85,7 +85,7 @@ class AllometricCalculator extends AbstractCalculator implements ModelInterface
         $raw = $this->squat($weight, $bodyWeight)->value;
         $result = $this->applyAge($raw, $age);
 
-        return new WilksResult('AM Squat (AGE)', $result[0], ['mult' => $result[1]]);
+        return new WilksResult('Squat/Age', $result[0], ['mult' => $result[1]]);
     }
 
     /**
@@ -102,7 +102,7 @@ class AllometricCalculator extends AbstractCalculator implements ModelInterface
         $raw = $this->bench($weight, $bodyWeight)->value;
         $result = $this->applyAge($raw, $age);
 
-        return new WilksResult('AM Bench (AGE)', $result[0], ['mult' => $result[1]]);
+        return new WilksResult('Bench/Age', $result[0], ['mult' => $result[1]]);
     }
 
     /**
@@ -119,6 +119,6 @@ class AllometricCalculator extends AbstractCalculator implements ModelInterface
         $raw = $this->dead($weight, $bodyWeight)->value;
         $result = $this->applyAge($raw, $age);
 
-        return new WilksResult('AM Deadlift (AGE)', $result[0], ['mult' => $result[1]]);
+        return new WilksResult('Dead/Age', $result[0], ['mult' => $result[1]]);
     }
 }

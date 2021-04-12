@@ -51,19 +51,7 @@ class WilksAction extends AbstractAction implements ActionInterface
      */
     protected function weightUnits(FormInterface &$form, string $name, string $label, string $title): FormInterface
     {
-        /*
-        $form->addField('inputtext', ['name' => $name, 'label' => $label, 
-            'title' => $title])
-            ->addValidator(new Compulsory([$name]))
-            ->addValidator(new NumericBetween([$name], array('low' => 1, 'high' => 9999.99)));
-
-        $form->addField('select', ['name' => $name . 'Units', 'label' => 'Units',
-            'options' => ['kg' => 'kg', 'lb' => 'lb'],
-            'title' => "Select the units."]);
-            //->setAfter('<span class="caret">&#9660;</span>');
-        */
-
-        $form->addField('weight', ['name' => $name, 'label' => $label,
+        $form->addField('weight', ['name' => $name, 'label' => $label, 'type' => 'number', 'step' => 'any', 'min' => '1',
             'title' => $title])
             ->addValidator(new Compulsory([$name]))
             ->addValidator(new NumericBetween([$name], array('low' => 1, 'high' => 9999.99)));
@@ -105,31 +93,27 @@ class WilksAction extends AbstractAction implements ActionInterface
 
         // Row 1. Gender, age.
 
-        $form->addField('divopen', ['name' => 'row1', 'class' => 'two-columns-always']);
+        $form->addField('divopen', ['name' => 'row1', 'class' => 'three-columns']);
 
             $form->addField('radioset', ['name' => 'gender', 'label' => 'Gender', 'class' => 'radio horizontal', 
                 'options' => ['male' => 'Male', 'female' => 'Female'], 'title' => "Select your gender."]);
 
-            $form->addField('inputtext', ['name' => 'age', 'label' => 'Age', 'style' => 'max-width: 4em',
-                'title' => "If you want to see the adjustment for your age, enter your age here."])
-                ->addValidator(new Integer(['age']))
-                ->addValidator(new NumericBetween(['age'], array('low' => 14, 'high' => 90)));
+                $this->weightUnits($form, 'bodyWeight', 'Body Weight', "Enter your body weight.");
 
-        $form->closeField();
+                $form->addField('inputnumber', ['name' => 'age', 'label' => 'Age', 'style' => 'max-width: 4em',
+                    'title' => "If you want to see the adjustment for your age, enter your age here. Whole numbers only.",
+                    'step' => '1', 'min' => '14', 'max' => '90'])
+                    ->addValidator(new Integer(['age']))
+                    ->addValidator(new NumericBetween(['age'], array('low' => 14, 'high' => 90)));
 
-        // Row 2. Bodyweight.
+            $form->closeField();
 
-        $form->addField('divopen', ['name' => 'row2', 'class' => 'two-columns-always']);
-
-            $this->weightUnits($form, 'bodyWeight', 'Body Weight', "Enter your body weight.");
-
-        $form->closeField();
-
-        // Row 3. Method.
+        // Row 2. Method, bodyweight.
 
         $form->addField('radioset', ['name' => 'method', 'label' => 'Method', 'class' => 'radio horizontal', 
-            'options' => ['all' => 'Total', 'separate' => 'Separate Lifts'], 'onclick' => "javascript:methodCheck();",
+            'options' => ['all' => 'Total', 'separate' => 'Separate'], 'onclick' => "javascript:methodCheck();",
             'title' => "Select the method of calculation: total of all lifts together or enter weights for each lift separately?"]);
+
 
         // Work out the styles for all/separate.
 
@@ -140,9 +124,9 @@ class WilksAction extends AbstractAction implements ActionInterface
             $styleSeparate = "display:inline";
         }
 
-        // Row 4. Weight.
+        // Row 3. Weight.
 
-        $form->addField('divopen', ['name' => 'row4', 'id' => 'methodAll', 'style' => $styleAll]);
+        $form->addField('divopen', ['name' => 'row3', 'id' => 'methodAll', 'style' => $styleAll]);
 
             $this->weightUnits($form, 'weight', 'Total Weight Lifted',
                 "This can be for an invididual lift, but a true Wilks score is based on your combined squat, bench press and deadlift weights."
@@ -153,7 +137,7 @@ class WilksAction extends AbstractAction implements ActionInterface
 
         $form->closeField();
 
-        // Rows 5-7. Squat, Bench Press, Deadlift.
+        // Rows 4-6. Squat, Bench Press, Deadlift.
 
         $rows = ['squat' => 'Squat', 'bench' => 'Bench Press', 'dead' => 'Deadlift'];
         $count = 5;
@@ -195,7 +179,9 @@ class WilksAction extends AbstractAction implements ActionInterface
         $form = $this->createForm()->load($payload);
         $payload->set('form', $form);
 
-        $payload->set('results', []);
+        $payload->set('resultsWilks', []);
+        $payload->set('resultsAllometric', []);
+        $payload->set('resultsSiff', []);
 
         // Has user posted the form?
         if ($this->input->isPost()) {
@@ -247,65 +233,69 @@ class WilksAction extends AbstractAction implements ActionInterface
                     $convBodyWeight = $payload->get('bodyWeight');
                 }
 
-                $results = [];
+                $resultsWilks = [];
+                $resultsAllometric = [];
+                $resultsSiff = [];
 
                 $calculator = new WilksCalculator();
-                $results[] = $calculator->wilks(floatval($convWeight), floatval($convBodyWeight), $payload->gender);
+                $resultsWilks[] = $calculator->wilks(floatval($convWeight), floatval($convBodyWeight), $payload->gender);
                 if ($payload->age and $payload->age > 13) {
-                    $results[] = $calculator->wilksAge(floatval($convWeight), floatval($convBodyWeight), 
+                    $resultsWilks[] = $calculator->wilksAge(floatval($convWeight), floatval($convBodyWeight), 
                         $payload->gender, intval($payload->age));
                 }
 
                 if ('separate' == $payload->get('method')) {
                     $allo = new AllometricCalculator();
-                    $results[] = $allo->squat(floatval($convSingles['squat']), floatval($convBodyWeight));
+                    $resultsAllometric[] = $allo->squat(floatval($convSingles['squat']), floatval($convBodyWeight));
                     if ($payload->age and $payload->age > 13) {
-                        $results[] = $allo->squatAge(floatval($convSingles['squat']), floatval($convBodyWeight), 
+                        $resultsAllometric[] = $allo->squatAge(floatval($convSingles['squat']), floatval($convBodyWeight), 
                         intval($payload->age));
                     }
-                    $results[] = $allo->bench(floatval($convSingles['bench']), floatval($convBodyWeight));
+                    $resultsAllometric[] = $allo->bench(floatval($convSingles['bench']), floatval($convBodyWeight));
                     if ($payload->age and $payload->age > 13) {
-                        $results[] = $allo->benchAge(floatval($convSingles['bench']), floatval($convBodyWeight),
+                        $resultsAllometric[] = $allo->benchAge(floatval($convSingles['bench']), floatval($convBodyWeight),
                         intval($payload->age));
                     }
-                    $results[] = $allo->dead(floatval($convSingles['dead']), floatval($convBodyWeight));
+                    $resultsAllometric[] = $allo->dead(floatval($convSingles['dead']), floatval($convBodyWeight));
                     if ($payload->age and $payload->age > 13) {
-                        $results[] = $allo->deadAge(floatval($convSingles['dead']), floatval($convBodyWeight),
+                        $resultsAllometric[] = $allo->deadAge(floatval($convSingles['dead']), floatval($convBodyWeight),
                         intval($payload->age));
                     }
                 }
 
                 $siff = new SiffCalculator();
                 if ('separate' == $payload->get('method')) {
-                    $results[] = $siff->squat(floatval($convSingles['squat']), floatval($convBodyWeight));
+                    $resultsSiff[] = $siff->squat(floatval($convSingles['squat']), floatval($convBodyWeight));
                     if ($payload->age and $payload->age > 13) {
-                        $results[] = $siff->squatAge(floatval($convSingles['squat']), floatval($convBodyWeight), 
+                        $resultsSiff[] = $siff->squatAge(floatval($convSingles['squat']), floatval($convBodyWeight), 
                         intval($payload->age));
                     }
-                    $results[] = $siff->bench(floatval($convSingles['bench']), floatval($convBodyWeight));
+                    $resultsSiff[] = $siff->bench(floatval($convSingles['bench']), floatval($convBodyWeight));
                     if ($payload->age and $payload->age > 13) {
-                        $results[] = $siff->benchAge(floatval($convSingles['bench']), floatval($convBodyWeight),
+                        $resultsSiff[] = $siff->benchAge(floatval($convSingles['bench']), floatval($convBodyWeight),
                         intval($payload->age));
                     }
-                    $results[] = $siff->dead(floatval($convSingles['dead']), floatval($convBodyWeight));
+                    $resultsSiff[] = $siff->dead(floatval($convSingles['dead']), floatval($convBodyWeight));
                     if ($payload->age and $payload->age > 13) {
-                        $results[] = $siff->deadAge(floatval($convSingles['dead']), floatval($convBodyWeight),
+                        $resultsSiff[] = $siff->deadAge(floatval($convSingles['dead']), floatval($convBodyWeight),
                         intval($payload->age));
                     }
-                    $results[] = $siff->total(floatval($convSingles['dead'] + $convSingles['bench'] + $convSingles['squat']), 
+                    $resultsSiff[] = $siff->total(floatval($convSingles['dead'] + $convSingles['bench'] + $convSingles['squat']), 
                         floatval($convBodyWeight));
                     if ($payload->age and $payload->age > 13) {
-                        $results[] = $siff->totalAge(floatval($convSingles['dead'] + $convSingles['bench'] + $convSingles['squat']), 
+                        $resultsSiff[] = $siff->totalAge(floatval($convSingles['dead'] + $convSingles['bench'] + $convSingles['squat']), 
                             floatval($convBodyWeight), intval($payload->age));
                     }
                 } else {
-                    $results[] = $siff->total(floatval($convWeight), floatval($convBodyWeight));
+                    $resultsSiff[] = $siff->total(floatval($convWeight), floatval($convBodyWeight));
                     if ($payload->age and $payload->age > 13) {
-                        $results[] = $siff->totalAge(floatval($convWeight), floatval($convBodyWeight), intval($payload->age));
+                        $resultsSiff[] = $siff->totalAge(floatval($convWeight), floatval($convBodyWeight), intval($payload->age));
                     }
                 }
 
-                $payload->set('results', $results);
+                $payload->set('resultsWilks', $resultsWilks);
+                $payload->set('resultsAllometric', $resultsAllometric);
+                $payload->set('resultsSiff', $resultsSiff);
             }
 
             $form->save($payload);

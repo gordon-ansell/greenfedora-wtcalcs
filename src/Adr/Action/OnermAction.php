@@ -51,21 +51,25 @@ class OnermAction extends AbstractAction implements ActionInterface
         $form->addField('errors', ['name' => 'errors', 'class' => 'error']);
         $form->addField('divopen', ['name' => 'row1', 'class' => 'three-columns-always']);
 
-            $form->addField('inputtext', ['name' => 'weight', 'label' => 'Weight', 
-                'placeholder' => 'Weight', 'title' => "Enter the weight you lifted (5-9999.99)."])
+            $form->addField('inputnumber', ['name' => 'weight', 'label' => 'Weight', 
+                'placeholder' => 'Weight', 'title' => "Enter the weight you lifted (5-9999.99).",
+                'step' => 'any', 'min' => '1'])
                 ->addFilter(new FloatVal())
                 ->addValidator(new Compulsory(['weight']))
                 ->addValidator(new NumericBetween(['weight'], array('low' => 5, 'high' => 9999.99)));
 
-            $form->addField('inputtext', ['name' => 'reps', 'label' => 'Reps', 
-                'title' => "Enter the number of reps you performed (1-15).", 'style' => "width: 4em;"])
+
+            $form->addField('inputnumber', ['name' => 'reps', 'label' => 'Reps', 
+                'title' => "Enter the number of reps you performed (1-15).", 'style' => "width: 4em;",
+                'step' => '1', 'min' => '1', 'max' => '15', 'step' => '1'])
                 ->addValidator(new Compulsory(['reps']))
                 ->addValidator(new Integer(['reps']))
                 ->addValidator(new NumericBetween(['reps'], array('low' => 1, 'high' => 15)));
 
-            $form->addField('inputtext', ['name' => 'rounding', 'label' => 'Rounding', 
+            $form->addField('inputnumber', ['name' => 'rounding', 'label' => 'Rounding', 
                 'title' => "Enter the rounding value (0.01 - 20). This will typically be twice the smallest weight plate you have.", 
-                'style' => "width: 5em;"])
+                'style' => "width: 5em;",
+                'step' => 'any', 'min' => '0.01', 'max' => '20'])
                 ->addFilter(new FloatVal())
                 ->addValidator(new Compulsory(['rounding']))
                 ->addValidator(new NumericBetween(['weight'], array('low' => 0.01, 'high' => 20)));
