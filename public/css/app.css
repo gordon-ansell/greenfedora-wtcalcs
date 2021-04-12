@@ -749,51 +749,454 @@ blockquote::after {
   }
 }
 .flextable {
-  display: flex;
-  flex-flow: column nowrap;
-  margin: 0.5em;
-  line-height: 1.5;
-  border-bottom: 1px solid;
-  flex: 1 1 auto;
   font-family: "Fira Code", Menlo, Monaco, Consolas, "Andale Mono", "Courier New", monospace;
-  font-weight: 200;
   font-size: 90%;
+  width: 100%;
+  border-radius: 0.5em;
+  display: flex;
+  flex-direction: column;
 }
-.flextable .th {
-  display: none;
-  font-weight: bold;
-}
-.flextable .th > .td {
-  white-space: normal;
-}
-.flextable .tr {
+.flextable tr, .flextable .row {
   width: 100%;
   display: flex;
-  flex-flow: row nowrap;
-}
-.flextable .td {
-  display: flex;
-  flex-flow: row nowrap;
-  flex-grow: 1;
-  flex-basis: 0;
-  padding: 0.5em;
-  word-break: break-word;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  min-width: 0px;
-  white-space: nowrap;
+  flex-direction: row;
+  padding: 0.25em 0.25em 0.25em 0.25em;
   border-bottom: 1px solid;
+  justify-content: flex-start;
 }
-.flextable .td.alignright {
-  display: inline;
+.flextable tr td, .flextable tr th, .flextable tr .column, .flextable .row td, .flextable .row th, .flextable .row .column {
+  height: auto;
+  padding: 0 0.25em 0 0.25em;
   flex-grow: 1;
-  align-content: flex-end;
+  flex-shrink: 1;
+}
+.flextable tr td.show1, .flextable tr td.show2, .flextable tr th.show1, .flextable tr th.show2, .flextable tr .column.show1, .flextable tr .column.show2, .flextable .row td.show1, .flextable .row td.show2, .flextable .row th.show1, .flextable .row th.show2, .flextable .row .column.show1, .flextable .row .column.show2 {
+  display: none;
+}
+.flextable tr td .subitem, .flextable tr th .subitem, .flextable tr .column .subitem, .flextable .row td .subitem, .flextable .row th .subitem, .flextable .row .column .subitem {
+  width: 100%;
+}
+.flextable tr td.icons, .flextable tr th.icons, .flextable tr .column.icons, .flextable .row td.icons, .flextable .row th.icons, .flextable .row .column.icons {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+}
+.flextable tr td.icons .iconw, .flextable tr th.icons .iconw, .flextable tr .column.icons .iconw, .flextable .row td.icons .iconw, .flextable .row th.icons .iconw, .flextable .row .column.icons .iconw {
+  padding-right: 1em;
+}
+.flextable tr td.icons .iconw:last-of-type, .flextable tr th.icons .iconw:last-of-type, .flextable tr .column.icons .iconw:last-of-type, .flextable .row td.icons .iconw:last-of-type, .flextable .row th.icons .iconw:last-of-type, .flextable .row .column.icons .iconw:last-of-type {
+  padding-right: 0;
+}
+.flextable tr.with-subs, .flextable .row.with-subs {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+.flextable tr.with-subs .subrow, .flextable .row.with-subs .subrow {
+  width: 100%;
+  padding: 0.25em 0.25em 0.25em 0.25em;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+}
+.flextable tr.with-subs .subrow td, .flextable tr.with-subs .subrow .column, .flextable .row.with-subs .subrow td, .flextable .row.with-subs .subrow .column {
+  height: auto;
+  padding: 0 0.25em 0 0.25em;
+}
+.flextable tr.with-subs .subrow td.right, .flextable tr.with-subs .subrow .column.right, .flextable .row.with-subs .subrow td.right, .flextable .row.with-subs .subrow .column.right {
   text-align: right;
 }
-.flextable .tr.bold {
+.flextable .right {
+  text-align: right;
+}
+.flextable .centre {
+  text-align: center;
+}
+.flextable.smaller {
+  font-size: 80%;
+}
+.flextable .bold {
   font-weight: bold;
 }
+.flextable .size-1 {
+  flex-basis: 1%;
+}
+.flextable .size-2 {
+  flex-basis: 2%;
+}
+.flextable .size-3 {
+  flex-basis: 3%;
+}
+.flextable .size-4 {
+  flex-basis: 4%;
+}
+.flextable .size-5 {
+  flex-basis: 5%;
+}
+.flextable .size-6 {
+  flex-basis: 6%;
+}
+.flextable .size-7 {
+  flex-basis: 7%;
+}
+.flextable .size-8 {
+  flex-basis: 8%;
+}
+.flextable .size-9 {
+  flex-basis: 9%;
+}
+.flextable .size-10 {
+  flex-basis: 10%;
+}
+.flextable .size-11 {
+  flex-basis: 11%;
+}
+.flextable .size-12 {
+  flex-basis: 12%;
+}
+.flextable .size-13 {
+  flex-basis: 13%;
+}
+.flextable .size-14 {
+  flex-basis: 14%;
+}
+.flextable .size-15 {
+  flex-basis: 15%;
+}
+.flextable .size-16 {
+  flex-basis: 16%;
+}
+.flextable .size-17 {
+  flex-basis: 17%;
+}
+.flextable .size-18 {
+  flex-basis: 18%;
+}
+.flextable .size-19 {
+  flex-basis: 19%;
+}
+.flextable .size-20 {
+  flex-basis: 20%;
+}
+.flextable .size-21 {
+  flex-basis: 21%;
+}
+.flextable .size-22 {
+  flex-basis: 22%;
+}
+.flextable .size-23 {
+  flex-basis: 23%;
+}
+.flextable .size-24 {
+  flex-basis: 24%;
+}
+.flextable .size-25 {
+  flex-basis: 25%;
+}
+.flextable .size-26 {
+  flex-basis: 26%;
+}
+.flextable .size-27 {
+  flex-basis: 27%;
+}
+.flextable .size-28 {
+  flex-basis: 28%;
+}
+.flextable .size-29 {
+  flex-basis: 29%;
+}
+.flextable .size-30 {
+  flex-basis: 30%;
+}
+.flextable .size-31 {
+  flex-basis: 31%;
+}
+.flextable .size-32 {
+  flex-basis: 32%;
+}
+.flextable .size-33 {
+  flex-basis: 33%;
+}
+.flextable .size-34 {
+  flex-basis: 34%;
+}
+.flextable .size-35 {
+  flex-basis: 35%;
+}
+.flextable .size-36 {
+  flex-basis: 36%;
+}
+.flextable .size-37 {
+  flex-basis: 37%;
+}
+.flextable .size-38 {
+  flex-basis: 38%;
+}
+.flextable .size-39 {
+  flex-basis: 39%;
+}
+.flextable .size-40 {
+  flex-basis: 40%;
+}
+.flextable .size-41 {
+  flex-basis: 41%;
+}
+.flextable .size-42 {
+  flex-basis: 42%;
+}
+.flextable .size-43 {
+  flex-basis: 43%;
+}
+.flextable .size-44 {
+  flex-basis: 44%;
+}
+.flextable .size-45 {
+  flex-basis: 45%;
+}
+.flextable .size-46 {
+  flex-basis: 46%;
+}
+.flextable .size-47 {
+  flex-basis: 47%;
+}
+.flextable .size-48 {
+  flex-basis: 48%;
+}
+.flextable .size-49 {
+  flex-basis: 49%;
+}
+.flextable .size-50 {
+  flex-basis: 50%;
+}
+.flextable .size-51 {
+  flex-basis: 51%;
+}
+.flextable .size-52 {
+  flex-basis: 52%;
+}
+.flextable .size-53 {
+  flex-basis: 53%;
+}
+.flextable .size-54 {
+  flex-basis: 54%;
+}
+.flextable .size-55 {
+  flex-basis: 55%;
+}
+.flextable .size-56 {
+  flex-basis: 56%;
+}
+.flextable .size-57 {
+  flex-basis: 57%;
+}
+.flextable .size-58 {
+  flex-basis: 58%;
+}
+.flextable .size-59 {
+  flex-basis: 59%;
+}
+.flextable .size-60 {
+  flex-basis: 60%;
+}
+.flextable .size-61 {
+  flex-basis: 61%;
+}
+.flextable .size-62 {
+  flex-basis: 62%;
+}
+.flextable .size-63 {
+  flex-basis: 63%;
+}
+.flextable .size-64 {
+  flex-basis: 64%;
+}
+.flextable .size-65 {
+  flex-basis: 65%;
+}
+.flextable .size-66 {
+  flex-basis: 66%;
+}
+.flextable .size-67 {
+  flex-basis: 67%;
+}
+.flextable .size-68 {
+  flex-basis: 68%;
+}
+.flextable .size-69 {
+  flex-basis: 69%;
+}
+.flextable .size-70 {
+  flex-basis: 70%;
+}
+.flextable .size-71 {
+  flex-basis: 71%;
+}
+.flextable .size-72 {
+  flex-basis: 72%;
+}
+.flextable .size-73 {
+  flex-basis: 73%;
+}
+.flextable .size-74 {
+  flex-basis: 74%;
+}
+.flextable .size-75 {
+  flex-basis: 75%;
+}
+.flextable .size-76 {
+  flex-basis: 76%;
+}
+.flextable .size-77 {
+  flex-basis: 77%;
+}
+.flextable .size-78 {
+  flex-basis: 78%;
+}
+.flextable .size-79 {
+  flex-basis: 79%;
+}
+.flextable .size-80 {
+  flex-basis: 80%;
+}
+.flextable .size-81 {
+  flex-basis: 81%;
+}
+.flextable .size-82 {
+  flex-basis: 82%;
+}
+.flextable .size-83 {
+  flex-basis: 83%;
+}
+.flextable .size-84 {
+  flex-basis: 84%;
+}
+.flextable .size-85 {
+  flex-basis: 85%;
+}
+.flextable .size-86 {
+  flex-basis: 86%;
+}
+.flextable .size-87 {
+  flex-basis: 87%;
+}
+.flextable .size-88 {
+  flex-basis: 88%;
+}
+.flextable .size-89 {
+  flex-basis: 89%;
+}
+.flextable .size-90 {
+  flex-basis: 90%;
+}
+.flextable .size-91 {
+  flex-basis: 91%;
+}
+.flextable .size-92 {
+  flex-basis: 92%;
+}
+.flextable .size-93 {
+  flex-basis: 93%;
+}
+.flextable .size-94 {
+  flex-basis: 94%;
+}
+.flextable .size-95 {
+  flex-basis: 95%;
+}
+.flextable .size-96 {
+  flex-basis: 96%;
+}
+.flextable .size-97 {
+  flex-basis: 97%;
+}
+.flextable .size-98 {
+  flex-basis: 98%;
+}
+.flextable .size-99 {
+  flex-basis: 99%;
+}
+.flextable .size-100 {
+  flex-basis: 100%;
+}
+.flextable .grow-1 {
+  flex-grow: 1;
+}
+.flextable .grow-2 {
+  flex-grow: 2;
+}
+.flextable .grow-3 {
+  flex-grow: 3;
+}
+.flextable .grow-4 {
+  flex-grow: 4;
+}
+.flextable .grow-5 {
+  flex-grow: 5;
+}
+.flextable .grow-6 {
+  flex-grow: 6;
+}
+.flextable .grow-7 {
+  flex-grow: 7;
+}
+.flextable .grow-8 {
+  flex-grow: 8;
+}
+.flextable .grow-9 {
+  flex-grow: 9;
+}
+.flextable .grow-10 {
+  flex-grow: 10;
+}
+.flextable thead tr, .flextable thead .row {
+  font-weight: bold;
+}
+.flextable .subheader {
+  display: block;
+  font-weight: bold;
+}
+.flextable .subheader td, .flextable .subheader .column {
+  padding-left: 0.5em;
+}
+.flextable .footer {
+  display: block;
+  text-align: center;
+  padding-top: 0.5em;
+}
+.flextable .footer .paging-nav {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+.flextable .hide1, .flextable .hide2 {
+  display: none;
+  flex-basis: 0;
+}
+.flextable img.icon {
+  height: 16px;
+  width: 16px;
+}
 
+@media screen and (min-width: 37.5em) {
+  .flextable tr .hide1, .flextable .row .hide1 {
+    display: inline;
+  }
+  .flextable tr td.show1, .flextable tr th.show1, .flextable tr .column.show1, .flextable .row td.show1, .flextable .row th.show1, .flextable .row .column.show1 {
+    display: inline;
+  }
+  .flextable img.icon {
+    height: 24px;
+    width: 24px;
+  }
+}
+@media screen and (min-width: 62em) {
+  .flextable tr .hide2, .flextable .row .hide2 {
+    display: inline;
+  }
+  .flextable tr td.show2, .flextable tr th.show2, .flextable tr .column.show2, .flextable .row td.show2, .flextable .row th.show2, .flextable .row .column.show2 {
+    display: inline;
+  }
+}
 * {
   border-color: var(--col-border);
 }
@@ -847,17 +1250,20 @@ blockquote::before {
 .flextable {
   border-bottom-color: var(--col-muted);
 }
-.flextable .th {
-  background-color: var(--col-muted);
-}
-.flextable .td {
+.flextable tr, .flextable .row {
   border-bottom-color: var(--col-muted);
 }
-.flextable .th > .td {
-  border-bottom-color: var(--col-text-primary);
+.flextable thead tr, .flextable thead .row {
+  background-color: var(--col-muted);
+}
+.flextable .subheader {
+  background-color: var(--col-muted);
+}
+.flextable .footer {
+  background-color: var(--col-muted);
 }
 
-.flextable.stripe .tr:nth-of-type(even) {
+.flextable.stripe tbody tr:nth-child(even), .flextable.stripe tbody .row:nth-child(even) {
   background-color: var(--col-bg-secondary);
 }
 

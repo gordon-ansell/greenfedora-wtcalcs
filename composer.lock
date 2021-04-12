@@ -58,12 +58,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/gordon-ansell/greenfedora-scss.git",
-                "reference": "cc526e391199e2db5ae7ca6a3d618696164bec8c"
+                "reference": "c956778a366e34850b4125925aebc1833a24cf9c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/gordon-ansell/greenfedora-scss/zipball/cc526e391199e2db5ae7ca6a3d618696164bec8c",
-                "reference": "cc526e391199e2db5ae7ca6a3d618696164bec8c",
+                "url": "https://api.github.com/repos/gordon-ansell/greenfedora-scss/zipball/c956778a366e34850b4125925aebc1833a24cf9c",
+                "reference": "c956778a366e34850b4125925aebc1833a24cf9c",
                 "shasum": ""
             },
             "default-branch": true,
@@ -83,7 +83,7 @@
                 "source": "https://github.com/gordon-ansell/greenfedora-scss/tree/main",
                 "issues": "https://github.com/gordon-ansell/greenfedora-scss/issues"
             },
-            "time": "2021-04-12T06:47:03+00:00"
+            "time": "2021-04-12T13:30:56+00:00"
         },
         {
             "name": "league/plates",

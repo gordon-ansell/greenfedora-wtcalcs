@@ -17,34 +17,48 @@
 
     <?php if ($results): ?>
         <div class="table1">
-            <div class="flextable stripe">
-                <div class="tr th">
-                    <div class="td">Method</div>
-                    <div class="td alignright">Result (to nearest <?=$rounding?>)</div>
-                </div>
-                <?php foreach($results as $item): ?>
-                    <div class="tr"><div class="td"><?=$item->name?></div>
-                    <div class="td alignright"><?=number_format($item->rounded, 2)?></div></div>
-                <?php endforeach ?>
-                <div class="tr bold"><div class="td">Average</div>
-                <div class="td alignright"><?=number_format($average->rounded, 2)?></div>
-            </div>
+            <table class="flextable stripe">
+                <thead>
+                    <tr>
+                        <th class="size-50">Method</td>
+                        <th class="size-50 right">Result (to nearest <?=$rounding?>)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php foreach($results as $item): ?>
+                        <tr>
+                            <td class="size-50"><?=$item->name?></td>
+                            <td class="size-50 right"><?=number_format($item->rounded, 2)?></td>
+                        </tr>
+                    <?php endforeach ?>
+                    <tr>
+                        <td class="size-50 bold">Average</td>
+                        <td class="size-50 right bold"><?=number_format($average->rounded, 2)?></td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
     <?php endif ?>
 
     <?php if ($percents): ?>
     <div class="table2">
         <p>The following lists shows the various percentages of your 1-rep maximum. Handy when choosing weights to use for various sets.</p> 
-        <div class="flextable stripe">
-            <div class="tr th">
-                <div class="td">Percentage</div>
-                <div class="td alignright">Result (to nearest <?=$rounding?>)</div>
-            </div>
-            <?php foreach($percents as $item): ?>
-                <div class="tr"><div class="td"><?=$item->name?>%</div>
-                <div class="td alignright"><?=number_format($item->rounded, 2)?></div></div>
-            <?php endforeach ?>
-        </div>
+        <table class="flextable stripe">
+            <thead>
+                <tr>
+                    <td class="size-50">Percentage</td>
+                    <td class="size-50 right">Result (to nearest <?=$rounding?>)</td>
+                </tr>
+            </thead>
+            <tbody>
+                <?php foreach($percents as $item): ?>
+                    <tr>
+                        <td class="size-50"><?=$item->name?>%</td>
+                        <td class="size-50 right"><?=number_format($item->rounded, 2)?></td>
+                    </tr>
+                <?php endforeach ?>
+            </tbody>
+        </table>
     </div>
     <?php endif ?>
 

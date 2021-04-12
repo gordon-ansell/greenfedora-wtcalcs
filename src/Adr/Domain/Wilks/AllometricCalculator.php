@@ -72,6 +72,22 @@ class AllometricCalculator extends AbstractCalculator implements ModelInterface
     }
 
     /**
+     * Calculate the allometric total result.
+     *
+     * @param   float   $weight     Weight lifted.(KG)
+     * @param   float   $bodyWeight Body weight.(KG)
+     *
+     * @return  WilksResult         Result.
+     */
+    public function total(float $weight, float $bodyWeight): WilksResult
+    {
+        $bmult = ($bodyWeight) ** -0.54;
+        $bresult = ($weight/3) * $bmult;
+
+        return new WilksResult('Total', $bresult, ['mult' => $bmult]);
+    }
+
+    /**
      * Calculate the age-adjusted allometric squat result.
      *
      * @param   float   $weight     Weight lifted.(KG)
@@ -120,5 +136,22 @@ class AllometricCalculator extends AbstractCalculator implements ModelInterface
         $result = $this->applyAge($raw, $age);
 
         return new WilksResult('Dead/Age', $result[0], ['mult' => $result[1]]);
+    }
+
+    /**
+     * Calculate the age-adjusted allometric total result.
+     *
+     * @param   float   $weight     Weight lifted.(KG)
+     * @param   float   $bodyWeight Body weight.(KG)
+     * @param   int     $age        Age.    
+     *
+     * @return  WilksResult         Result.
+     */
+    public function totalAge(float $weight, float $bodyWeight, int $age): WilksResult
+    {
+        $raw = $this->total($weight, $bodyWeight)->value;
+        $result = $this->applyAge($raw, $age);
+
+        return new WilksResult('Total/Age', $result[0], ['mult' => $result[1]]);
     }
 }

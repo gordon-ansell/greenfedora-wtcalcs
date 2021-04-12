@@ -244,8 +244,8 @@ class WilksAction extends AbstractAction implements ActionInterface
                         $payload->gender, intval($payload->age));
                 }
 
+                $allo = new AllometricCalculator();
                 if ('separate' == $payload->get('method')) {
-                    $allo = new AllometricCalculator();
                     $resultsAllometric[] = $allo->squat(floatval($convSingles['squat']), floatval($convBodyWeight));
                     if ($payload->age and $payload->age > 13) {
                         $resultsAllometric[] = $allo->squatAge(floatval($convSingles['squat']), floatval($convBodyWeight), 
@@ -260,6 +260,18 @@ class WilksAction extends AbstractAction implements ActionInterface
                     if ($payload->age and $payload->age > 13) {
                         $resultsAllometric[] = $allo->deadAge(floatval($convSingles['dead']), floatval($convBodyWeight),
                         intval($payload->age));
+                    }
+                    $resultsAllometric[] = $allo->total(floatval($convSingles['dead'] + $convSingles['bench'] + $convSingles['squat']), 
+                        floatval($convBodyWeight));
+                    if ($payload->age and $payload->age > 13) {
+                        $resultsAllometric[] = $allo->totalAge(floatval($convSingles['dead'] + $convSingles['bench'] + $convSingles['squat']), 
+                            floatval($convBodyWeight), intval($payload->age));
+                    }
+                } else {
+                    $resultsAllometric[] = $allo->total(floatval($convWeight), floatval($convBodyWeight));
+                    if ($payload->age and $payload->age > 13) {
+                        $resultsAllometric[] = $allo->totalAge(floatval($convWeight), 
+                            floatval($convBodyWeight), intval($payload->age));
                     }
                 }
 

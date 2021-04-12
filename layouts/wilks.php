@@ -34,18 +34,26 @@
     <?php if ($resultsWilks): ?>
         <a id="results"></a>
         <h4>Wilks Results</h4>
-        <div class="flextable stripe">
-            <div class="tr th">
-                <div class="td">Method</div>
-                <div class="td alignright">Result</div>
-                <div class="td alignright">Multiplier</div>
-            </div>
-            <?php foreach($resultsWilks as $item): ?>
-                <div class="tr"><div class="td"><?=$item->name?></div>
-                <div class="td alignright"><?=number_format($item->value, 2)?></div>
-                <div class="td alignright"><?=number_format($item->extra['mult'], 4)?></div></div>
-            <?php endforeach ?>
-        </div>
+
+        <table class="flextable stripe">
+            <thead>
+                <tr>
+                    <th class="size-33">Method</th>
+                    <th class="size-33 right">Result</th>
+                    <th class="size-33 right">Multiplier</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php foreach($resultsWilks as $item): ?>
+                    <tr>
+                        <td class="size-33"><?=$item->name?></td>
+                        <td class="size-33 right"><?=number_format($item->value, 2)?></td>
+                        <td class="size-33 right"><?=number_format($item->extra['mult'], 4)?></td>
+                    </tr>
+                <?php endforeach ?>
+            </tbody>
+        </table>
+
         <div class="explain">
             <ul>
                 <li><strong>Wilks</strong> is your raw Wilks score. The multiplier column shows the multiplier applied to the score for your body weight. The heavier you are, the bigger the penalty against you. This allows light people to compete fairly with heavy people.</li>
@@ -55,65 +63,85 @@
             </ul>
         </div>
 
-        <?php if ("separate" == $method): ?>
-            <h4>Allometric Results</h4>
-            <p>See <a href="https://journals.lww.com/nsca-jscr/Abstract/2000/02000/Allometric_Modeling_of_the_Bench_Press_and_Squat_.6.aspx" tarket="_blank">here</a> for more details.</p>
-            <?php if ($age): ?>
-                <p>Note that there's no formal age adjustment here and I've just used the Wilks age adjustments.</p>
-            <?php endif ?>
-            <div class="flextable stripe">
-                <div class="tr th">
-                    <div class="td">Method</div>
-                    <div class="td alignright">Result</div>
-                    <div class="td alignright">Multiplier</div>
-                </div>
+        <h4>Allometric Results</h4>
+        <p>See <a href="https://journals.lww.com/nsca-jscr/Abstract/2000/02000/Allometric_Modeling_of_the_Bench_Press_and_Squat_.6.aspx" tarket="_blank">here</a> for more details.</p>
+        <?php if ($age): ?>
+            <p>Note that there's no formal age adjustment here and I've just used the Wilks age adjustments.</p>
+        <?php endif ?>
+        <table class="flextable stripe">
+            <thead>
+                <tr>
+                    <th class="size-33">Method</th>
+                    <th class="size-33 right">Result</th>
+                    <th§ class="size-33 right">Multiplier</th>
+                </tr>
+            </thead>
+            <tbody>
                 <?php foreach($resultsAllometric as $item): ?>
-                    <div class="tr"><div class="td"><?=$item->name?></div>
-                    <div class="td alignright"><?=number_format($item->value, 2)?></div>
-                    <div class="td alignright"><?=number_format($item->extra['mult'], 4)?></div></div>
+                    <?php $extra = ''; ?>
+                    <?php if (('separate' == $method) and (substr($item->name, 0, strlen("Total")) === "Total")): ?>
+                        <?php $extra = ' bold'; ?>
+                    <?php endif ?>
+                    <tr>
+                        <td class="size-33<?=$extra?>"><?=$item->name?></td>
+                        <td class="size-33 right<?=$extra?>"><?=number_format($item->value, 2)?></td>
+                        <td class="size-33 right<?=$extra?>"><?=number_format($item->extra['mult'], 4)?></div>
+                    </tr>
                 <?php endforeach ?>
-            </div>
-            <div class="explain">
-                <ul>
-                    <li><strong>Squat</strong> is an 'allometric' body weight-adjusted measure for your squat.</li>
+            </tbody>
+        </table>
+
+        <div class="explain">
+            <ul>
+                <?php if ("separate" == $method): ?>
+                    <li><strong>Squat</strong> is an allometric body weight-adjusted measure for your squat.</li>
                     <?php if ($age): ?>
                         <li><strong>Squat/Age</strong> is an age-adjusted version of above.</li>
                     <?php endif ?>
-                    <li><strong>Bench</strong> is an 'allometric' body weight-adjusted measure for your bench press.</li>
+                    <li><strong>Bench</strong> is an allometric body weight-adjusted measure for your bench press.</li>
                     <?php if ($age): ?>
                         <li><strong>Bench/Age</strong> is an age-adjusted version of above.</li>
                     <?php endif ?>
-                    <li><strong>Dead</strong> is an 'allometric' body weight-adjusted measure for your deadlift. <strong>Note</strong>: the allometric deadlift figure is known to be less reliable than those for the squat and bench press.</li>
+                    <li><strong>Dead</strong> is an allometric body weight-adjusted measure for your deadlift. <strong>Note</strong>: the allometric deadlift figure is known to be less reliable than those for the squat and bench press.</li>
                     <?php if ($age): ?>
                         <li><strong>Dead/Age</strong> is an age-adjusted version of above.</li>
                     <?php endif ?>
-                </ul>
-            </div>
-        <?php endif ?>
+                <?php endif ?>
+                <li><strong>Total</strong> is an allometric body weight-adjusted measure for the total. There isn't really an official calculation of this, so I've just averaged them.</li>
+                <?php if ($age): ?>
+                    <li><strong>Total/Age</strong> is an age-adjusted version of above.</li>
+                <?php endif ?>
+            </ul>
+        </div>
 
         <h4>SIFF Results</h4>
         <p>See <a href="http://web.archive.org/web/20050304042306/http://www.sportsci.com/SPORTSCI/JANUARY/evolution_of_bodymass_adjustment.htm" tarket="_blank">here</a> for more details.</p>
         <?php if ($age): ?>
             <p>Note that there's no formal age adjustment here and I've just used the Wilks age adjustments.</p>
         <?php endif ?>
-        <div class="flextable stripe">
-            <div class="tr th">
-                <div class="td">Method</div>
-                <div class="td alignright">Result</div>
-                <div class="td alignright">Multiplier</div>
-            </div>
-            <?php foreach($resultsSiff as $item): ?>
-                <?php if (('separate' == $method) and (substr($item->name, 0, strlen("Total")) === "Total")): ?>
-                    <div class="tr bold"><div class="td"><?=$item->name?></div>
-                    <div class="td alignright"><?=number_format($item->value, 2)?></div>
-                    <div class="td alignright"><?=number_format($item->extra['mult'], 4)?></div></div>
-                <?php else: ?>
-                    <div class="tr"><div class="td"><?=$item->name?></div>
-                    <div class="td alignright"><?=number_format($item->value, 2)?></div>
-                    <div class="td alignright"><?=number_format($item->extra['mult'], 4)?></div></div>
-                <?php endif ?>
-            <?php endforeach ?>
-        </div>
+        <table class="flextable stripe">
+            <thead>
+                <tr>
+                    <th class="size-33">Method</th>
+                    <th class="size-33 right">Result</th>
+                    <th class="size-33 right">Multiplier</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php foreach($resultsSiff as $item): ?>
+                    <?php $extra = ''; ?>
+                    <?php if (('separate' == $method) and (substr($item->name, 0, strlen("Total")) === "Total")): ?>
+                        <?php $extra = ' bold'; ?>
+                    <?php endif ?>
+                    <tr>
+                        <td class="size-33<?=$extra?>"><?=$item->name?></td>
+                        <td class="size-33 right<?=$extra?>"><?=number_format($item->value, 2)?></td>
+                        <td class="size-33 right<?=$extra?>"><?=number_format($item->extra['mult'], 4)?></td>
+                    </tr>
+                <?php endforeach ?>
+            </tbody>
+        </table>
+
         <div class="explain">
             <ul>
                 <?php if ("separate" == $method): ?>
