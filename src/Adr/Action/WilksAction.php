@@ -137,7 +137,7 @@ class WilksAction extends AbstractAction implements ActionInterface
         $styleSeparate = 'display:none';
         if ("separate" == $method) {
             $styleAll = "display:none";
-            $styleSeparate = "display:flex";
+            $styleSeparate = "display:inline";
         }
 
         // Row 4. Weight.
@@ -158,12 +158,11 @@ class WilksAction extends AbstractAction implements ActionInterface
         $rows = ['squat' => 'Squat', 'bench' => 'Bench Press', 'dead' => 'Deadlift'];
         $count = 5;
 
-        $form->addField('divopen', ['name' => 'allblock', 'id' => 'methodSeparate', 'class' => 'spread', 'style' => $styleSeparate]);
 
-            //$form->addField('spanopen', ['name' => 'allblock', 'id' => 'methodSeparate', 'style' => $styleSeparate]);
+        $form->addField('spanopen', ['name' => 'allblock', 'id' => 'methodSeparate', 'style' => $styleSeparate]);
 
                 foreach ($rows as $k => $v) {
-                    //$form->addField('divopen', ['name' => 'row' . $count, 'class' => 'two-columns-always']);
+                    $form->addField('divopen', ['name' => 'row' . $count]);
 
                         $this->weightUnits($form, $k, $v, "Enter the weight you lifted in the " . $k . ".");
 
@@ -171,11 +170,9 @@ class WilksAction extends AbstractAction implements ActionInterface
                             $form->getField($k)->disableValidators();
                         }
                 
-                    //$form->closeField();
+                    $form->closeField();
                     $count++;
                 }
-
-            //$form->closeField();
 
         $form->closeField();
 

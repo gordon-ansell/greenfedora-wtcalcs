@@ -1025,10 +1025,20 @@ blockquote::before {
   margin-top: 2em;
 }
 
-.form-container .form-box form .spread {
-  display: flex;
-  justify-content: space-between;
+/*
+.form-container {
+
+    .form-box {
+
+        form {
+            .spread {
+                display: flex;
+                justify-content: space-between;
+            }
+            fieldset.duofield {
+                display: inline;
+            }
+        }
+    }
 }
-.form-container .form-box form fieldset.duofield {
-  display: inline;
-}
+*/
