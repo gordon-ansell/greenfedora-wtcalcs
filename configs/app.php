@@ -31,9 +31,9 @@ return array(
 		'assets'	=>	'https://wtcalcs.gordonansell.com/public/'
 	),
     'session' => array(
-        'cookie_lifetime'   =>  '86400',
+        'cookie_lifetime'   =>  '432000',
         'cookie_path'       =>  '/',
-        'gc_maxlifetime'    =>  '86400',
+        'gc_maxlifetime'    =>  '432000',
         'gc_probability'    =>  '1',
         'gc_divisor'        =>  '100',
         'prefix'            =>  '',
