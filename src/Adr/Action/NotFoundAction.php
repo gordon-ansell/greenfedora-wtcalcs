@@ -29,7 +29,7 @@ class NotFoundAction extends AbstractAction implements ActionInterface
     public function dispatch()
     {
         $payload = new Payload();
-        $responder = new NotFoundResponder($this->container, $this->output, $payload);
+        $responder = new NotFoundResponder($this->container, $this->input, $this->output, $payload);
         $responder->dispatch();
     }
 

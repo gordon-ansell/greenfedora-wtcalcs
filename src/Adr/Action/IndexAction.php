@@ -29,7 +29,7 @@ class IndexAction extends AbstractAction implements ActionInterface
     public function dispatch()
     {
         $payload = new Payload();
-        $responder = new IndexResponder($this->container, $this->output, $payload);
+        $responder = new IndexResponder($this->container, $this->input, $this->output, $payload);
         $responder->dispatch();
     }
 
