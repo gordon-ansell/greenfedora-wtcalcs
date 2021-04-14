@@ -47,4 +47,14 @@ class OnermResult
         $this->name = $name;
         $this->value = $value;
     }
+
+    /**
+     * Convert to an array.
+     * 
+     * @return  array
+     */
+    public function asArray(): array
+    {
+        return array($this->name, $this->value, $this->rounded);
+    }
 }

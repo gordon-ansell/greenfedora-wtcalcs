@@ -769,6 +769,7 @@ blockquote::after {
   padding: 0 0.25em 0 0.25em;
   flex-grow: 1;
   flex-shrink: 1;
+  text-align: left;
 }
 .flextable tr td.show1, .flextable tr td.show2, .flextable tr th.show1, .flextable tr th.show2, .flextable tr .column.show1, .flextable tr .column.show2, .flextable .row td.show1, .flextable .row td.show2, .flextable .row th.show1, .flextable .row th.show2, .flextable .row .column.show1, .flextable .row .column.show2 {
   display: none;
@@ -1427,6 +1428,18 @@ blockquote::before {
   margin-bottom: 1em;
 }
 
+.table1 table {
+  margin: 0 auto;
+  max-width: 500px;
+}
+.table1 table tbody tr:last-of-type {
+  font-weight: bold;
+}
+
 .table2 {
   margin-top: 2em;
+}
+.table2 table {
+  margin: 0 auto;
+  max-width: 500px;
 }

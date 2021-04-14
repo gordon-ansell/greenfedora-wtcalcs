@@ -99,6 +99,7 @@ class OnermCalcs extends AbstractModel implements ModelInterface
         }
 
         $avg = new OnermResult();
+        $avg->name = 'Average';
         $avg->value = $tot / sizeof($results);
         $avg->rounded = $this->mround($avg->value, $rounding);
     
@@ -118,10 +119,10 @@ class OnermCalcs extends AbstractModel implements ModelInterface
     {
         for ($i = 100; $i >= 5; $i = $i - 5) {
             if (100 === $i) {
-                $tmp = new OnermResult("100", $weight);
+                $tmp = new OnermResult("100%", $weight);
                 array_push($results, $tmp);
             } else {
-                $tmp = new OnermResult(strval($i), ($weight / 100) * $i);
+                $tmp = new OnermResult(strval($i) . '%', ($weight / 100) * $i);
                 array_push($results, $tmp);
             }
         }

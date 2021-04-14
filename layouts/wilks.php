@@ -33,26 +33,9 @@
 
     <?php if ($resultsWilks): ?>
         <a id="results"></a>
-        <h4>Wilks Results</h4>
 
-        <table class="flextable stripe">
-            <thead>
-                <tr>
-                    <th class="size-33">Method</th>
-                    <th class="size-33 right">Result</th>
-                    <th class="size-33 right">Multiplier</th>
-                </tr>
-            </thead>
-            <tbody>
-                <?php foreach($resultsWilks as $item): ?>
-                    <tr>
-                        <td class="size-33"><?=$item->name?></td>
-                        <td class="size-33 right"><?=number_format($item->value, 2)?></td>
-                        <td class="size-33 right"><?=number_format($item->extra['mult'], 4)?></td>
-                    </tr>
-                <?php endforeach ?>
-            </tbody>
-        </table>
+        <h4>Wilks Results</h4>
+        <?= $wilksTable->render(); ?>
 
         <div class="explain">
             <ul>
@@ -63,33 +46,17 @@
             </ul>
         </div>
 
+    <?php endif ?>
+
+    <?php if ($resultsAllometric): ?>
+
         <h4>Allometric Results</h4>
         <p>See <a href="https://journals.lww.com/nsca-jscr/Abstract/2000/02000/Allometric_Modeling_of_the_Bench_Press_and_Squat_.6.aspx" tarket="_blank">here</a> for more details.</p>
         <?php if ($age): ?>
             <p>Note that there's no formal age adjustment here and I've just used the Wilks age adjustments.</p>
         <?php endif ?>
-        <table class="flextable stripe">
-            <thead>
-                <tr>
-                    <th class="size-33">Method</th>
-                    <th class="size-33 right">Result</th>
-                    <th§ class="size-33 right">Multiplier</th>
-                </tr>
-            </thead>
-            <tbody>
-                <?php foreach($resultsAllometric as $item): ?>
-                    <?php $extra = ''; ?>
-                    <?php if (('separate' == $method) and (substr($item->name, 0, strlen("Total")) === "Total")): ?>
-                        <?php $extra = ' bold'; ?>
-                    <?php endif ?>
-                    <tr>
-                        <td class="size-33<?=$extra?>"><?=$item->name?></td>
-                        <td class="size-33 right<?=$extra?>"><?=number_format($item->value, 2)?></td>
-                        <td class="size-33 right<?=$extra?>"><?=number_format($item->extra['mult'], 4)?></div>
-                    </tr>
-                <?php endforeach ?>
-            </tbody>
-        </table>
+
+        <?= $alloTable->render(); ?>
 
         <div class="explain">
             <ul>
@@ -114,33 +81,17 @@
             </ul>
         </div>
 
+    <?php endif ?>
+
+    <?php if ($resultsSiff): ?>
+
         <h4>SIFF Results</h4>
         <p>See <a href="http://web.archive.org/web/20050304042306/http://www.sportsci.com/SPORTSCI/JANUARY/evolution_of_bodymass_adjustment.htm" tarket="_blank">here</a> for more details.</p>
         <?php if ($age): ?>
             <p>Note that there's no formal age adjustment here and I've just used the Wilks age adjustments.</p>
         <?php endif ?>
-        <table class="flextable stripe">
-            <thead>
-                <tr>
-                    <th class="size-33">Method</th>
-                    <th class="size-33 right">Result</th>
-                    <th class="size-33 right">Multiplier</th>
-                </tr>
-            </thead>
-            <tbody>
-                <?php foreach($resultsSiff as $item): ?>
-                    <?php $extra = ''; ?>
-                    <?php if (('separate' == $method) and (substr($item->name, 0, strlen("Total")) === "Total")): ?>
-                        <?php $extra = ' bold'; ?>
-                    <?php endif ?>
-                    <tr>
-                        <td class="size-33<?=$extra?>"><?=$item->name?></td>
-                        <td class="size-33 right<?=$extra?>"><?=number_format($item->value, 2)?></td>
-                        <td class="size-33 right<?=$extra?>"><?=number_format($item->extra['mult'], 4)?></td>
-                    </tr>
-                <?php endforeach ?>
-            </tbody>
-        </table>
+
+        <?= $siffTable->render(); ?>
 
         <div class="explain">
             <ul>

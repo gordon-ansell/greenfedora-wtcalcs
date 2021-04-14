@@ -317,7 +317,7 @@ class WilksAction extends AbstractAction implements ActionInterface
             $form->getPersistHandler()->outputDebugging($this->container->get('logger'));
         }
 
-        $responder = new WilksResponder($this->container, $this->output, $payload);
+        $responder = new WilksResponder($this->container, $this->input, $this->output, $payload);
         $responder->dispatch();
     }
 

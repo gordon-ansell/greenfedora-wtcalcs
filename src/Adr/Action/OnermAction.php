@@ -127,7 +127,7 @@ class OnermAction extends AbstractAction implements ActionInterface
             $form->getPersistHandler()->outputDebugging($this->container->get('logger'));
         }
 
-        $responder = new OnermResponder($this->container, $this->output, $payload);
+        $responder = new OnermResponder($this->container, $this->input, $this->output, $payload);
         $responder->dispatch();
     }
 

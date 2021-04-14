@@ -48,4 +48,15 @@ class WilksResult
         $this->value = $value;
         $this->extra = $extra;
     }
+
+    /**
+     * Convert to an array.
+     * 
+     * @return  array
+     */
+    public function asArray(): array
+    {
+        return array($this->name, $this->value, $this->extra);
+    }
+
 }
