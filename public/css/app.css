@@ -1416,9 +1416,6 @@ blockquote::before {
 .flextable {
   margin-top: 2em;
 }
-.flextable div.td.estimate {
-  color: var(--col-alert);
-}
 
 .explain {
   margin-top: 2em;
@@ -1428,18 +1425,11 @@ blockquote::before {
   margin-bottom: 1em;
 }
 
-.table1 table {
+table.wtcalcs {
   margin: 0 auto;
   max-width: 500px;
-}
-.table1 table tbody tr:last-of-type {
-  font-weight: bold;
 }
 
-.table2 {
-  margin-top: 2em;
-}
-.table2 table {
-  margin: 0 auto;
-  max-width: 500px;
+table.onerm1 tbody tr:last-of-type {
+  font-weight: bold;
 }

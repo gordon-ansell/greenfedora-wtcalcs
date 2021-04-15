@@ -13,7 +13,8 @@
         "php": "^7.0",
         "gordon-ansell/greenfedora-framework": "*",
         "gordon-ansell/greenfedora-scss": "*",
-        "league/plates": "3.*"
+        "league/plates": "3.*",
+        "spatie/schema-org": "*"
     },
 	"minimum-stability": "dev",
 	"repositories": [

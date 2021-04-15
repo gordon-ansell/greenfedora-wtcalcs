@@ -18,9 +18,6 @@ $flextable-font-size: 90%;
 
 .flextable {
     margin-top: 2em;
-    div.td.estimate {
-        color: var(--col-alert);
-    }
 }
 
 .explain {
@@ -31,20 +28,13 @@ $flextable-font-size: 90%;
     }
 }
 
-.table1 {
-    table {
-        margin: 0 auto;
-        max-width: 500px;
-        tbody tr:last-of-type {
-            font-weight: bold;
-        }
-    }
+table.wtcalcs {
+    margin: 0 auto;
+    max-width: 500px;
 }
 
-.table2 {
-    table {
-        margin: 0 auto;
-        max-width: 500px;
+table.onerm1 {
+    tbody tr:last-of-type {
+        font-weight: bold;
     }
-    margin-top: 2em;
 }
