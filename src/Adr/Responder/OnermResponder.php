@@ -72,7 +72,7 @@ class OnermResponder extends AbstractBaseResponder implements ResponderInterface
      */
     protected function resultsTable(PayloadInterface $payload): TableInterface
     {
-        $table = new Table('onerm', 'flextable stripe wtcalcs onerm1');
+        $table = new Table('onerm-table', 'flextable stripe wtcalcs onerm1');
 
         $table->addColumn('method', 'Method', 'size-50')
             ->addColumn('value', 'Value', 'size-50 right')
@@ -111,7 +111,7 @@ class OnermResponder extends AbstractBaseResponder implements ResponderInterface
      */
     public function dispatch()
     {
-        if ($this->input->isPost()) {
+        if ($this->input->formSubmitted('onerm')) {
             // Results table.
             $resultsTable = $this->resultsTable($this->payload);
             $resultsTable->setData(array_merge($this->payload->get('results')->toArray(), 

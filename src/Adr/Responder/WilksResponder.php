@@ -75,12 +75,12 @@ class WilksResponder extends AbstractBaseResponder implements ResponderInterface
     {
         $table = new Table($name, 'flextable stripe wtcalcs wilks' . $num);
 
-        $table->addColumn('Method', 'size-50')
-            ->addColumn('Result', 'size-50 right')
-            ->addColumn('Multiplier', 'size-50 right');
+        $table->addColumn('method', 'Method', 'size-50')
+            ->addColumn('result', 'Result', 'size-50 right')
+            ->addColumn('multiplier', 'Multiplier', 'size-50 right');
 
-        $table->getColumn(2)->addFilter(new NumberFormat(array('decimals' => 2)));
-        $table->getColumn(3)->addFilter(new NumberFormat(array('decimals' => 2)));
+        $table->getColumn('result')->addFilter(new NumberFormat(array('decimals' => 2)));
+        $table->getColumn('multiplier')->addFilter(new NumberFormat(array('decimals' => 2)));
 
         return $table;
     }
@@ -90,7 +90,7 @@ class WilksResponder extends AbstractBaseResponder implements ResponderInterface
      */
     public function dispatch()
     {
-        if ($this->input->isPost()) {
+        if ($this->input->isPost() and $this->input->formSubmitted('wilks')) {
             // Wilks results table.
             $wilksTable = $this->resultsTable('wilks', $this->payload, 1);
             $wilksTable->setData($this->payload->get('resultsWilks')->toArray());

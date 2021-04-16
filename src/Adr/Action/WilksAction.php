@@ -184,7 +184,7 @@ class WilksAction extends AbstractAction implements ActionInterface
         $payload->set('resultsSiff', []);
 
         // Has user posted the form?
-        if ($this->input->isPost()) {
+        if ($this->input->isPost() and $this->input->formSubmitted('wilks')) {
 
             $payload->set('gender', $this->input->post('gender', 'male'));
             $payload->set('age', $this->input->post('age', ''));

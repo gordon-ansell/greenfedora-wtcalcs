@@ -97,9 +97,8 @@ class OnermAction extends AbstractAction implements ActionInterface
         $payload->set('results', []);
         $payload->set('percents', []);
 
-
         // Has user posted the form?
-        if ($this->input->isPost()) {
+        if ($this->input->formSubmitted('onerm')) {
 
             $payload->set('weight', $this->input->post('weight', ''));
             $payload->set('reps', $this->input->post('reps', ''));
@@ -121,6 +120,9 @@ class OnermAction extends AbstractAction implements ActionInterface
 
 
             $form->save($payload);
+        } else if ($this->input->formSubmitted('onerm-table')) {
+            $payload->set('onerm-sortcol', $this->input->post('sortcol'));
+            $payload->set('onerm-sortdir', $this->input->post('sortdir'));
         }
 
         if ($form->getPersistHandler()->hasDebugging()) {

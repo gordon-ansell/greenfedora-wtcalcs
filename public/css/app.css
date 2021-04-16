@@ -748,18 +748,6 @@ blockquote::after {
     grid-column-gap: 2%;
   }
 }
-button.sortablecolumn-button {
-  border: none;
-  padding: none;
-  margin: none;
-  text-align: unset;
-  background: none;
-  font-weight: inherit;
-}
-button.sortablecolumn-button:focus {
-  border: none;
-}
-
 .flextable {
   font-family: "Fira Code", Menlo, Monaco, Consolas, "Andale Mono", "Courier New", monospace;
   font-size: 90%;
@@ -1213,6 +1201,20 @@ button.sortablecolumn-button:focus {
     display: inline;
   }
 }
+button.sortablecolumn-button {
+  border: none;
+  padding: none;
+  margin: none;
+  text-align: unset;
+  background: none;
+  font-weight: inherit;
+  font-style: inherit;
+  font-family: inherit;
+}
+button.sortablecolumn-button:focus {
+  border: none;
+}
+
 * {
   border-color: var(--col-border);
 }
