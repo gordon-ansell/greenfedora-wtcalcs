@@ -17,6 +17,7 @@
 
     <?php if ($results): ?>
         <?= $resultsTable->render(); ?>
+        <p>Results are rounded to the nearest <?=$rounding?>.</p>
     <?php endif ?>
 
     <?php if ($percents): ?>

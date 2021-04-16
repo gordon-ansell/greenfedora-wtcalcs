@@ -86,7 +86,7 @@ class WilksAction extends AbstractAction implements ActionInterface
                 'deadUnits' => 'kg',
             ), 'wilks_');
 
-        $form = new Form('/wilks#results', $ph, ['onload' => "javascript:methodCheck();"]);
+        $form = new Form('wilks', '/wilks#results', $ph, ['onload' => "javascript:methodCheck();"]);
         $form->setAutoWrap('fieldset');
 
         $form->addField('errors', ['name' => 'errors', 'class' => 'error']);

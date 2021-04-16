@@ -72,15 +72,15 @@ class OnermResponder extends AbstractBaseResponder implements ResponderInterface
      */
     protected function resultsTable(PayloadInterface $payload): TableInterface
     {
-        $table = new Table('flextable stripe wtcalcs onerm1');
+        $table = new Table('onerm', 'flextable stripe wtcalcs onerm1');
 
-        $table->addColumn('Method', 'size-50')
-            ->addColumn('Value', 'size-50 right')
-            ->addColumn('Result (to nearest ' . $payload->get('rounding') . ')', 'size-50 right');
+        $table->addColumn('method', 'Method', 'size-50')
+            ->addColumn('value', 'Value', 'size-50 right')
+            ->addSortableColumn('result', 'Result', 'size-50 right');
 
-        $table->getColumn(2)->addFilter(new NumberFormat(array('decimals' => 2)));
-        $table->getColumn(3)->addFilter(new NumberFormat(array('decimals' => 4)));
-        $table->getColumn(2)->setHidden();
+        $table->getColumn('value')->addFilter(new NumberFormat(array('decimals' => 4)));
+        $table->getColumn('result')->addFilter(new NumberFormat(array('decimals' => 2)));
+        $table->getColumn('value')->setHidden();
 
         return $table;
     }
@@ -93,15 +93,15 @@ class OnermResponder extends AbstractBaseResponder implements ResponderInterface
      */
     protected function percentTable(PayloadInterface $payload): TableInterface
     {
-        $table = new Table('flextable stripe wtcalcs onerm2');
+        $table = new Table('percent', 'flextable stripe wtcalcs onerm2');
 
-        $table->addColumn('Percentage', 'size-50')
-            ->addColumn('Value', 'size-50 right')
-            ->addColumn('Result (to nearest ' . $payload->get('rounding') . ')', 'size-50 right');
+        $table->addColumn('percentage', 'Percentage', 'size-50')
+            ->addColumn('value', 'Value', 'size-50 right')
+            ->addColumn('result', 'Result', 'size-50 right');
 
-        $table->getColumn(2)->addFilter(new NumberFormat(array('decimals' => 2)));
-        $table->getColumn(3)->addFilter(new NumberFormat(array('decimals' => 2)));
-        $table->getColumn(2)->setHidden();
+        $table->getColumn('value')->addFilter(new NumberFormat(array('decimals' => 2)));
+        $table->getColumn('result')->addFilter(new NumberFormat(array('decimals' => 2)));
+        $table->getColumn('value')->setHidden();
 
         return $table;
     }

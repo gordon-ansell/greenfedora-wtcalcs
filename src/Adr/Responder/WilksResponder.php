@@ -66,13 +66,14 @@ class WilksResponder extends AbstractBaseResponder implements ResponderInterface
     /**
      * Create the results table.
      * 
+     * @param   string                   $name       Table name.
      * @param   PayloadInterface         $payload    Data payload.
      * @param   int                      $num        Table number.
      * @return  TableInterface 
      */
-    protected function resultsTable(PayloadInterface $payload, int $num): TableInterface
+    protected function resultsTable(string $name, PayloadInterface $payload, int $num): TableInterface
     {
-        $table = new Table('flextable stripe wtcalcs wilks' . $num);
+        $table = new Table($name, 'flextable stripe wtcalcs wilks' . $num);
 
         $table->addColumn('Method', 'size-50')
             ->addColumn('Result', 'size-50 right')
@@ -91,17 +92,17 @@ class WilksResponder extends AbstractBaseResponder implements ResponderInterface
     {
         if ($this->input->isPost()) {
             // Wilks results table.
-            $wilksTable = $this->resultsTable($this->payload, 1);
+            $wilksTable = $this->resultsTable('wilks', $this->payload, 1);
             $wilksTable->setData($this->payload->get('resultsWilks')->toArray());
             $this->payload->set('wilksTable', $wilksTable);
 
             // Allometric results table.
-            $alloTable = $this->resultsTable($this->payload, 2);
+            $alloTable = $this->resultsTable('allometric', $this->payload, 2);
             $alloTable->setData($this->payload->get('resultsAllometric')->toArray());
             $this->payload->set('alloTable', $alloTable);
 
             // Allometric results table.
-            $siffTable = $this->resultsTable($this->payload, 3);
+            $siffTable = $this->resultsTable('siff', $this->payload, 3);
             $siffTable->setData($this->payload->get('resultsSiff')->toArray());
             $this->payload->set('siffTable', $siffTable);
         }

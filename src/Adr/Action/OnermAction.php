@@ -45,7 +45,7 @@ class OnermAction extends AbstractAction implements ActionInterface
         $ph = new FormPersistHandler($this->getInstance('session'), $this->input, 
             array('weight' => '', 'reps' => 2, 'rounding' => 2.5), 'onerm_');
 
-        $form = new Form('/onerm', $ph);
+        $form = new Form('onerm', '/onerm', $ph);
         $form->setAutoWrap('fieldset');
 
         $form->addField('errors', ['name' => 'errors', 'class' => 'error']);
