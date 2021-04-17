@@ -13,6 +13,7 @@ use GreenFedora\Adr\Action\AbstractAction;
 use GreenFedora\Adr\Action\ActionInterface;
 use WTCalcs\Adr\Responder\OnermResponder;
 use GreenFedora\Payload\Payload;
+use GreenFedora\Payload\PayloadInterface;
 use GreenFedora\Validator\Compulsory;
 use GreenFedora\Validator\Numeric;
 use GreenFedora\Validator\Integer;
@@ -84,6 +85,28 @@ class OnermAction extends AbstractAction implements ActionInterface
     }
 
     /**
+     * Get the results.
+     * 
+     * @param   PayloadInterface    $payload    Payload.
+     * @return  void
+     */
+    public function results(PayloadInterface &$payload)
+    {
+        $calculator = new OnermCalcs();
+
+        $results = array();
+        $average = $calculator->onermcalcs(floatval($payload->weight), intval($payload->reps), 
+            floatval($payload->rounding), $results);
+        $payload->set('results', $results);
+        $payload->set('average', $average);
+
+        $percents = array();
+        $calculator->onermpercents(floatval($average->value), floatval($payload->rounding), $percents);
+        $payload->set('percents', $percents);
+
+    }
+
+    /**
      * Dispatch the action.
      */
     public function dispatch()
@@ -105,24 +128,20 @@ class OnermAction extends AbstractAction implements ActionInterface
             $payload->set('rounding', $this->input->post('rounding', 2.5));
 
             if ($form->validate($this->input->post()->toArray())) {
-                $results = array();
-                $calculator = new OnermCalcs();
-                $average = $calculator->onermcalcs(floatval($payload->weight), intval($payload->reps), 
-                    floatval($payload->rounding), $results);
-
-                $payload->set('results', $results);
-                $payload->set('average', $average);
-
-                $percents = array();
-                $calculator->onermpercents(floatval($average->value), floatval($payload->rounding), $percents);
-                $payload->set('percents', $percents);
+                $this->results($payload);
             }
 
-
             $form->save($payload);
+
         } else if ($this->input->formSubmitted('onerm-table')) {
-            $payload->set('onerm-sortcol', $this->input->post('sortcol'));
-            $payload->set('onerm-sortdir', $this->input->post('sortdir'));
+
+            $session = $this->getInstance('session');
+
+            $payload->set('weight', $session->get('onerm_weight', ''));
+            $payload->set('reps', $session->get('onerm_reps', ''));
+            $payload->set('rounding', $session->get('onerm_rounding', 2.5));
+
+            $this->results($payload);
         }
 
         if ($form->getPersistHandler()->hasDebugging()) {

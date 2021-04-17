@@ -36,7 +36,7 @@ class SiffCalculator extends AbstractCalculator implements ModelInterface
         $smult = 638.01 - 9517.7 * $bodyWeight ** -0.7911;
         $sresult = ($weight /$smult) * 100;
 
-        return new WilksResult('Squat', $sresult, ['mult' => $smult]);
+        return new WilksResult('Squat', $sresult, $smult);
     }
 
     /**
@@ -52,7 +52,7 @@ class SiffCalculator extends AbstractCalculator implements ModelInterface
         $smult = 408.15 - 11047 * $bodyWeight ** -0.9371;
         $sresult = ($weight /$smult) * 100;
 
-        return new WilksResult('Bench', $sresult, ['mult' => $smult]);
+        return new WilksResult('Bench', $sresult, $smult);
     }
 
     /**
@@ -69,7 +69,7 @@ class SiffCalculator extends AbstractCalculator implements ModelInterface
         $sresult = ($weight /$smult) * 100;
 
 
-        return new WilksResult('Dead', $sresult, ['mult' => $smult]);
+        return new WilksResult('Dead', $sresult, $smult);
     }
 
     /**
@@ -85,7 +85,7 @@ class SiffCalculator extends AbstractCalculator implements ModelInterface
         $smult = 1270.4 - 172970 * $bodyWeight ** -1.3925;
         $sresult = ($weight /$smult) * 100;
 
-        return new WilksResult('Total', $sresult, ['mult' => $smult]);
+        return new WilksResult('Total', $sresult, $smult);
     }
 
     /**
@@ -102,7 +102,7 @@ class SiffCalculator extends AbstractCalculator implements ModelInterface
         $raw = $this->squat($weight, $bodyWeight)->value;
         $result = $this->applyAge($raw, $age);
 
-        return new WilksResult('Squat/Age', $result[0], ['mult' => $result[1]]);
+        return new WilksResult('Squat/Age', $result[0], $result[1]);
     }
 
     /**
@@ -119,7 +119,7 @@ class SiffCalculator extends AbstractCalculator implements ModelInterface
         $raw = $this->bench($weight, $bodyWeight)->value;
         $result = $this->applyAge($raw, $age);
 
-        return new WilksResult('Bench/Age', $result[0], ['mult' => $result[1]]);
+        return new WilksResult('Bench/Age', $result[0], $result[1]);
     }
 
     /**
@@ -136,7 +136,7 @@ class SiffCalculator extends AbstractCalculator implements ModelInterface
         $raw = $this->dead($weight, $bodyWeight)->value;
         $result = $this->applyAge($raw, $age);
 
-        return new WilksResult('Dead/Age', $result[0], ['mult' => $result[1]]);
+        return new WilksResult('Dead/Age', $result[0], $result[1]);
     }
 
     /**
@@ -153,6 +153,6 @@ class SiffCalculator extends AbstractCalculator implements ModelInterface
         $raw = $this->total($weight, $bodyWeight)->value;
         $result = $this->applyAge($raw, $age);
 
-        return new WilksResult('Total/Age', $result[0], ['mult' => $result[1]]);
+        return new WilksResult('Total/Age', $result[0], $result[1]);
     }
 }

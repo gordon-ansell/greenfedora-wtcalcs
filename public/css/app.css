@@ -1210,6 +1210,7 @@ button.sortablecolumn-button {
   font-weight: inherit;
   font-style: inherit;
   font-family: inherit;
+  color: inherit;
 }
 button.sortablecolumn-button:focus {
   border: none;

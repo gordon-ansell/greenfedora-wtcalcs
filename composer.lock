@@ -12,12 +12,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/gordon-ansell/greenfedora-framework.git",
-                "reference": "982aeb8990c03c8291d710ac6523e6121fd581c2"
+                "reference": "6af097fb5251d123b33b2058ffa5fed43ecdd6b7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/gordon-ansell/greenfedora-framework/zipball/982aeb8990c03c8291d710ac6523e6121fd581c2",
-                "reference": "982aeb8990c03c8291d710ac6523e6121fd581c2",
+                "url": "https://api.github.com/repos/gordon-ansell/greenfedora-framework/zipball/6af097fb5251d123b33b2058ffa5fed43ecdd6b7",
+                "reference": "6af097fb5251d123b33b2058ffa5fed43ecdd6b7",
                 "shasum": ""
             },
             "require": {
@@ -50,7 +50,7 @@
                 "source": "https://github.com/gordon-ansell/greenfedora-framework/tree/main",
                 "issues": "https://github.com/gordon-ansell/greenfedora-framework/issues"
             },
-            "time": "2021-04-16T16:41:53+00:00"
+            "time": "2021-04-17T06:07:41+00:00"
         },
         {
             "name": "gordon-ansell/greenfedora-scss",
@@ -58,12 +58,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/gordon-ansell/greenfedora-scss.git",
-                "reference": "62d32ed2a3f9667db878106d7520d851838f45a7"
+                "reference": "727c4d0f8f4c908abc024ba8619ae674c6572f75"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/gordon-ansell/greenfedora-scss/zipball/62d32ed2a3f9667db878106d7520d851838f45a7",
-                "reference": "62d32ed2a3f9667db878106d7520d851838f45a7",
+                "url": "https://api.github.com/repos/gordon-ansell/greenfedora-scss/zipball/727c4d0f8f4c908abc024ba8619ae674c6572f75",
+                "reference": "727c4d0f8f4c908abc024ba8619ae674c6572f75",
                 "shasum": ""
             },
             "default-branch": true,
@@ -83,7 +83,7 @@
                 "source": "https://github.com/gordon-ansell/greenfedora-scss/tree/main",
                 "issues": "https://github.com/gordon-ansell/greenfedora-scss/issues"
             },
-            "time": "2021-04-16T10:32:55+00:00"
+            "time": "2021-04-17T04:17:09+00:00"
         },
         {
             "name": "league/plates",

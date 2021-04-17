@@ -36,7 +36,7 @@ class AllometricCalculator extends AbstractCalculator implements ModelInterface
         $smult = $bodyWeight ** -0.60;
         $sresult = $weight * $smult;
 
-        return new WilksResult('Squat', $sresult, ['mult' => $smult]);
+        return new WilksResult('Squat', $sresult, $smult);
     }
 
     /**
@@ -52,7 +52,7 @@ class AllometricCalculator extends AbstractCalculator implements ModelInterface
         $bmult = $bodyWeight ** -0.57;
         $bresult = $weight * $bmult;
 
-        return new WilksResult('Bench', $bresult, ['mult' => $bmult]);
+        return new WilksResult('Bench', $bresult, $bmult);
     }
 
     /**
@@ -68,7 +68,7 @@ class AllometricCalculator extends AbstractCalculator implements ModelInterface
         $bmult = $bodyWeight ** -0.46;
         $bresult = $weight * $bmult;
 
-        return new WilksResult('Dead', $bresult, ['mult' => $bmult]);
+        return new WilksResult('Dead', $bresult, $bmult);
     }
 
     /**
@@ -84,7 +84,7 @@ class AllometricCalculator extends AbstractCalculator implements ModelInterface
         $bmult = ($bodyWeight) ** -0.54;
         $bresult = ($weight/3) * $bmult;
 
-        return new WilksResult('Total', $bresult, ['mult' => $bmult]);
+        return new WilksResult('Total', $bresult, $bmult);
     }
 
     /**
@@ -101,7 +101,7 @@ class AllometricCalculator extends AbstractCalculator implements ModelInterface
         $raw = $this->squat($weight, $bodyWeight)->value;
         $result = $this->applyAge($raw, $age);
 
-        return new WilksResult('Squat/Age', $result[0], ['mult' => $result[1]]);
+        return new WilksResult('Squat/Age', $result[0], $result[1]);
     }
 
     /**
@@ -118,7 +118,7 @@ class AllometricCalculator extends AbstractCalculator implements ModelInterface
         $raw = $this->bench($weight, $bodyWeight)->value;
         $result = $this->applyAge($raw, $age);
 
-        return new WilksResult('Bench/Age', $result[0], ['mult' => $result[1]]);
+        return new WilksResult('Bench/Age', $result[0], $result[1]);
     }
 
     /**
@@ -135,7 +135,7 @@ class AllometricCalculator extends AbstractCalculator implements ModelInterface
         $raw = $this->dead($weight, $bodyWeight)->value;
         $result = $this->applyAge($raw, $age);
 
-        return new WilksResult('Dead/Age', $result[0], ['mult' => $result[1]]);
+        return new WilksResult('Dead/Age', $result[0], $result[1]);
     }
 
     /**
@@ -152,6 +152,6 @@ class AllometricCalculator extends AbstractCalculator implements ModelInterface
         $raw = $this->total($weight, $bodyWeight)->value;
         $result = $this->applyAge($raw, $age);
 
-        return new WilksResult('Total/Age', $result[0], ['mult' => $result[1]]);
+        return new WilksResult('Total/Age', $result[0], $result[1]);
     }
 }

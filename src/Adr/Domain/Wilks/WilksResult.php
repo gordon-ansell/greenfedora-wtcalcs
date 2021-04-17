@@ -9,31 +9,15 @@
 declare(strict_types=1);
 namespace WTCalcs\Adr\Domain\Wilks;
 
+use GreenFedora\Arr\Arr;
+
 /**
  * Contains a wilks calculation.
  *
  * @author Gordon Ansell <contact@gordonansell.com>
  */
-class WilksResult 
+class WilksResult extends Arr
 {
-    /**
-     * Name.
-     * @var string
-     */
-    public $name = null;
-
-    /**
-     * Value.
-     * @var float
-     */
-    public $value = null;
-
-    /**
-     * Extra fields.
-     * @var array
-     */
-    public $extra = [];
-
     /**
      * Constructor.
      *
@@ -42,21 +26,9 @@ class WilksResult
      *
      * @return  void
      */
-    public function __construct(string $name = null, float $value = null, array $extra = [])
+    public function __construct(string $name = null, float $value = null, $extra = null)
     {
-        $this->name = $name;
-        $this->value = $value;
-        $this->extra = $extra;
-    }
-
-    /**
-     * Convert to an array.
-     * 
-     * @return  array
-     */
-    public function asArray(): array
-    {
-        return array($this->name, $this->value, $this->extra);
+        parent::__construct(['name' => $name, 'value' => $value, 'extra' => $extra]);
     }
 
 }

@@ -9,31 +9,15 @@
 declare(strict_types=1);
 namespace WTCalcs\Adr\Domain\Onerm;
 
+use GreenFedora\Arr\Arr;
+
 /**
  * Contains a 1-rep max calculation.
  *
  * @author Gordon Ansell <contact@gordonansell.com>
  */
-class OnermResult 
+class OnermResult extends Arr
 {
-    /**
-     * Name.
-     * @var string
-     */
-    public $name = null;
-
-    /**
-     * Value.
-     * @var float
-     */
-    public $value = null;
-
-    /**
-     * Rounded value.
-     * @var float
-     */
-    public $rounded = null;
-
     /**
      * Constructor.
      *
@@ -44,17 +28,7 @@ class OnermResult
      */
     public function __construct(string $name = null, float $value = null)
     {
-        $this->name = $name;
-        $this->value = $value;
+        parent::__construct(['name' => $name, 'value' => $value]);
     }
 
-    /**
-     * Convert to an array.
-     * 
-     * @return  array
-     */
-    public function asArray(): array
-    {
-        return array($this->name, $this->value, $this->rounded);
-    }
 }

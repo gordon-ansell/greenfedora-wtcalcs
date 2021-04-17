@@ -12,7 +12,11 @@ namespace WTCalcs\Adr\Responder;
 use WTCalcs\Adr\Responder\AbstractBaseResponder;
 use GreenFedora\Adr\Responder\ResponderInterface;
 
+use WTCalcs\Adr\Domain\Onerm\OnermResult;
+
 use GreenFedora\Payload\PayloadInterface;
+use GreenFedora\Arr\Arr;
+use GreenFedora\Arr\ArrInterface;
 
 use GreenFedora\Table\Table;
 use GreenFedora\Table\TableInterface;
@@ -107,15 +111,31 @@ class OnermResponder extends AbstractBaseResponder implements ResponderInterface
     }
 
     /**
+     * Sort results.
+     * 
+     * @param   ArrInterface    $results    Results to sort.
+     * @param   string          $col        Column to sort by.
+     * @param   string          $dir        Direction to sort.
+     * @return  void
+     */
+    protected function sortResults(ArrInterface $results, string $col, string $dir)
+    {
+        $realDir = ('asc' == $dir) ? SORT_ASC : SORT_DESC;
+        $results->sortByCol('rounded', $realDir);
+        return $results;
+    }
+
+    /**
      * Dispatch the responder.
      */
     public function dispatch()
     {
-        if ($this->input->formSubmitted('onerm')) {
+        $resultsTable = $this->resultsTable($this->payload);
+
+        if ($this->input->isPost()) {
             // Results table.
-            $resultsTable = $this->resultsTable($this->payload);
             $resultsTable->setData(array_merge($this->payload->get('results')->toArray(), 
-                [$this->payload->get('average')->asArray()]));
+                [$this->payload->get('average')->toArray()]));
             $this->payload->set('resultsTable', $resultsTable);
 
             // Percent table.
@@ -124,9 +144,26 @@ class OnermResponder extends AbstractBaseResponder implements ResponderInterface
             $this->payload->set('percentTable', $percentTable);
         }
 
+        // Configure sorting.
+        $resultsTable->checkSort($this->input, $this->getInstance('session'));
+
+        // Do we need to sort?
+        $resultsSort = $resultsTable->getSort();
+        if (null !== $resultsSort and null !== $this->payload->get('results') and null !== $this->payload->get('average')) {
+            $this->sortResults($this->payload->get('results'), $resultsSort[0], $resultsSort[1]);
+            $resultsTable->setData(array_merge($this->payload->get('results')->toArray(), 
+                [$this->payload->get('average')->toArray()]));
+        }
+
+        // Set the schema.
         $this->payload->set('schema', json_encode($this->schema(), JSON_PRETTY_PRINT));
 
         $r = $this->container->get('template')->render('onerm', $this->payload->toArray());
+
+        if ($resultsTable->hasDebugging()) {
+            $resultsTable->outputDebugging($this->container->get('logger'));
+        }
+
         $this->output->setBody($r);
     }
 }
