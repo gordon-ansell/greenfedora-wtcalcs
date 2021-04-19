@@ -15,15 +15,11 @@ use WTCalcs\Adr\Responder\OnermResponder;
 use GreenFedora\Payload\Payload;
 use GreenFedora\Payload\PayloadInterface;
 use GreenFedora\Validator\Compulsory;
-use GreenFedora\Validator\Numeric;
 use GreenFedora\Validator\Integer;
 use GreenFedora\Validator\NumericBetween;
 use GreenFedora\Filter\FloatVal;
-use GreenFedora\Filter\IntVal;
 use GreenFedora\Form\FormPersistHandler;
-use GreenFedora\Form\FormPersistHandlerInterface;
 use GreenFedora\Form\Form;
-use GreenFedora\Html\Html;
 
 use WTCalcs\Adr\Domain\Onerm\OnermCalcs;
 
@@ -43,7 +39,7 @@ class OnermAction extends AbstractAction implements ActionInterface
      */
     protected function createForm()
     {
-        $ph = new FormPersistHandler($this->getInstance('session'), $this->input, 
+        $ph = new FormPersistHandler($this->get('session'), $this->input, 
             array('weight' => '', 'reps' => 2, 'rounding' => 2.5), 'onerm_');
 
         $form = new Form('onerm', '/onerm', $ph);
@@ -135,7 +131,7 @@ class OnermAction extends AbstractAction implements ActionInterface
 
         } else if ($this->input->formSubmitted('onerm-table')) {
 
-            $session = $this->getInstance('session');
+            $session = $this->get('session');
 
             $payload->set('weight', $session->get('onerm_weight', ''));
             $payload->set('reps', $session->get('onerm_reps', ''));

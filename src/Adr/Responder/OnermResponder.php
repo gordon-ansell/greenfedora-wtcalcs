@@ -12,10 +12,6 @@ namespace WTCalcs\Adr\Responder;
 use WTCalcs\Adr\Responder\AbstractBaseResponder;
 use GreenFedora\Adr\Responder\ResponderInterface;
 
-use WTCalcs\Adr\Domain\Onerm\OnermResult;
-
-use GreenFedora\Payload\PayloadInterface;
-use GreenFedora\Arr\Arr;
 use GreenFedora\Arr\ArrInterface;
 
 use GreenFedora\Table\Table;
@@ -23,8 +19,6 @@ use GreenFedora\Table\TableInterface;
 
 use GreenFedora\Filter\NumberFormat;
 
-use Spatie\SchemaOrg\Schema;
-use Spatie\SchemaOrg\ReferencedType;
 use Spatie\SchemaOrg\Graph;
 
 /**
@@ -71,10 +65,9 @@ class OnermResponder extends AbstractBaseResponder implements ResponderInterface
     /**
      * Create the results table.
      * 
-     * @param   PayloadInterface         $payload    Data payload.
      * @return  TableInterface 
      */
-    protected function resultsTable(PayloadInterface $payload): TableInterface
+    protected function resultsTable(): TableInterface
     {
         $table = new Table('onerm-table', 'flextable stripe wtcalcs onerm1');
 
@@ -92,10 +85,9 @@ class OnermResponder extends AbstractBaseResponder implements ResponderInterface
     /**
      * Create the percents table.
      * 
-     * @param   PayloadInterface         $payload    Data payload.
      * @return  TableInterface 
      */
-    protected function percentTable(PayloadInterface $payload): TableInterface
+    protected function percentTable(): TableInterface
     {
         $table = new Table('percent', 'flextable stripe wtcalcs onerm2');
 
@@ -134,8 +126,8 @@ class OnermResponder extends AbstractBaseResponder implements ResponderInterface
 
         if ($this->input->isPost()) {
             // Results table.
-            $resultsTable->setData(array_merge($this->payload->get('results')->toArray(), 
-                [$this->payload->get('average')->toArray()]));
+            $avg = ($this->payload->has('average')) ? $this->payload->get('average')->toArray() : [];
+            $resultsTable->setData(array_merge($this->payload->get('results')->toArray(), [$avg]));
             $this->payload->set('resultsTable', $resultsTable);
 
             // Percent table.
@@ -145,7 +137,7 @@ class OnermResponder extends AbstractBaseResponder implements ResponderInterface
         }
 
         // Configure sorting.
-        $resultsTable->checkSort($this->input, $this->getInstance('session'));
+        $resultsTable->checkSort($this->input, $this->get('session'));
 
         // Do we need to sort?
         $resultsSort = $resultsTable->getSort();

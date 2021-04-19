@@ -12,17 +12,17 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/gordon-ansell/greenfedora-framework.git",
-                "reference": "6af097fb5251d123b33b2058ffa5fed43ecdd6b7"
+                "reference": "1dc5bcad5e0a200c8c0e14effa370e62dd82484d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/gordon-ansell/greenfedora-framework/zipball/6af097fb5251d123b33b2058ffa5fed43ecdd6b7",
-                "reference": "6af097fb5251d123b33b2058ffa5fed43ecdd6b7",
+                "url": "https://api.github.com/repos/gordon-ansell/greenfedora-framework/zipball/1dc5bcad5e0a200c8c0e14effa370e62dd82484d",
+                "reference": "1dc5bcad5e0a200c8c0e14effa370e62dd82484d",
                 "shasum": ""
             },
             "require": {
                 "php": "^7.0",
-                "psr/container": "^1.0",
+                "psr/container": "^2.0",
                 "psr/link": "^1.0",
                 "psr/log": "~1.0"
             },
@@ -50,7 +50,7 @@
                 "source": "https://github.com/gordon-ansell/greenfedora-framework/tree/main",
                 "issues": "https://github.com/gordon-ansell/greenfedora-framework/issues"
             },
-            "time": "2021-04-17T06:07:41+00:00"
+            "time": "2021-04-19T10:45:53+00:00"
         },
         {
             "name": "gordon-ansell/greenfedora-scss",
@@ -152,22 +152,28 @@
         },
         {
             "name": "psr/container",
-            "version": "1.1.x-dev",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/php-fig/container.git",
-                "reference": "8622567409010282b7aeebe4bb841fe98b58dcaf"
+                "reference": "2ae37329ee82f91efadc282cc2d527fd6065a5ef"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/php-fig/container/zipball/8622567409010282b7aeebe4bb841fe98b58dcaf",
-                "reference": "8622567409010282b7aeebe4bb841fe98b58dcaf",
+                "url": "https://api.github.com/repos/php-fig/container/zipball/2ae37329ee82f91efadc282cc2d527fd6065a5ef",
+                "reference": "2ae37329ee82f91efadc282cc2d527fd6065a5ef",
                 "shasum": ""
             },
             "require": {
                 "php": ">=7.2.0"
             },
+            "default-branch": true,
             "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "2.0.x-dev"
+                }
+            },
             "autoload": {
                 "psr-4": {
                     "Psr\\Container\\": "src/"
@@ -194,9 +200,9 @@
             ],
             "support": {
                 "issues": "https://github.com/php-fig/container/issues",
-                "source": "https://github.com/php-fig/container/tree/1.1.x"
+                "source": "https://github.com/php-fig/container/tree/2.0.1"
             },
-            "time": "2021-03-05T17:36:06+00:00"
+            "time": "2021-03-24T13:40:57+00:00"
         },
         {
             "name": "psr/link",

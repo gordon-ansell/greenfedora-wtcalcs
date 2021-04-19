@@ -13,16 +13,10 @@ use GreenFedora\Adr\Action\AbstractAction;
 use GreenFedora\Adr\Action\ActionInterface;
 use WTCalcs\Adr\Responder\WilksResponder;
 use GreenFedora\Payload\Payload;
-use GreenFedora\Payload\PayloadInterface;
 use GreenFedora\Validator\Compulsory;
-use GreenFedora\Validator\Numeric;
 use GreenFedora\Validator\Integer;
 use GreenFedora\Validator\NumericBetween;
-use GreenFedora\Filter\FloatVal;
-use GreenFedora\Filter\IntVal;
-use GreenFedora\Form\FormValidator;
 use GreenFedora\Form\FormPersistHandler;
-use GreenFedora\Form\FormPersistHandlerInterface;
 use GreenFedora\Form\Form;
 use GreenFedora\Form\FormInterface;
 
@@ -67,9 +61,9 @@ class WilksAction extends AbstractAction implements ActionInterface
      */
     protected function createForm()
     {
-        $method = $this->input->post('method', $this->getInstance('session')->get('wilks_method', 'all'));
+        $method = $this->input->post('method', $this->get('session')->get('wilks_method', 'all'));
 
-        $ph = new FormPersistHandler($this->getInstance('session'), $this->input, 
+        $ph = new FormPersistHandler($this->get('session'), $this->input, 
             array(
                 'gender' => 'male', 
                 'age' => '',

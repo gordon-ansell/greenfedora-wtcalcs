@@ -15,10 +15,6 @@ use GreenFedora\Payload\PayloadInterface;
 use GreenFedora\Table\Table;
 use GreenFedora\Table\TableInterface;
 use GreenFedora\Filter\NumberFormat;
-use GreenFedora\Json\Json;
-
-use Spatie\SchemaOrg\Schema;
-use Spatie\SchemaOrg\ReferencedType;
 use Spatie\SchemaOrg\Graph;
 
 

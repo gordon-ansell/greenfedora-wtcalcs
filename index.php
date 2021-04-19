@@ -19,18 +19,18 @@ if ('prod' != $env) {
 require __DIR__ . "/vendor/autoload.php";
 
 use WTCalcs\Application\WTCalcsApplication;
-use GreenFedora\Application\Input\HttpApplicationInput;
-use GreenFedora\Application\Output\HttpApplicationOutput;
+use GreenFedora\Http\Request;
+use GreenFedora\Http\Response;
 
 // This is assumed to be the base path.
 define('APP_PATH', dirname(__FILE__));
 define('APP_VERSION', '1.0.0.dev1');
 
 // Output response.
-$output = new HttpApplicationOutput();
+$output = new Response();
 
 // Kick off the application
-$app = new WTCalcsApplication(WTCalcsApplication::bootstrap($env), $env, new HttpApplicationInput, $output);
+$app = new WTCalcsApplication(WTCalcsApplication::bootstrap($env), $env, new Request, $output);
 $app->main();
 
 // Display output.
