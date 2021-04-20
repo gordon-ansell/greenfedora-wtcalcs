@@ -1202,7 +1202,6 @@ blockquote::after {
   }
 }
 button.sortablecolumn-button {
-  border: none;
   padding: none;
   margin: none;
   text-align: unset;
@@ -1211,6 +1210,9 @@ button.sortablecolumn-button {
   font-style: inherit;
   font-family: inherit;
   color: inherit;
+  cursor: pointer;
+  border: 0.5px solid;
+  border-radius: 0.5em;
 }
 button.sortablecolumn-button:focus {
   border: none;
@@ -1284,6 +1286,10 @@ blockquote::before {
 
 .flextable.stripe tbody tr:nth-child(even), .flextable.stripe tbody .row:nth-child(even) {
   background-color: var(--col-bg-secondary);
+}
+
+button.sortablecolumn-button {
+  border-color: var(--col-border);
 }
 
 .form-container .form-box .error {

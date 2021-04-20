@@ -58,16 +58,14 @@ class WTCalcsApplication extends AbstractHttpApplication implements ApplicationI
 		$di->setSingleton('locale', Locale::class, [$di->get('config')->locale]);
 
 		// Logger.
-		$di->setValue('loggerConfig', $di->get('config')->logger);
+		$di->setInjectableValue('loggerConfig', $di->get('config')->logger);
 		$di->setClass('logFormatter', StdLogFormatter::class);
 		$writers = array($di->create(FileLogWriter::class));
 		if ('prod' != $env) {
 			$writers[] = $di->create(ForcedConsoleLogWriter::class);		
 		}
-		$di->setValue('logWriters', $writers);
+		$di->setInjectableValue('logWriters', $writers);
 		$di->setSingleton('logger', Logger::class);
-
-		$di->get('logger')->error("Testing");
 
 		// Inflector.
 		$di->setClass('inflector', Inflector::class);
