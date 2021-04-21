@@ -152,10 +152,6 @@ class OnermResponder extends AbstractBaseResponder implements ResponderInterface
 
         $r = $this->container->get('template')->render('onerm', $this->payload->toArray());
 
-        if ($resultsTable->hasDebugging()) {
-            $resultsTable->outputDebugging($this->container->get('logger'));
-        }
-
         $this->output->setBody($r);
     }
 }

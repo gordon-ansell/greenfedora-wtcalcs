@@ -232,6 +232,27 @@ class WilksAction extends AbstractAction implements ActionInterface
                 $resultsSiff = [];
 
                 $calculator = new WilksCalculator();
+                if ('separate' == $payload->get('method')) {
+                    $resultsWilks[] = $calculator->wilks(floatval($convSingles['squat']), floatval($convBodyWeight), 
+                        $payload->gender, 'Squat');
+                    if ($payload->age and $payload->age > 13) {
+                        $resultsWilks[] = $calculator->wilksAge(floatval($convSingles['squat']), floatval($convBodyWeight), 
+                            $payload->gender, intval($payload->age), 'Squat/Age');
+                    }
+                    $resultsWilks[] = $calculator->wilks(floatval($convSingles['bench']), floatval($convBodyWeight), 
+                        $payload->gender, 'Bench');
+                    if ($payload->age and $payload->age > 13) {
+                        $resultsWilks[] = $calculator->wilksAge(floatval($convSingles['bench']), floatval($convBodyWeight), 
+                            $payload->gender, intval($payload->age), 'Bench/Age');
+                    }
+                    $resultsWilks[] = $calculator->wilks(floatval($convSingles['dead']), floatval($convBodyWeight), 
+                        $payload->gender, 'Dead');
+                    if ($payload->age and $payload->age > 13) {
+                        $resultsWilks[] = $calculator->wilksAge(floatval($convSingles['dead']), floatval($convBodyWeight), 
+                            $payload->gender, intval($payload->age), 'Dead/Age');
+                    }
+                }
+
                 $resultsWilks[] = $calculator->wilks(floatval($convWeight), floatval($convBodyWeight), $payload->gender);
                 if ($payload->age and $payload->age > 13) {
                     $resultsWilks[] = $calculator->wilksAge(floatval($convWeight), floatval($convBodyWeight), 

@@ -38,3 +38,10 @@ table.onerm1 {
         font-weight: bold;
     }
 }
+
+table.wilks1, table.wilks2, table.wilks3 {
+    tbody tr:last-child,
+    tbody tr:nth-last-child(2) {
+        font-weight: bold;
+    }
+}

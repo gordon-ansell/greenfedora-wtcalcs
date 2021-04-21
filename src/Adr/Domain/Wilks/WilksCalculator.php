@@ -28,10 +28,11 @@ class WilksCalculator extends AbstractCalculator implements ModelInterface
      * @param   float   $weight     Weight lifted.(KG)
      * @param   float   $bodyWeight Body weight.(KG)
      * @param   string  $gender     Gender.
+     * @param   string  $tag        Name tag.
      *
      * @return  WilksResult         Wilks calculations.
      */
-    public function wilks(float $weight, float $bodyWeight, string $gender): WilksResult
+    public function wilks(float $weight, float $bodyWeight, string $gender, string $tag = 'Wilks'): WilksResult
     {
         $wilks = 0.0;
 
@@ -56,8 +57,8 @@ class WilksCalculator extends AbstractCalculator implements ModelInterface
         $bwMult = $wilks;
         $wilks = $wilks * $weight;
 
-        return new WilksResult('Wilks', $wilks, $bwMult);
-    }
+        return new WilksResult($tag, $wilks, $bwMult);
+    }    
 
     /**
      * Calculate the wilks score with age allowances
@@ -66,14 +67,16 @@ class WilksCalculator extends AbstractCalculator implements ModelInterface
      * @param   float   $bodyWeight Body weight.(KG)
      * @param   string  $gender     Gender.
      * @param   int     $age        Age.   
+     * @param   string  $tag        Name tag.
      *
      * @return  WilksResult         Wilks calculations.
      */
-    public function wilksAge(float $weight, float $bodyWeight, string $gender, int $age): WilksResult
+    public function wilksAge(float $weight, float $bodyWeight, string $gender, int $age, 
+        string $tag = 'Wilks/Age'): WilksResult
     {
         $wilksAge = $this->wilks($weight, $bodyWeight, $gender)->value;
         $ret = $this->applyAge($wilksAge, $age);
 
-        return new WilksResult('Wilks/Age', $ret[0], $ret[1]);
+        return new WilksResult($tag, $ret[0], $ret[1]);
     }
 }

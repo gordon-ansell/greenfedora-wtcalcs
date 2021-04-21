@@ -30,8 +30,8 @@ define('APP_VERSION', '1.0.0.dev1');
 $output = new Response();
 
 // Kick off the application
-$app = new WTCalcsApplication(WTCalcsApplication::bootstrap($env), $env, new Request, $output);
-$app->main();
+$app = new WTCalcsApplication($env, new Request, $output);
+$app->bootstrap()->main();
 
 // Display output.
 $output->send();

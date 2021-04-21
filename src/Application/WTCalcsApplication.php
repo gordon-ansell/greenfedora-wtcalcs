@@ -10,7 +10,7 @@ declare(strict_types=1);
 namespace WTCalcs\Application;
 
 use GreenFedora\Application\AbstractHttpApplication;
-use GreenFedora\Application\ApplicationInterface;
+use GreenFedora\Application\HttpApplicationInterface;
 use GreenFedora\Config\Config;
 use GreenFedora\Locale\Locale;
 use GreenFedora\Logger\Logger;
@@ -23,10 +23,12 @@ use GreenFedora\Router\Router;
 use GreenFedora\Template\PlatesTemplate;
 use GreenFedora\Template\SmartyTemplate;
 use GreenFedora\Session\Session;
-
-use GreenFedora\DI\Container;
-use GreenFedora\DI\ContainerInterface;
-
+use GreenFedora\Logger\LoggerAwareTrait;
+use GreenFedora\Logger\LoggerAwareInterface;
+use GreenFedora\Logger\LoggerInterface;
+use GreenFedora\Lang\LangAwareInterface;
+use GreenFedora\Lang\LangAwareTrait;
+use GreenFedora\Lang\LangInterface;
 
 /**
  * The main WTCalcs application.
@@ -34,60 +36,80 @@ use GreenFedora\DI\ContainerInterface;
  * @author Gordon Ansell <contact@gordonansell.com>
  */
 
-class WTCalcsApplication extends AbstractHttpApplication implements ApplicationInterface
+class WTCalcsApplication extends AbstractHttpApplication implements HttpApplicationInterface, LoggerAwareInterface,
+	LangAwareInterface
 {
+	use LoggerAwareTrait;
+	use LangAwareTrait;
 
 	/**
 	 * Bootstrap.
 	 * 
-	 * @param 	string 				$env 	Environment.
-	 * @return 	ContainerInterface
+	 * @return 	HttpApplicationInterface
 	 */
-	static public function bootstrap(string $env): ContainerInterface
+	public function bootstrap(): HttpApplicationInterface
 	{
-		// Container instance.
-		$di = Container::getInstance();
-
+		
 		// Config.
-		$di->setSingletonAndCreate('config', Config::class)->process($env);
+		$this->setSingletonAndCreate('config', Config::class)->process($this->mode);
 
 		// Locale.
-		$di->setSingleton('locale', Locale::class, [$di->get('config')->locale]);
+		$this->setSingleton('locale', Locale::class, [$this->get('config')->locale]);
 
 		// Logger.
-		$di->setInjectableValue('loggerConfig', $di->get('config')->logger);
-		$di->setClass('logFormatter', StdLogFormatter::class);
-		$writers = array($di->create(FileLogWriter::class));
-		if ('prod' != $env) {
-			$writers[] = $di->create(ForcedConsoleLogWriter::class);		
+		$this->setInjectableValue('loggerConfig', $this->get('config')->logger);
+		$this->setClass('logFormatter', StdLogFormatter::class);
+		$writers = array($this->create(FileLogWriter::class));
+		if ('prod' != $this->mode) {
+			$writers[] = $this->create(ForcedConsoleLogWriter::class);		
 		}
-		$di->setInjectableValue('logWriters', $writers);
-		$di->setSingleton('logger', Logger::class);
+		$this->setInjectableValue('logWriters', $writers);
+		$this->setSingleton('logger', Logger::class);
 
 		// Inflector.
-		$di->setClass('inflector', Inflector::class);
+		$this->setClass('inflector', Inflector::class);
 
 		// Lang.
-		$di->setClass('lang', Lang::class, [$di->get('locale')->getLangCode()]);
+		$this->setClass('lang', Lang::class, [$this->get('locale')->getLangCode()]);
 
 		// Session.
-		$di->setClass('session', Session::class, [$di->get('config')->session]);
+		$this->setClass('session', Session::class, [$this->get('config')->session]);
 
 		// Router.
-		$di->setClass('router', Router::class, [$di->get('config')->routing, $di]);
+		$this->setClass('router', Router::class, [$this->get('config')->routing]);
 
 		// Template.
-		$tplType = $di->get('config')->templateType;
+		$tplType = $this->get('config')->templateType;
 		if ('plates' == $tplType) {
-			$di->setClass('template', PlatesTemplate::class, [$di->get('config')->template, $di]);
+			$this->setClass('template', PlatesTemplate::class, [$this->get('config')->template]);
 		} else if ('smarty' == $tplType) {
-			$di->setClass('template', SmartyTemplate::class, [$di->get('config')->template, $di]);
+			$this->setClass('template', SmartyTemplate::class, [$this->get('config')->template, $this]);
 		} else {
 			throw new \InvalidArgumentException(sprintf("No template support for type '%s'", $tplType));
 		}
 
-		return $di;
+		return $this;
 
+	}
+
+	/**
+	 * Get the logger.
+	 * 
+	 * @return 	LoggerInterface
+	 */
+	public function getLogger(): LoggerInterface
+	{
+		return $this->get('logger');
+	}
+
+	/**
+	 * Get the language processot.
+	 * 
+	 * @return 	LangInterface
+	 */
+	public function getLang(): LangInterface
+	{
+		return $this->get('lang');
 	}
 
 	/**

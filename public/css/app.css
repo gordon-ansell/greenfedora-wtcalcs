@@ -1457,3 +1457,10 @@ table.wtcalcs {
 table.onerm1 tbody tr:last-of-type {
   font-weight: bold;
 }
+
+table.wilks1 tbody tr:last-child,
+table.wilks1 tbody tr:nth-last-child(2), table.wilks2 tbody tr:last-child,
+table.wilks2 tbody tr:nth-last-child(2), table.wilks3 tbody tr:last-child,
+table.wilks3 tbody tr:nth-last-child(2) {
+  font-weight: bold;
+}

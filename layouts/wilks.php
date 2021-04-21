@@ -39,6 +39,12 @@
 
         <div class="explain">
             <ul>
+                <?php if ("separate" == $method): ?>
+                    <li><strong>Squat, Bench and Dead</strong> are the pseudo Wilks scores for your individual lifts.</li>
+                    <?php if ($age): ?>
+                        <li><strong>Squat/Age, Bench/Age, Dead/Age</strong> are age-adjusted versions of the above.</li>
+                    <?php endif ?>
+                <?php endif ?>
                 <li><strong>Wilks</strong> is your raw Wilks score. The multiplier column shows the multiplier applied to the score for your body weight. The heavier you are, the bigger the penalty against you. This allows light people to compete fairly with heavy people.</li>
                 <?php if ($age): ?>
                     <li><strong>Wilks/Age</strong> is your age-adjusted Wilks score. People between 23 and 40 get no adjustment because this is considered the age when you are at maximum strength capacity. People outside these ages get an adjustment for being older or younger. The multiplier column shows what your Wilks score is multiplied by to account for your age.</li>
@@ -61,17 +67,9 @@
         <div class="explain">
             <ul>
                 <?php if ("separate" == $method): ?>
-                    <li><strong>Squat</strong> is an allometric body weight-adjusted measure for your squat.</li>
+                    <li><strong>Squat, Bench and Dead</strong> are the allometric bodyweight-adjusted scores for your individual lifts. <strong>Note</strong>: the allometric deadlift figure is known to be less reliable than those for the squat and bench press.</li>
                     <?php if ($age): ?>
-                        <li><strong>Squat/Age</strong> is an age-adjusted version of above.</li>
-                    <?php endif ?>
-                    <li><strong>Bench</strong> is an allometric body weight-adjusted measure for your bench press.</li>
-                    <?php if ($age): ?>
-                        <li><strong>Bench/Age</strong> is an age-adjusted version of above.</li>
-                    <?php endif ?>
-                    <li><strong>Dead</strong> is an allometric body weight-adjusted measure for your deadlift. <strong>Note</strong>: the allometric deadlift figure is known to be less reliable than those for the squat and bench press.</li>
-                    <?php if ($age): ?>
-                        <li><strong>Dead/Age</strong> is an age-adjusted version of above.</li>
+                        <li><strong>Squat/Age, Bench/Age, Dead/Age</strong> are age-adjusted versions of the above.</li>
                     <?php endif ?>
                 <?php endif ?>
                 <li><strong>Total</strong> is an allometric body weight-adjusted measure for the total. There isn't really an official calculation of this, so I've just averaged them.</li>
@@ -96,17 +94,9 @@
         <div class="explain">
             <ul>
                 <?php if ("separate" == $method): ?>
-                    <li><strong>Squat</strong> is the SIFF body weight-adjusted measure for your squat.</li>
+                    <li><strong>Squat, Bench and Dead</strong> are the SIFF bodyweight-adjusted scores for your individual lifts.</li>
                     <?php if ($age): ?>
-                        <li><strong>Squat/Age</strong> is an age-adjusted version of above.</li>
-                    <?php endif ?>
-                    <li><strong>Bench</strong> is the SIFF body weight-adjusted measure for your bench press.</li>
-                    <?php if ($age): ?>
-                        <li><strong>Bench/Age</strong> is an age-adjusted version of above.</li>
-                    <?php endif ?>
-                    <li><strong>Dead</strong> is the SIFF body weight-adjusted measure for your deadlift.
-                    <?php if ($age): ?>
-                        <li><strong>Dead/Age</strong> is an age-adjusted version of above.</li>
+                        <li><strong>Squat/Age, Bench/Age and Dead/Age</strong> are age-adjusted versions of the above.</li>
                     <?php endif ?>
                 <?php endif ?>
                 <li><strong>Total</strong> is the SIFF body weight-adjusted measure for your lifts.</li>
