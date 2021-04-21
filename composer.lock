@@ -12,12 +12,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/gordon-ansell/greenfedora-framework.git",
-                "reference": "23f24ec13bcd5dca637970e656a8e81908538f7b"
+                "reference": "82e6991e268cffa4361f5e7b8dd7bff2b4f7ec7e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/gordon-ansell/greenfedora-framework/zipball/23f24ec13bcd5dca637970e656a8e81908538f7b",
-                "reference": "23f24ec13bcd5dca637970e656a8e81908538f7b",
+                "url": "https://api.github.com/repos/gordon-ansell/greenfedora-framework/zipball/82e6991e268cffa4361f5e7b8dd7bff2b4f7ec7e",
+                "reference": "82e6991e268cffa4361f5e7b8dd7bff2b4f7ec7e",
                 "shasum": ""
             },
             "require": {
@@ -50,7 +50,7 @@
                 "source": "https://github.com/gordon-ansell/greenfedora-framework/tree/main",
                 "issues": "https://github.com/gordon-ansell/greenfedora-framework/issues"
             },
-            "time": "2021-04-21T04:59:08+00:00"
+            "time": "2021-04-21T10:58:39+00:00"
         },
         {
             "name": "gordon-ansell/greenfedora-scss",
