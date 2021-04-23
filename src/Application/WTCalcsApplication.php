@@ -9,15 +9,15 @@
 declare(strict_types=1);
 namespace WTCalcs\Application;
 
-use GreenFedora\Application\AbstractHttpApplication;
-use GreenFedora\Application\HttpApplicationInterface;
+use GreenFedora\Http\AbstractHttpApplication;
+use GreenFedora\Http\HttpApplicationInterface;
 use GreenFedora\Lang\Lang;
 use GreenFedora\Inflector\Inflector;
 use GreenFedora\Router\Router;
+use GreenFedora\Http\HttpRouteMatcher;
 use GreenFedora\Template\PlatesTemplate;
 use GreenFedora\Template\SmartyTemplate;
 use GreenFedora\Session\Session;
-use GreenFedora\Logger\LoggerInterface;
 use GreenFedora\Lang\LangAwareInterface;
 use GreenFedora\Lang\LangAwareTrait;
 use GreenFedora\Lang\LangInterface;
@@ -49,6 +49,7 @@ class WTCalcsApplication extends AbstractHttpApplication implements HttpApplicat
 		$this->addClass('session', Session::class, [$this->get('config')->session]);
 
 		// Router.
+		$this->addSingleton('routeMatcher', HttpRouteMatcher::class);
 		$this->addClass('router', Router::class, [$this->get('config')->routing]);
 
 		// Template.

@@ -39,7 +39,7 @@ class OnermAction extends AbstractAction implements ActionInterface
      */
     protected function createForm()
     {
-        $ph = new FormPersistHandler($this->get('session'), $this->input, 
+        $ph = new FormPersistHandler($this->get('session'), $this->request, 
             array('weight' => '', 'reps' => 2, 'rounding' => 2.5), 'onerm_');
 
         $form = new Form('onerm', '/onerm', $ph);
@@ -117,19 +117,19 @@ class OnermAction extends AbstractAction implements ActionInterface
         $payload->set('percents', []);
 
         // Has user posted the form?
-        if ($this->input->formSubmitted('onerm')) {
+        if ($this->request->formSubmitted('onerm')) {
 
-            $payload->set('weight', $this->input->post('weight', ''));
-            $payload->set('reps', $this->input->post('reps', ''));
-            $payload->set('rounding', $this->input->post('rounding', 2.5));
+            $payload->set('weight', $this->request->post('weight', ''));
+            $payload->set('reps', $this->request->post('reps', ''));
+            $payload->set('rounding', $this->request->post('rounding', 2.5));
 
-            if ($form->validate($this->input->post()->toArray())) {
+            if ($form->validate($this->request->post()->toArray())) {
                 $this->results($payload);
             }
 
             $form->save($payload);
 
-        } else if ($this->input->formSubmitted('onerm-table')) {
+        } else if ($this->request->formSubmitted('onerm-table')) {
 
             $session = $this->get('session');
 
@@ -144,7 +144,7 @@ class OnermAction extends AbstractAction implements ActionInterface
             $form->getPersistHandler()->outputDebugging($this->container->get('logger'));
         }
 
-        $responder = new OnermResponder($this->container, $this->input, $this->output, $payload);
+        $responder = new OnermResponder($this->container, $this->request, $this->response, $payload);
         $responder->dispatch();
     }
 

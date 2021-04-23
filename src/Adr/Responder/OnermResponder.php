@@ -124,7 +124,7 @@ class OnermResponder extends AbstractBaseResponder implements ResponderInterface
     {
         $resultsTable = $this->resultsTable($this->payload);
 
-        if ($this->input->isPost()) {
+        if ($this->request->isPost()) {
             // Results table.
             $avg = ($this->payload->has('average')) ? $this->payload->get('average')->toArray() : [];
             $resultsTable->setData(array_merge($this->payload->get('results')->toArray(), [$avg]));
@@ -137,7 +137,7 @@ class OnermResponder extends AbstractBaseResponder implements ResponderInterface
         }
 
         // Configure sorting.
-        $resultsTable->checkSort($this->input, $this->get('session'));
+        $resultsTable->checkSort($this->request, $this->get('session'));
 
         // Do we need to sort?
         $resultsSort = $resultsTable->getSort();
@@ -152,6 +152,6 @@ class OnermResponder extends AbstractBaseResponder implements ResponderInterface
 
         $r = $this->container->get('template')->render('onerm', $this->payload->toArray());
 
-        $this->output->setBody($r);
+        $this->response->setContent($r);
     }
 }

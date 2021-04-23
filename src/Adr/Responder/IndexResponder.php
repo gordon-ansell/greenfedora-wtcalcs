@@ -54,6 +54,6 @@ class IndexResponder extends AbstractBaseResponder implements ResponderInterface
         $this->payload->set('schema', json_encode($this->schema(), JSON_PRETTY_PRINT));
 
         $r = $this->container->get('template')->render('index', $this->payload->toArray());
-        $this->output->setBody($r);
+        $this->response->setContent($r);
     }
 }

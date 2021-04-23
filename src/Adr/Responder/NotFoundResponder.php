@@ -26,6 +26,6 @@ class NotFoundResponder extends AbstractResponder implements ResponderInterface
     public function dispatch()
     {
         $r = $this->container->get('template')->render('404', $this->payload->toArray());
-        $this->output->setBody($r);
+        $this->response->setContent($r);
     }
 }

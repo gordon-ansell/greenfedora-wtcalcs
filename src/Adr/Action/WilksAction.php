@@ -61,9 +61,9 @@ class WilksAction extends AbstractAction implements ActionInterface
      */
     protected function createForm()
     {
-        $method = $this->input->post('method', $this->get('session')->get('wilks_method', 'all'));
+        $method = $this->request->post('method', $this->get('session')->get('wilks_method', 'all'));
 
-        $ph = new FormPersistHandler($this->get('session'), $this->input, 
+        $ph = new FormPersistHandler($this->get('session'), $this->request, 
             array(
                 'gender' => 'male', 
                 'age' => '',
@@ -178,23 +178,23 @@ class WilksAction extends AbstractAction implements ActionInterface
         $payload->set('resultsSiff', []);
 
         // Has user posted the form?
-        if ($this->input->isPost() and $this->input->formSubmitted('wilks')) {
+        if ($this->request->isPost() and $this->request->formSubmitted('wilks')) {
 
-            $payload->set('gender', $this->input->post('gender', 'male'));
-            $payload->set('age', $this->input->post('age', ''));
-            $payload->set('bodyWeight', $this->input->post('bodyWeight', ''));
-            $payload->set('bodyWeightUnits', $this->input->post('bodyWeightUnits', 'kg'));
-            $payload->set('method', $this->input->post('method', 'all'));
-            $payload->set('weight', $this->input->post('weight', ''));
-            $payload->set('weightUnits', $this->input->post('weightUnits', 'kg'));
-            $payload->set('squat', $this->input->post('squat', ''));
-            $payload->set('squatUnits', $this->input->post('squatUnits', 'kg'));
-            $payload->set('bench', $this->input->post('bench', ''));
-            $payload->set('benchUnits', $this->input->post('benchUnits', 'kg'));
-            $payload->set('dead', $this->input->post('dead', ''));
-            $payload->set('deadUnits', $this->input->post('deadUnits', 'kg'));
+            $payload->set('gender', $this->request->post('gender', 'male'));
+            $payload->set('age', $this->request->post('age', ''));
+            $payload->set('bodyWeight', $this->request->post('bodyWeight', ''));
+            $payload->set('bodyWeightUnits', $this->request->post('bodyWeightUnits', 'kg'));
+            $payload->set('method', $this->request->post('method', 'all'));
+            $payload->set('weight', $this->request->post('weight', ''));
+            $payload->set('weightUnits', $this->request->post('weightUnits', 'kg'));
+            $payload->set('squat', $this->request->post('squat', ''));
+            $payload->set('squatUnits', $this->request->post('squatUnits', 'kg'));
+            $payload->set('bench', $this->request->post('bench', ''));
+            $payload->set('benchUnits', $this->request->post('benchUnits', 'kg'));
+            $payload->set('dead', $this->request->post('dead', ''));
+            $payload->set('deadUnits', $this->request->post('deadUnits', 'kg'));
 
-            if ($form->validate($this->input->post()->toArray())) {
+            if ($form->validate($this->request->post()->toArray())) {
 
                 $convWeight = 0;
                 $convBodyWeight = 0;
@@ -332,7 +332,7 @@ class WilksAction extends AbstractAction implements ActionInterface
             $form->getPersistHandler()->outputDebugging($this->container->get('logger'));
         }
 
-        $responder = new WilksResponder($this->container, $this->input, $this->output, $payload);
+        $responder = new WilksResponder($this->container, $this->request, $this->response, $payload);
         $responder->dispatch();
     }
 
