@@ -12,7 +12,6 @@ namespace WTCalcs\Ui\Onerm;
 use GreenFedora\Http\Adr\AbstractHttpAction;
 use GreenFedora\Application\Adr\ActionInterface;
 use WTCalcs\Ui\Onerm\OnermResponder;
-use GreenFedora\Payload\Payload;
 use GreenFedora\Payload\PayloadInterface;
 use GreenFedora\Validator\Compulsory;
 use GreenFedora\Validator\Integer;
@@ -21,7 +20,7 @@ use GreenFedora\Filter\FloatVal;
 use GreenFedora\Form\FormPersistHandler;
 use GreenFedora\Form\Form;
 
-use WTCalcs\Domain\Onerm\OnermCalcs;
+use WTCalcs\Domain\Onerm\OnermDomain;
 
 /**
  * The 1-rep maximum calculator action.
@@ -101,18 +100,12 @@ class OnermAction extends AbstractHttpAction implements ActionInterface
      */
     public function results(PayloadInterface &$payload)
     {
-        $calculator = new OnermCalcs();
+        $calculator = new OnermDomain();
+        list($onerms, $average, $percents) = $calculator->results($payload->weight, $payload->reps, $payload->rounding);
 
-        $results = array();
-        $average = $calculator->onermcalcs(floatval($payload->weight), intval($payload->reps), 
-            floatval($payload->rounding), $results);
-        $payload->set('results', $results);
+        $payload->set('results', $onerms);
         $payload->set('average', $average);
-
-        $percents = array();
-        $calculator->onermpercents(floatval($average->value), floatval($payload->rounding), $percents);
         $payload->set('percents', $percents);
-
     }
 
     /**
@@ -123,7 +116,7 @@ class OnermAction extends AbstractHttpAction implements ActionInterface
         $form = $this->createForm()->load($this->payload);
         $this->payload->set('form', $form);
 
-        $this->payload->set('af', 'weight');
+        //$this->payload->set('af', 'weight');
         $this->payload->set('results', []);
         $this->payload->set('percents', []);
 

@@ -9,8 +9,7 @@
 declare(strict_types=1);
 namespace WTCalcs\Domain\Onerm;
 
-use GreenFedora\Adr\Domain\AbstractModel;
-use GreenFedora\Adr\Domain\ModelInterface;
+use GreenFedora\Maths\Maths;
 
 use WTCalcs\Domain\Onerm\OnermResult;
 
@@ -20,115 +19,101 @@ use WTCalcs\Domain\Onerm\OnermResult;
  * @author Gordon Ansell <contact@gordonansell.com>
  */
 
-class OnermCalcs extends AbstractModel implements ModelInterface
-{
+class OnermCalcs
+{    
+    /**
+     * Weight.
+     * @var float
+     */    
+    protected $weight = null;
 
     /**
-     * Round a number to the nearest multiplier.
-     *
-     * @param   float   $num   Number to round.
-     * @param   float   $mult  Multiplier to round it to.
-     *
-     * @return  float          Rounded number.
+     * Reps.
+     * @var int
+     */    
+    protected $reps = null;
+
+    /**
+     * Rounding.
+     * @var float
      */
-    protected function mround(float $num, float $mult): float 
+    protected $rounding = null;
+
+    /**
+     * Constructor.
+     *
+     * @param   float   $weight    Weight lifted.
+     * @param   float   $reps      Reps performed.
+     * @param   float   $rounding  Number to round to.
+     *
+     * @return  void
+     */
+    public function __construct(float $weight, int $reps, float $rounding)
     {
-        $multiplier = 1 / $mult;
-        return round($num * $multiplier) / $multiplier;
+        $this->weight = $weight;
+        $this->reps = $reps;
+        $this->rounding = $rounding;
     }
-    
+
     /**
      * Calculate the various one rep maximums.
      *
-     * @param   float   $weight    Weight lifted.
-     * @param   int     $reps      Reps performed.
-     * @param   float   $rounding  Number to round to.
-     * @param   array   $results   Where to add the results - array of Calc objects. (optional)
-     *
-     * @return  OnermResult        Average of the results.
+     * @return  array
      */
-    public function onermcalcs(float $weight, int $reps, float $rounding, array &$results = null): OnermResult
+    public function __invoke()
     {
-        if (null === $results) {
-            $results = [];
-        }
+        $results = [];
 
-        if (1 === $reps) {
+        if (1 === $this->reps) {
 
             foreach(['Epley', 'Brzycki', 'McGlothin', 'Lombardi', 'Mayhew', 'Wathan', "O'Conner"] as $item) {
-                $tmp = new OnermResult($item, $weight);
+                $tmp = new OnermResult($item, $this->weight);
                 array_push($results, $tmp);
             }
 
         } else {
     
             // Epley.
-            $tmp = new OnermResult('Epley', $weight * (1 + ($reps / 30)));
+            $tmp = new OnermResult('Epley', $this->weight * (1 + ($this->reps / 30)));
             array_push($results, $tmp);
         
             // Brzycki.
-            $tmp = new OnermResult('Brzycki', $weight * (36 / (37 - $reps)));
+            $tmp = new OnermResult('Brzycki', $this->weight * (36 / (37 - $this->reps)));
             array_push($results, $tmp);
         
             // McGlothin.
-            $tmp = new OnermResult('McGlothin', (100 * $weight) / (101.3 - (2.67123 * $reps)));
+            $tmp = new OnermResult('McGlothin', (100 * $this->weight) / (101.3 - (2.67123 * $this->reps)));
             array_push($results, $tmp);
         
             // Lombardi.
-            $tmp = new OnermResult('Lombardi', $weight * ($reps ** 0.1));
+            $tmp = new OnermResult('Lombardi', $this->weight * ($this->reps ** 0.1));
             array_push($results, $tmp);
         
             // Mayhew.
-            $tmp = new OnermResult('Mayhew', (100 * $weight) / (52.2 + 41.9 * (M_E ** (-0.055 * $reps))));
+            $tmp = new OnermResult('Mayhew', (100 * $this->weight) / (52.2 + 41.9 * (M_E ** (-0.055 * $this->reps))));
             array_push($results, $tmp);
         
             // Wathan.
-            $tmp = new OnermResult('Wathan', ($weight * 100) / (48.8 + 53.8 * (M_E ** (-0.075 * $reps))));
+            $tmp = new OnermResult('Wathan', ($this->weight * 100) / (48.8 + 53.8 * (M_E ** (-0.075 * $this->reps))));
             array_push($results, $tmp);
         
             // O'Conner.
-            $tmp = new OnermResult("O'Conner", $weight * (1 + ($reps / 40)));
+            $tmp = new OnermResult("O'Conner", $this->weight * (1 + ($this->reps / 40)));
             array_push($results, $tmp);
         }
     
         // Total.
         $tot = 0;
         foreach($results as $item) {
-            $item->rounded = $this->mround($item->value, $rounding);
+            $item->rounded = Maths::mround($item->value, $this->rounding);
             $tot += $item->value;
         }
 
         $avg = new OnermResult();
         $avg->name = 'Average';
         $avg->value = $tot / sizeof($results);
-        $avg->rounded = $this->mround($avg->value, $rounding);
+        $avg->rounded = Maths::mround($avg->value, $this->rounding);
     
-        return $avg;
-    }
-
-    /**
-     * Calculate the various percentages of the one rep maximum.
-     *
-     * @param   float   $weight    Weight lifted.
-     * @param   float   $rounding  Number to round to.
-     * @param   array   $results   Where to add the results - array of Calc objects. (optional)
-     *
-     * @return  void
-     */
-    public function onermpercents(float $weight, float $rounding, array &$results = null)
-    {
-        for ($i = 100; $i >= 5; $i = $i - 5) {
-            if (100 === $i) {
-                $tmp = new OnermResult("100%", $weight);
-                array_push($results, $tmp);
-            } else {
-                $tmp = new OnermResult(strval($i) . '%', ($weight / 100) * $i);
-                array_push($results, $tmp);
-            }
-        }
-
-        foreach($results as $item) {
-            $item->rounded = $this->mround($item->value, $rounding);
-        }
+        return array($results, $avg);
     }
 }
