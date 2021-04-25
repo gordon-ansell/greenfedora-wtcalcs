@@ -12,7 +12,6 @@ namespace WTCalcs\Ui\Wilks;
 use GreenFedora\Http\Adr\AbstractHttpAction;
 use GreenFedora\Application\Adr\ActionInterface;
 use WTCalcs\Ui\Wilks\WilksResponder;
-use GreenFedora\Payload\Payload;
 use GreenFedora\Validator\Compulsory;
 use GreenFedora\Validator\Integer;
 use GreenFedora\Validator\NumericBetween;
@@ -20,9 +19,7 @@ use GreenFedora\Form\FormPersistHandler;
 use GreenFedora\Form\Form;
 use GreenFedora\Form\FormInterface;
 
-use WTCalcs\Domain\Wilks\WilksCalculator;
-use WTCalcs\Domain\Wilks\AllometricCalculator;
-use WTCalcs\Domain\Wilks\SiffCalculator;
+use WTCalcs\Domain\Wilks\WilksDomain;
 
 /**
  * The Wilks score calculator action.
@@ -191,103 +188,18 @@ class WilksAction extends AbstractHttpAction implements ActionInterface
 
             if ($form->validate($this->request->post()->toArray())) {
 
-                $convWeight = 0;
-                $convBodyWeight = 0;
-                $convSingles = array();
+                $params = [
+                    'gender'    => $this->payload->get('gender'),
+                    'age'       => $this->payload->get('age'),
+                    'method'    => $this->payload->get('method'),
+                ];
 
-                if ('all' == $this->payload->get('method')) {
-                    if ('lb' == $this->payload->get('weightUnits')) {
-                        $convWeight = $this->payload->get('weight') * self::KGMULT;
-                    } else {
-                        $convWeight = $this->payload->get('weight');
-                    }
-                } else {
-                    foreach (['squat', 'bench', 'dead'] as $e) {
-                        if ('lb' == $this->payload->get($e . 'Units')) {
-                            $convSingles[$e] = $this->payload->get($e) * self::KGMULT;
-                            $convWeight += $this->payload->get($e) * self::KGMULT;
-                        } else {
-                            $convSingles[$e] = $this->payload->get($e);
-                            $convWeight += $this->payload->get($e);
-                        }
-                    }
-
-                    $this->payload->set('weight', $convWeight);
-                    $this->payload->set('weightUnits', 'kg');
+                foreach (['weight', 'squat', 'bench', 'dead', 'bodyWeight'] as $item) {
+                    $params[$item] = array($this->payload->get($item), $this->payload->get($item . 'Units'));
                 }
 
-                if ('lb' == $this->payload->get('bodyWeightUnits')) {
-                    $convBodyWeight = $this->payload->get('bodyWeight') * self::KGMULT;
-                } else {
-                    $convBodyWeight = $this->payload->get('bodyWeight');
-                }
-
-                $resultsWilks = [];
-                $resultsAllometric = [];
-                $resultsSiff = [];
-
-                $calculator = new WilksCalculator();
-                if ('separate' == $this->payload->get('method')) {
-                    foreach (['squat', 'bench', 'dead'] as $lift) {
-                        $resultsWilks[] = $calculator->wilks(floatval($convSingles[$lift]), floatval($convBodyWeight), 
-                            $this->payload->gender, null, ucfirst($lift));
-                        if ($this->payload->age and $this->payload->age > 13) {
-                            $resultsWilks[] = $calculator->wilks(floatval($convSingles[$lift]), floatval($convBodyWeight), 
-                                $this->payload->gender, intval($this->payload->age), ucfirst($lift));
-                        }
-                    }
-                }
-
-                $resultsWilks[] = $calculator->wilks(floatval($convWeight), floatval($convBodyWeight), $this->payload->gender);
-                if ($this->payload->age and $this->payload->age > 13) {
-                    $resultsWilks[] = $calculator->wilks(floatval($convWeight), floatval($convBodyWeight), 
-                        $this->payload->gender, intval($this->payload->age));
-                }
-
-                $allo = new AllometricCalculator();
-                if ('separate' == $this->payload->get('method')) {
-                    foreach (['squat', 'bench', 'dead'] as $lift) {
-                        $resultsAllometric[] = $allo->squat(floatval($convSingles[$lift]), floatval($convBodyWeight));
-                        if ($this->payload->age and $this->payload->age > 13) {
-                            $resultsAllometric[] = $allo->squat(floatval($convSingles[$lift]), floatval($convBodyWeight), 
-                            intval($this->payload->age));
-                        }
-                    }
-                    $resultsAllometric[] = $allo->total(floatval($convSingles['dead'] + $convSingles['bench'] + $convSingles['squat']), 
-                        floatval($convBodyWeight));
-                    if ($this->payload->age and $this->payload->age > 13) {
-                        $resultsAllometric[] = $allo->total(floatval($convSingles['dead'] + $convSingles['bench'] + $convSingles['squat']), 
-                            floatval($convBodyWeight), intval($this->payload->age));
-                    }
-                } else {
-                    $resultsAllometric[] = $allo->total(floatval($convWeight), floatval($convBodyWeight));
-                    if ($this->payload->age and $this->payload->age > 13) {
-                        $resultsAllometric[] = $allo->total(floatval($convWeight), 
-                            floatval($convBodyWeight), intval($this->payload->age));
-                    }
-                }
-
-                $siff = new SiffCalculator();
-                if ('separate' == $this->payload->get('method')) {
-                    foreach (['squat', 'bench', 'dead'] as $lift) {
-                        $resultsSiff[] = $siff->squat(floatval($convSingles[$lift]), floatval($convBodyWeight));
-                        if ($this->payload->age and $this->payload->age > 13) {
-                            $resultsSiff[] = $siff->squat(floatval($convSingles[$lift]), floatval($convBodyWeight), 
-                            intval($this->payload->age));
-                        }
-                    }
-                    $resultsSiff[] = $siff->total(floatval($convSingles['dead'] + $convSingles['bench'] + $convSingles['squat']), 
-                        floatval($convBodyWeight));
-                    if ($this->payload->age and $this->payload->age > 13) {
-                        $resultsSiff[] = $siff->total(floatval($convSingles['dead'] + $convSingles['bench'] + $convSingles['squat']), 
-                            floatval($convBodyWeight), intval($this->payload->age));
-                    }
-                } else {
-                    $resultsSiff[] = $siff->total(floatval($convWeight), floatval($convBodyWeight));
-                    if ($this->payload->age and $this->payload->age > 13) {
-                        $resultsSiff[] = $siff->total(floatval($convWeight), floatval($convBodyWeight), intval($this->payload->age));
-                    }
-                }
+                $wd = new WilksDomain($params);
+                list($resultsWilks, $resultsAllometric, $resultsSiff) = $wd->results();
 
                 $this->payload->set('resultsWilks', $resultsWilks);
                 $this->payload->set('resultsAllometric', $resultsAllometric);

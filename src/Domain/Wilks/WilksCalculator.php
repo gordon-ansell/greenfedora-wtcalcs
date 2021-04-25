@@ -9,8 +9,6 @@
 declare(strict_types=1);
 namespace WTCalcs\Domain\Wilks;
 
-use GreenFedora\Adr\Domain\ModelInterface;
-
 use WTCalcs\Domain\Wilks\AbstractCalculator;
 use WTCalcs\Domain\Wilks\WilksResult;
 
@@ -20,7 +18,7 @@ use WTCalcs\Domain\Wilks\WilksResult;
  * @author Gordon Ansell <contact@gordonansell.com>
  */
 
-class WilksCalculator extends AbstractCalculator implements ModelInterface
+class WilksCalculator extends AbstractCalculator
 {
     /**
      * Calculation coefficients.

@@ -10,7 +10,9 @@ declare(strict_types=1);
 namespace WTCalcs\Ui\Wilks;
 
 use WTCalcs\Ui\AbstractBaseResponder;
-use GreenFedora\Application\Adr\ResponderInterface;
+use GreenFedora\Http\Adr\HttpResponderInterface;
+use GreenFedora\Http\HttpResponseInterface;
+use GreenFedora\Application\ResponseInterface;
 use GreenFedora\Payload\PayloadInterface;
 use GreenFedora\Table\Table;
 use GreenFedora\Table\TableInterface;
@@ -24,7 +26,7 @@ use Spatie\SchemaOrg\Graph;
  * @author Gordon Ansell <contact@gordonansell.com>
  */
 
-class WilksResponder extends AbstractBaseResponder implements ResponderInterface
+class WilksResponder extends AbstractBaseResponder implements HttpResponderInterface
 {
     /**
      * Generate schema.
@@ -83,8 +85,10 @@ class WilksResponder extends AbstractBaseResponder implements ResponderInterface
 
     /**
      * Dispatch the responder.
+	 * 
+	 * @return 	HttpResponseInterface
      */
-    public function dispatch()
+    public function dispatch(): ResponseInterface
     {
         if ($this->request->isPost() and $this->request->formSubmitted('wilks')) {
             // Wilks results table.
@@ -107,5 +111,6 @@ class WilksResponder extends AbstractBaseResponder implements ResponderInterface
 
         $r = $this->container->get('template')->render('wilks', $this->payload->toArray());
         $this->response->setContent($r);
+        return $this->response;
     }
 }

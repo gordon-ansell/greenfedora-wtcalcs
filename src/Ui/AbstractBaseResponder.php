@@ -10,6 +10,7 @@ declare(strict_types=1);
 namespace WTCalcs\Ui;
 
 use GreenFedora\Http\Adr\AbstractHttpResponder;
+use GreenFedora\Http\Adr\HttpResponderInterface;
 
 use Spatie\SchemaOrg\Graph;
 

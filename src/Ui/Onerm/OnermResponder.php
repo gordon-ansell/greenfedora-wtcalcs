@@ -11,6 +11,7 @@ namespace WTCalcs\Ui\Onerm;
 
 use WTCalcs\Ui\AbstractBaseResponder;
 use GreenFedora\Application\Adr\ResponderInterface;
+use GreenFedora\Http\Adr\HttpResponderInterface;
 
 use GreenFedora\Arr\ArrInterface;
 
@@ -18,7 +19,8 @@ use GreenFedora\Table\Table;
 use GreenFedora\Table\TableInterface;
 
 use GreenFedora\Filter\NumberFormat;
-
+use GreenFedora\Http\HttpResponseInterface;
+use GreenFedora\Application\ResponseInterface;
 use Spatie\SchemaOrg\Graph;
 
 /**
@@ -27,7 +29,7 @@ use Spatie\SchemaOrg\Graph;
  * @author Gordon Ansell <contact@gordonansell.com>
  */
 
-class OnermResponder extends AbstractBaseResponder implements ResponderInterface
+class OnermResponder extends AbstractBaseResponder implements HttpResponderInterface
 {
     /**
      * Generate schema.
@@ -119,12 +121,15 @@ class OnermResponder extends AbstractBaseResponder implements ResponderInterface
 
     /**
      * Dispatch the responder.
+	 * 
+	 * @return 	HttpResponseInterface
      */
-    public function dispatch()
+    public function dispatch(): ResponseInterface
     {
         $resultsTable = $this->resultsTable($this->payload);
 
-        if ($this->request->isPost()) {
+        //if ($this->request->isPost()) {
+        if (!is_null($this->payload->formSubmitted)) {
             // Results table.
             $avg = ($this->payload->has('average')) ? $this->payload->get('average')->toArray() : [];
             $resultsTable->setData(array_merge($this->payload->get('results')->toArray(), [$avg]));
@@ -153,5 +158,7 @@ class OnermResponder extends AbstractBaseResponder implements ResponderInterface
         $r = $this->container->get('template')->render('onerm', $this->payload->toArray());
 
         $this->response->setContent($r);
+
+        return $this->response;
     }
 }

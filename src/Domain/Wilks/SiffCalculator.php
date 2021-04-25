@@ -9,8 +9,6 @@
 declare(strict_types=1);
 namespace WTCalcs\Domain\Wilks;
 
-use GreenFedora\Adr\Domain\ModelInterface;
-
 use WTCalcs\Domain\Wilks\AbstractCalculator;
 use WTCalcs\Domain\Wilks\WilksResult;
 
@@ -20,7 +18,7 @@ use WTCalcs\Domain\Wilks\WilksResult;
  * @author Gordon Ansell <contact@gordonansell.com>
  */
 
-class SiffCalculator extends AbstractCalculator implements ModelInterface
+class SiffCalculator extends AbstractCalculator
 {
     /**
      * Calculation values.
@@ -43,7 +41,7 @@ class SiffCalculator extends AbstractCalculator implements ModelInterface
      *
      * @return  WilksResult         Result.
      */
-    protected function doCalc(string $type, float $weight, float $bodyWeight, ?int $age = null): WilksResult
+    public function doCalc(string $type, float $weight, float $bodyWeight, ?int $age = null): WilksResult
     {
         $f = $this->calc[$type];
 

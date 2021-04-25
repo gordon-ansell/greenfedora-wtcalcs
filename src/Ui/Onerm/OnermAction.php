@@ -116,12 +116,14 @@ class OnermAction extends AbstractHttpAction implements ActionInterface
         $form = $this->createForm()->load($this->payload);
         $this->payload->set('form', $form);
 
-        //$this->payload->set('af', 'weight');
         $this->payload->set('results', []);
         $this->payload->set('percents', []);
+        $this->payload->set('formSubmitted', null);
 
         // Has user posted the form?
         if ($this->request->formSubmitted('onerm')) {
+
+            $this->payload->set('formSubmitted', 'onerm');
 
             $this->payload->setFrom($this->request->post()->toArray(), $this->getFormDefaults());
 
@@ -132,6 +134,8 @@ class OnermAction extends AbstractHttpAction implements ActionInterface
             $form->save($this->payload);
 
         } else if ($this->request->formSubmitted('onerm-table')) {
+
+            $this->payload->set('formSubmitted', 'onerm-table');
 
             $session = $this->get('session');
 

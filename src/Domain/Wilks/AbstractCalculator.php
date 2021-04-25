@@ -9,15 +9,13 @@
 declare(strict_types=1);
 namespace WTCalcs\Domain\Wilks;
 
-use GreenFedora\Adr\Domain\AbstractModel;
-
 /**
  * The abstract calculator.
  *
  * @author Gordon Ansell <contact@gordonansell.com>
  */
 
-abstract class AbstractCalculator extends AbstractModel
+abstract class AbstractCalculator
 {
     const WOLD = "41|1.01, 42|1.02, 43|1.031, 44|1.043, 45|1.055, 46|1.068, 47|1.082, 48|1.097, 49|1.113, 50|1.130,
         51|1.147, 52|1.165, 53|1.184, 54|1.204, 55|1.225, 56|1.246, 57|1.268, 58|1.291, 59|1.315, 60|1.340,
