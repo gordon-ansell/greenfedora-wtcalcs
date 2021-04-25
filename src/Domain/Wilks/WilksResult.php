@@ -7,7 +7,7 @@
  */
 
 declare(strict_types=1);
-namespace WTCalcs\Adr\Domain\Wilks;
+namespace WTCalcs\Domain\Wilks;
 
 use GreenFedora\Arr\Arr;
 

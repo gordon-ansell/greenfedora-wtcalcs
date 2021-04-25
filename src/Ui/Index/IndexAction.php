@@ -7,12 +7,12 @@
  */
 
 declare(strict_types=1);
-namespace WTCalcs\Adr\Action;
+namespace WTCalcs\Ui\Index;
 
-use GreenFedora\Adr\Action\AbstractAction;
-use GreenFedora\Adr\Action\ActionInterface;
+use GreenFedora\Http\Adr\AbstractHttpAction;
+use GreenFedora\Application\Adr\ActionInterface;
 use GreenFedora\Payload\Payload;
-use WTCalcs\Adr\Responder\IndexResponder;
+use WTCalcs\Ui\Index\IndexResponder;
 
 /**
  * The index action.
@@ -20,7 +20,7 @@ use WTCalcs\Adr\Responder\IndexResponder;
  * @author Gordon Ansell <contact@gordonansell.com>
  */
 
-class IndexAction extends AbstractAction implements ActionInterface
+class IndexAction extends AbstractHttpAction implements ActionInterface
 {
 
     /**

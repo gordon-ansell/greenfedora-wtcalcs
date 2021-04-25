@@ -7,7 +7,7 @@
  */
 
 declare(strict_types=1);
-namespace WTCalcs\Adr\Domain\Onerm;
+namespace WTCalcs\Domain\Onerm;
 
 use GreenFedora\Arr\Arr;
 

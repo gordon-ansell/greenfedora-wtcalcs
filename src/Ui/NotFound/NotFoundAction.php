@@ -7,12 +7,12 @@
  */
 
 declare(strict_types=1);
-namespace WTCalcs\Adr\Action;
+namespace WTCalcs\Ui\NotFound;
 
-use GreenFedora\Adr\Action\AbstractAction;
-use GreenFedora\Adr\Action\ActionInterface;
+use GreenFedora\Http\Adr\AbstractHttpAction;
+use GreenFedora\Application\Adr\ActionInterface;
 use GreenFedora\Payload\Payload;
-use WTCalcs\Adr\Responder\NotFoundResponder;
+use WTCalcs\Ui\NotFound\NotFoundResponder;
 
 /**
  * The not found action.
@@ -20,7 +20,7 @@ use WTCalcs\Adr\Responder\NotFoundResponder;
  * @author Gordon Ansell <contact@gordonansell.com>
  */
 
-class NotFoundAction extends AbstractAction implements ActionInterface
+class NotFoundAction extends AbstractHttpAction implements ActionInterface
 {
 
     /**

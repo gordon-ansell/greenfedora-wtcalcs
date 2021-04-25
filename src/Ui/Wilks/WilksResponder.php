@@ -7,10 +7,10 @@
  */
 
 declare(strict_types=1);
-namespace WTCalcs\Adr\Responder;
+namespace WTCalcs\Ui\Wilks;
 
-use WTCalcs\Adr\Responder\AbstractBaseResponder;
-use GreenFedora\Adr\Responder\ResponderInterface;
+use WTCalcs\Ui\AbstractBaseResponder;
+use GreenFedora\Application\Adr\ResponderInterface;
 use GreenFedora\Payload\PayloadInterface;
 use GreenFedora\Table\Table;
 use GreenFedora\Table\TableInterface;

@@ -16,14 +16,14 @@
 return array(
 	'routing'	=> 	array(
 
-		'prefixNamespace'	=>	'\WTCalcs\Adr\Action',
+		'prefixNamespace'	=>	'WTCalcs\Ui',
 
 		'routes'	=>	array(
 			//'^\/test(?P<params>[a-zA-Z0-9_\-\/]*)$'	=>	'IndexAction',
-			'/wilks'     	=>  'WilksAction',
-			'/onerm'     	=>  'OnermAction',
-			'_default_'		=>  'IndexAction',
-			'_404_'			=>	'NotFoundAction',
+			'/wilks'     	=>  'Wilks\WilksAction',
+			'/onerm'     	=>  'Onerm\OnermAction',
+			'_default_'		=>  'Index\IndexAction',
+			'_404_'			=>	'NotFound\NotFoundAction',
 		)
 	)
 );

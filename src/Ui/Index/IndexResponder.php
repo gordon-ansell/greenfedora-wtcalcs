@@ -7,13 +7,11 @@
  */
 
 declare(strict_types=1);
-namespace WTCalcs\Adr\Responder;
+namespace WTCalcs\Ui\Index;
 
-use WTCalcs\Adr\Responder\AbstractBaseResponder;
-use GreenFedora\Adr\Responder\ResponderInterface;
+use WTCalcs\Ui\AbstractBaseResponder;
+use GreenFedora\Application\Adr\ResponderInterface;
 
-use Spatie\SchemaOrg\Schema;
-use Spatie\SchemaOrg\ReferencedType;
 use Spatie\SchemaOrg\Graph;
 
 /**

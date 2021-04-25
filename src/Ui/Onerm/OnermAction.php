@@ -7,11 +7,11 @@
  */
 
 declare(strict_types=1);
-namespace WTCalcs\Adr\Action;
+namespace WTCalcs\Ui\Onerm;
 
-use GreenFedora\Adr\Action\AbstractAction;
-use GreenFedora\Adr\Action\ActionInterface;
-use WTCalcs\Adr\Responder\OnermResponder;
+use GreenFedora\Http\Adr\AbstractHttpAction;
+use GreenFedora\Application\Adr\ActionInterface;
+use WTCalcs\Ui\Onerm\OnermResponder;
 use GreenFedora\Payload\Payload;
 use GreenFedora\Payload\PayloadInterface;
 use GreenFedora\Validator\Compulsory;
@@ -21,7 +21,7 @@ use GreenFedora\Filter\FloatVal;
 use GreenFedora\Form\FormPersistHandler;
 use GreenFedora\Form\Form;
 
-use WTCalcs\Adr\Domain\Onerm\OnermCalcs;
+use WTCalcs\Domain\Onerm\OnermCalcs;
 
 /**
  * The 1-rep maximum calculator action.
@@ -29,8 +29,22 @@ use WTCalcs\Adr\Domain\Onerm\OnermCalcs;
  * @author Gordon Ansell <contact@gordonansell.com>
  */
 
-class OnermAction extends AbstractAction implements ActionInterface
+class OnermAction extends AbstractHttpAction implements ActionInterface
 {
+
+    /**
+     * Get the form defaults.
+     * 
+     * @return array
+     */
+    protected function getFormDefaults(): array
+    {
+        return array(
+            'weight' => '', 
+            'reps' => 2, 
+            'rounding' => 2.5
+        );        
+    }
 
     /**
      * Create the form.
@@ -39,8 +53,7 @@ class OnermAction extends AbstractAction implements ActionInterface
      */
     protected function createForm()
     {
-        $ph = new FormPersistHandler($this->get('session'), $this->request, 
-            array('weight' => '', 'reps' => 2, 'rounding' => 2.5), 'onerm_');
+        $ph = new FormPersistHandler($this->get('session'), $this->request, $this->getFormDefaults(), 'onerm_');
 
         $form = new Form('onerm', '/onerm', $ph);
         $form->setAutoWrap('fieldset');
@@ -107,44 +120,37 @@ class OnermAction extends AbstractAction implements ActionInterface
      */
     public function dispatch()
     {
-        $payload = new Payload();
+        $form = $this->createForm()->load($this->payload);
+        $this->payload->set('form', $form);
 
-        $form = $this->createForm()->load($payload);
-        $payload->set('form', $form);
-
-        $payload->set('af', 'weight');
-        $payload->set('results', []);
-        $payload->set('percents', []);
+        $this->payload->set('af', 'weight');
+        $this->payload->set('results', []);
+        $this->payload->set('percents', []);
 
         // Has user posted the form?
         if ($this->request->formSubmitted('onerm')) {
 
-            $payload->set('weight', $this->request->post('weight', ''));
-            $payload->set('reps', $this->request->post('reps', ''));
-            $payload->set('rounding', $this->request->post('rounding', 2.5));
+            $this->payload->setFrom($this->request->post()->toArray(), $this->getFormDefaults());
 
             if ($form->validate($this->request->post()->toArray())) {
-                $this->results($payload);
+                $this->results($this->payload);
             }
 
-            $form->save($payload);
+            $form->save($this->payload);
 
         } else if ($this->request->formSubmitted('onerm-table')) {
 
             $session = $this->get('session');
 
-            $payload->set('weight', $session->get('onerm_weight', ''));
-            $payload->set('reps', $session->get('onerm_reps', ''));
-            $payload->set('rounding', $session->get('onerm_rounding', 2.5));
-
-            $this->results($payload);
+            $this->payload->setFrom($session->getAllUnprefixed('onerm_'));
+            $this->results($this->payload);
         }
 
         if ($form->getPersistHandler()->hasDebugging()) {
             $form->getPersistHandler()->outputDebugging($this->container->get('logger'));
         }
 
-        $responder = new OnermResponder($this->container, $this->request, $this->response, $payload);
+        $responder = new OnermResponder($this->container, $this->request, $this->response, $this->payload);
         $responder->dispatch();
     }
 

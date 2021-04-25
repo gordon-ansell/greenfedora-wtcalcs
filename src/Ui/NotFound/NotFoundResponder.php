@@ -7,10 +7,10 @@
  */
 
 declare(strict_types=1);
-namespace WTCalcs\Adr\Responder;
+namespace WTCalcs\Ui\NotFound;
 
-use GreenFedora\Adr\Responder\AbstractResponder;
-use GreenFedora\Adr\Responder\ResponderInterface;
+use WTCalcs\Ui\AbstractBaseResponder;
+use GreenFedora\Application\Adr\ResponderInterface;
 
 /**
  * The not found responder.
@@ -18,7 +18,7 @@ use GreenFedora\Adr\Responder\ResponderInterface;
  * @author Gordon Ansell <contact@gordonansell.com>
  */
 
-class NotFoundResponder extends AbstractResponder implements ResponderInterface
+class NotFoundResponder extends AbstractBaseResponder implements ResponderInterface
 {
     /**
      * Dispatch the responder.

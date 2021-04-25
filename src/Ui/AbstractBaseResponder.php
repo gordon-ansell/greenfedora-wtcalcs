@@ -7,11 +7,10 @@
  */
 
 declare(strict_types=1);
-namespace WTCalcs\Adr\Responder;
+namespace WTCalcs\Ui;
 
-use GreenFedora\Adr\Responder\AbstractResponder;
+use GreenFedora\Http\Adr\AbstractHttpResponder;
 
-use Spatie\SchemaOrg\Schema;
 use Spatie\SchemaOrg\Graph;
 
 /**
@@ -20,7 +19,7 @@ use Spatie\SchemaOrg\Graph;
  * @author Gordon Ansell <contact@gordonansell.com>
  */
 
-abstract class AbstractBaseResponder extends AbstractResponder
+abstract class AbstractBaseResponder extends AbstractHttpResponder
 {
     /**
      * Generate schema.
