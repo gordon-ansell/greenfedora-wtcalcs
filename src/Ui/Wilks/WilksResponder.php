@@ -88,9 +88,9 @@ class WilksResponder extends AbstractBaseResponder implements HttpResponderInter
 	 * 
 	 * @return 	HttpResponseInterface
      */
-    public function dispatch(): ResponseInterface
+    public function respond(): ResponseInterface
     {
-        if ($this->request->isPost() and $this->request->formSubmitted('wilks')) {
+        if ($this->payload->isFormSubmitted()) {
             // Wilks results table.
             $wilksTable = $this->resultsTable('wilks', $this->payload, 1);
             $wilksTable->setData($this->payload->get('resultsWilks')->toArray());
@@ -109,7 +109,7 @@ class WilksResponder extends AbstractBaseResponder implements HttpResponderInter
 
         $this->payload->set('schema', json_encode($this->schema(), JSON_PRETTY_PRINT));
 
-        $r = $this->container->get('template')->render('wilks', $this->payload->toArray());
+        $r = $this->container->get('template')->render('wilks', $this->payload->getdata()->toArray());
         $this->response->setContent($r);
         return $this->response;
     }

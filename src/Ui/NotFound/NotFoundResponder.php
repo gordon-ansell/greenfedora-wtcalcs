@@ -10,7 +10,7 @@ declare(strict_types=1);
 namespace WTCalcs\Ui\NotFound;
 
 use WTCalcs\Ui\AbstractBaseResponder;
-use GreenFedora\Application\Adr\ResponderInterface;
+use GreenFedora\Application\ResponseInterface;
 
 /**
  * The not found responder.
@@ -18,14 +18,17 @@ use GreenFedora\Application\Adr\ResponderInterface;
  * @author Gordon Ansell <contact@gordonansell.com>
  */
 
-class NotFoundResponder extends AbstractBaseResponder implements ResponderInterface
+class NotFoundResponder extends AbstractBaseResponder
 {
     /**
      * Dispatch the responder.
+     * 
+     * @return  HttpResponseInterface
      */
-    public function dispatch()
+    public function respond(): ResponseInterface
     {
-        $r = $this->container->get('template')->render('404', $this->payload->toArray());
+        $r = $this->container->get('template')->render('404', $this->payload->getdata()->toArray());
         $this->response->setContent($r);
+        return $this->response;
     }
 }

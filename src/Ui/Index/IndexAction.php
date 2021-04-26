@@ -12,6 +12,7 @@ namespace WTCalcs\Ui\Index;
 use GreenFedora\Http\Adr\AbstractHttpAction;
 use GreenFedora\Application\Adr\ActionInterface;
 use GreenFedora\Payload\Payload;
+use GreenFedora\Application\ResponseInterface;
 use WTCalcs\Ui\Index\IndexResponder;
 
 /**
@@ -25,12 +26,14 @@ class IndexAction extends AbstractHttpAction implements ActionInterface
 
     /**
      * Dispatch the action.
+     * 
+     * @return HttpResponseInterface
      */
-    public function dispatch()
+    public function dispatch(): ResponseInterface
     {
         $payload = new Payload();
         $responder = new IndexResponder($this->container, $this->request, $this->response, $payload);
-        $responder->dispatch();
+        return $responder->respond();
     }
 
 }

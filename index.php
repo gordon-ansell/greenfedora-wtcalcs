@@ -31,7 +31,7 @@ $output = new HttpResponse();
 
 // Kick off the application
 $app = new WTCalcsApplication($env, HttpRequest::fromGlobals(), $output);
-$app->bootstrap()->main();
+$response = $app->bootstrap()->main();
 
 // Display output.
-$output->send();
+$response->send();

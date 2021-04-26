@@ -11,6 +11,7 @@ namespace WTCalcs\Ui\Onerm;
 
 use GreenFedora\Http\Adr\AbstractHttpAction;
 use GreenFedora\Application\Adr\ActionInterface;
+use GreenFedora\Application\ResponseInterface;
 use WTCalcs\Ui\Onerm\OnermResponder;
 use GreenFedora\Payload\PayloadInterface;
 use GreenFedora\Validator\Compulsory;
@@ -110,20 +111,25 @@ class OnermAction extends AbstractHttpAction implements ActionInterface
 
     /**
      * Dispatch the action.
+     * 
+     * @return  HttpResponseInterface
      */
-    public function dispatch()
+    public function dispatch(): ResponseInterface
     {
-        $form = $this->createForm()->load($this->payload);
+        $data = $this->payload->getData();
+        $form = $this->createForm()->load($data);
+        $this->payload->setData($data);
+
         $this->payload->set('form', $form);
 
         $this->payload->set('results', []);
         $this->payload->set('percents', []);
-        $this->payload->set('formSubmitted', null);
+        $this->payload->setStatusNull();
 
         // Has user posted the form?
         if ($this->request->formSubmitted('onerm')) {
 
-            $this->payload->set('formSubmitted', 'onerm');
+            $this->payload->setFormSubmitted('onerm');
 
             $this->payload->setFrom($this->request->post()->toArray(), $this->getFormDefaults());
 
@@ -131,11 +137,11 @@ class OnermAction extends AbstractHttpAction implements ActionInterface
                 $this->results($this->payload);
             }
 
-            $form->save($this->payload);
+            $form->save($this->payload->getData());
 
         } else if ($this->request->formSubmitted('onerm-table')) {
 
-            $this->payload->set('formSubmitted', 'onerm-table');
+            $this->payload->setFormSubmitted('onerm-table');
 
             $session = $this->get('session');
 
@@ -143,12 +149,8 @@ class OnermAction extends AbstractHttpAction implements ActionInterface
             $this->results($this->payload);
         }
 
-        if ($form->getPersistHandler()->hasDebugging()) {
-            $form->getPersistHandler()->outputDebugging($this->container->get('logger'));
-        }
-
         $responder = new OnermResponder($this->container, $this->request, $this->response, $this->payload);
-        $responder->dispatch();
+        return $responder->respond();
     }
 
 }

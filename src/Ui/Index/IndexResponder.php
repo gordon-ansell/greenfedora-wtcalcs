@@ -10,7 +10,7 @@ declare(strict_types=1);
 namespace WTCalcs\Ui\Index;
 
 use WTCalcs\Ui\AbstractBaseResponder;
-use GreenFedora\Application\Adr\ResponderInterface;
+use GreenFedora\Application\ResponseInterface;
 
 use Spatie\SchemaOrg\Graph;
 
@@ -20,7 +20,7 @@ use Spatie\SchemaOrg\Graph;
  * @author Gordon Ansell <contact@gordonansell.com>
  */
 
-class IndexResponder extends AbstractBaseResponder implements ResponderInterface
+class IndexResponder extends AbstractBaseResponder
 {
     /**
      * Generate schema.
@@ -46,12 +46,15 @@ class IndexResponder extends AbstractBaseResponder implements ResponderInterface
 
     /**
      * Dispatch the responder.
+     * 
+     * @return  HttpResponseInterface
      */
-    public function dispatch()
+    public function respond(): ResponseInterface
     {
         $this->payload->set('schema', json_encode($this->schema(), JSON_PRETTY_PRINT));
 
-        $r = $this->container->get('template')->render('index', $this->payload->toArray());
+        $r = $this->container->get('template')->render('index', $this->payload->getData()->toArray());
         $this->response->setContent($r);
+        return $this->response;
     }
 }

@@ -11,6 +11,7 @@ namespace WTCalcs\Ui\Wilks;
 
 use GreenFedora\Http\Adr\AbstractHttpAction;
 use GreenFedora\Application\Adr\ActionInterface;
+use GreenFedora\Application\ResponseInterface;
 use WTCalcs\Ui\Wilks\WilksResponder;
 use GreenFedora\Validator\Compulsory;
 use GreenFedora\Validator\Integer;
@@ -171,18 +172,26 @@ class WilksAction extends AbstractHttpAction implements ActionInterface
 
     /**
      * Dispatch the action.
+     * 
+     * @return HttpResponseInterface
      */
-    public function dispatch()
+    public function dispatch(): ResponseInterface
     {
-        $form = $this->createForm()->load($this->payload);
+        $data = $this->payload->getData();
+        $form = $this->createForm()->load($data);
+        $this->payload->setData($data);
         $this->payload->set('form', $form);
 
         $this->payload->set('resultsWilks', []);
         $this->payload->set('resultsAllometric', []);
         $this->payload->set('resultsSiff', []);
 
+        $this->payload->set('formSubmitted', null);
+
         // Has user posted the form?
         if ($this->request->isPost() and $this->request->formSubmitted('wilks')) {
+
+            $this->payload->setFormSubmitted('wilks');
 
             $this->payload->setFrom($this->request->post()->toArray(), $this->getFormDefaults());
 
@@ -206,15 +215,11 @@ class WilksAction extends AbstractHttpAction implements ActionInterface
                 $this->payload->set('resultsSiff', $resultsSiff);
             }
 
-            $form->save($this->payload);
-        }
-
-        if ($form->getPersistHandler()->hasDebugging()) {
-            $form->getPersistHandler()->outputDebugging($this->container->get('logger'));
+            $form->save($this->payload->getData());
         }
 
         $responder = new WilksResponder($this->container, $this->request, $this->response, $this->payload);
-        $responder->dispatch();
+        return $responder->respond();
     }
 
 }

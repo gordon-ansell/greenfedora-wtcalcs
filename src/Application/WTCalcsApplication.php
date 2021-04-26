@@ -11,6 +11,7 @@ namespace WTCalcs\Application;
 
 use GreenFedora\Http\AbstractHttpApplication;
 use GreenFedora\Http\HttpApplicationInterface;
+use GreenFedora\Application\ResponseInterface;
 use GreenFedora\Lang\Lang;
 use GreenFedora\Inflector\Inflector;
 use GreenFedora\Router\Router;
@@ -79,13 +80,13 @@ class WTCalcsApplication extends AbstractHttpApplication implements HttpApplicat
 	/**
 	 * Run.
 	 *
-	 * @return 	void
+	 * @return 	HttpResonseInterface
 	 */
-	protected function run()
+	protected function run(): ResponseInterface
 	{
 		$this->trace($this->x("WTCalcs version %s started.", APP_VERSION));
 
-		$this->dispatch();
+		return parent::run();
 	}
 	
 }

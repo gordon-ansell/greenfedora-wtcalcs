@@ -29,7 +29,7 @@ use Spatie\SchemaOrg\Graph;
  * @author Gordon Ansell <contact@gordonansell.com>
  */
 
-class OnermResponder extends AbstractBaseResponder implements HttpResponderInterface
+class OnermResponder extends AbstractBaseResponder
 {
     /**
      * Generate schema.
@@ -124,12 +124,12 @@ class OnermResponder extends AbstractBaseResponder implements HttpResponderInter
 	 * 
 	 * @return 	HttpResponseInterface
      */
-    public function dispatch(): ResponseInterface
+    public function respond(): ResponseInterface
     {
         $resultsTable = $this->resultsTable($this->payload);
 
         //if ($this->request->isPost()) {
-        if (!is_null($this->payload->formSubmitted)) {
+        if ($this->payload->isFormSubmitted()) {
             // Results table.
             $avg = ($this->payload->has('average')) ? $this->payload->get('average')->toArray() : [];
             $resultsTable->setData(array_merge($this->payload->get('results')->toArray(), [$avg]));
@@ -155,7 +155,7 @@ class OnermResponder extends AbstractBaseResponder implements HttpResponderInter
         // Set the schema.
         $this->payload->set('schema', json_encode($this->schema(), JSON_PRETTY_PRINT));
 
-        $r = $this->container->get('template')->render('onerm', $this->payload->toArray());
+        $r = $this->container->get('template')->render('onerm', $this->payload->getData()->toArray());
 
         $this->response->setContent($r);
 
